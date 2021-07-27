@@ -28,15 +28,12 @@ import Menu from '../components/Menu'
 
 const AppWrapper = styled.div`
   display: flex;
-  flex-flow: column;
-  align-items: flex-start;
-  overflow-x: hidden;
 `
 
 const BodyWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: calc(100% - 320px);
   padding: 32px 16px;
   min-height: calc(100vh - 152px);
   align-items: center;
@@ -117,31 +114,30 @@ export default function App() {
             value={{ selectedLanguage, setSelectedLanguage, translatedLanguage, setTranslatedLanguage }}
           >
             <TranslationsContext.Provider value={{ translations, setTranslations }}>
-              <Menu>
-                <BodyWrapper>
-                  <Popups />
-                  <Web3ReactManager>
-                    <Switch>
-                      <Route exact strict path='/swap' component={Swap} />
-                      <Route exact strict path='/swap/:outputCurrency' component={RedirectToSwap} />
-                      <Route exact strict path='/send' component={RedirectPathToSwapOnly} />
-                      <Route exact strict path='/find' component={PoolFinder} />
-                      <Route exact strict path='/pool' component={Pool} />
-                      <Route exact strict path='/create' component={RedirectToAddLiquidity} />
-                      <Route exact path='/add' component={AddLiquidity} />
-                      <Route exact path='/add/:currencyIdA' component={RedirectOldAddLiquidityPathStructure} />
-                      <Route exact path='/add/:currencyIdA/:currencyIdB' component={RedirectDuplicateTokenIds} />
-                      <Route exact strict path='/remove/v1/:address' component={RemoveV1Exchange} />
-                      <Route exact strict path='/remove/:tokens' component={RedirectOldRemoveLiquidityPathStructure} />
-                      <Route exact strict path='/remove/:currencyIdA/:currencyIdB' component={RemoveLiquidity} />
-                      <Route exact strict path='/migrate/v1' component={MigrateV1} />
-                      <Route exact strict path='/migrate/v1/:address' component={MigrateV1Exchange} />
-                      <Route component={RedirectPathToSwapOnly} />
-                    </Switch>
-                  </Web3ReactManager>
-                  <Marginer />
-                </BodyWrapper>
-              </Menu>
+              <Menu />
+              <BodyWrapper>
+                <Popups />
+                <Web3ReactManager>
+                  <Switch>
+                    <Route exact strict path='/swap' component={Swap} />
+                    <Route exact strict path='/swap/:outputCurrency' component={RedirectToSwap} />
+                    <Route exact strict path='/send' component={RedirectPathToSwapOnly} />
+                    <Route exact strict path='/find' component={PoolFinder} />
+                    <Route exact strict path='/pool' component={Pool} />
+                    <Route exact strict path='/create' component={RedirectToAddLiquidity} />
+                    <Route exact path='/add' component={AddLiquidity} />
+                    <Route exact path='/add/:currencyIdA' component={RedirectOldAddLiquidityPathStructure} />
+                    <Route exact path='/add/:currencyIdA/:currencyIdB' component={RedirectDuplicateTokenIds} />
+                    <Route exact strict path='/remove/v1/:address' component={RemoveV1Exchange} />
+                    <Route exact strict path='/remove/:tokens' component={RedirectOldRemoveLiquidityPathStructure} />
+                    <Route exact strict path='/remove/:currencyIdA/:currencyIdB' component={RemoveLiquidity} />
+                    <Route exact strict path='/migrate/v1' component={MigrateV1} />
+                    <Route exact strict path='/migrate/v1/:address' component={MigrateV1Exchange} />
+                    <Route component={RedirectPathToSwapOnly} />
+                  </Switch>
+                </Web3ReactManager>
+                <Marginer />
+              </BodyWrapper>
             </TranslationsContext.Provider>
           </LanguageContext.Provider>
         </AppWrapper>
