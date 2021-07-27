@@ -2,6 +2,9 @@ import React from 'react'
 import styled from 'styled-components'
 import { Flex, Link } from '@pancakeswap-libs/uikit'
 import Marquee from "react-fast-marquee";
+import { ReactComponent as HelpIcon } from 'assets/svg/icon/HelpIcon.svg'
+import { ReactComponent as DownRedArrowIcon} from 'assets/svg/icon/DownRedArrowIcon.svg'
+import { ReactComponent as UpGreenArrowIcon} from 'assets/svg/icon/UpGreenArrowIcon.svg'
 import { HotTokenType } from './types'
 
 export interface HotTokenBarProps {
@@ -14,7 +17,7 @@ const StyledBar = styled.div`
 `
 
 const FlowBar = styled.div`
-  flex: 1;
+  width: calc(100% - 100px);
   background-color: rgba(0,0,0,0.2);
   border-radius: 0px 12px 12px 0px;
   padding: 6px;
@@ -24,22 +27,32 @@ const BarIntro = styled.div`
   width: 100px;
   display: flex;
   align-items: center;
-  padding-left: 12px;
-  padding-top: 0;
-  font-size: 12px;
+  justify-content: space-between;
+  padding: 0 8px;
   color: #fff;
-  padding-right: 24px;
-  background-color: ${({theme}) => theme.card.background};
-  border-radius: 12px 0px 0px 12px;
+  background-color: #101010;
+  border-radius: 8px 0px 0px 8px;
+  & span {
+    font-size: 12px;
+    line-height: 14px;
+  }
 `
 
 const StyledLink = styled(Link)`
   display: flex;
   align-items: center;
   width: fit-content;
-  margin-left: 1rem;
+  margin-left: 16px;
   &:hover {
     text-decoration: none;
+  }
+  & svg {
+    margin-right: 8px;
+  }
+  & span:last-child {
+    font-weight: bold;
+    color: white;
+    text-transform: uppercase;
   }
 `;
 
@@ -62,23 +75,31 @@ const HotToken = ({
   index,
   dexId,
   name,
-  symbol
+  symbol,
+  direction
 }: {
   index: number,
   dexId: string,
   name: string,
-  symbol: string
+  symbol: string,
+  direction: string | undefined,
 }) => {
   const Ranking = styled.span<{
     index1: number
   }>`
-    padding-right: 12px;
+    padding-right: 8px;
     color: ${({index1}) => RankingColor[index1 - 1]};
   `
   return (
     <StyledLink href={`/#/swap/${dexId}`} fontSize="14px">
       <Ranking index1={index}>#{index}</Ranking>
-      <span style={{ color: '#fff', fontWeight: 400 }}>{name}</span>
+      {
+        direction && direction === 'up' && <UpGreenArrowIcon />
+      }
+      {
+        direction && direction === 'down' && <DownRedArrowIcon />
+      }
+      <span>{name}</span>
     </StyledLink>
   )
 }
@@ -88,28 +109,27 @@ export default function HotTokenBar({
 }: HotTokenBarProps) {
   return (
     <Flex mb="30px">
-      <BarIntro>Top Bar</BarIntro>
+      <BarIntro><span>Top Pairs</span> <HelpIcon /></BarIntro>
       <FlowBar>
-        <div style={{width: 'calc(100% - 120px)'}}>
-          <Marquee gradient={false}>
-            <ul style={{ display: 'flex', listStyle: 'none', justifyContent: 'center', width: 'calc(100% - 120px)' }}>
-            {
-              tokens ? tokens.map((token, key) => {
-                return (
-                  <li>
-                    <HotToken
-                      index={key + 1}
-                      dexId={token.dexId}
-                      symbol={token.symbol}
-                      name={token.name}
-                    />
-                  </li>
-                )
-              }) : <></>
-            }
-            </ul>
-          </Marquee>
-        </div>
+        <Marquee gradient={false}>
+          <ul style={{ display: 'flex', listStyle: 'none', justifyContent: 'center', width: 'calc(100% - 120px)' }}>
+          {
+            tokens ? tokens.map((token, key) => {
+              return (
+                <li>
+                  <HotToken
+                    index={key + 1}
+                    dexId={token.dexId}
+                    symbol={token.symbol}
+                    name={token.name}
+                    direction={token.direction}
+                  />
+                </li>
+              )
+            }) : <></>
+          }
+          </ul>
+        </Marquee>
       </FlowBar>
       <div className="paddingRight: 30px" />
     </Flex>

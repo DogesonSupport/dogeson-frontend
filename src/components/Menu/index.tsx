@@ -196,7 +196,7 @@ const Menu: React.FC = props => {
           links.map((link) => {
             const Icon = link.icon
             return (
-              <MenuItem href={link.href}>
+              <MenuItem href={link.href} target='_blank'>
                 <Icon />
                 <p><b>{ link.label }</b></p>
               </MenuItem>

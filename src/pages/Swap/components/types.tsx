@@ -3,7 +3,8 @@ export interface HotTokenType {
   dexId: string,
   contractAddress: string,
   name: string,
-  symbol: string
+  symbol: string,
+  direction?: string,
 }
 
 export interface TokenDetailProps {

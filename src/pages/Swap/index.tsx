@@ -38,6 +38,7 @@ import { computeTradePriceBreakdown, warningSeverity } from 'utils/prices'
 import Loader from 'components/Loader'
 import { TranslateString } from 'utils/translateTextHelpers'
 import { getHotTokens, getTokenInfo } from 'utils/request'
+import HotTokens from 'utils/hotTokens.json'
 import PageHeader from 'components/PageHeader'
 import ConnectWalletButton from 'components/ConnectWalletButton'
 import AppBody from '../AppBody'
@@ -297,14 +298,82 @@ const Swap = () => {
 
   useEffect(() => {
     const init = async () => {
-      const tokens = await getHotTokens()
-      setHotTokens(tokens.data.tokens)
+      // const tokens = await getHotTokens()
+      // setHotTokens(tokens.data.tokens)
+      const hotTokendata = [
+        {
+          name: 'Cumino',
+          symbol: 'Cumino',
+          dexId: '117bccac249c0c5fcde923a80ac0af53',
+          contractAddress: '0xfec01d8cefc67ed90d8fcad445ef04603ad546d2',
+        },
+        {
+          name: 'UFO',
+          symbol: 'UFO',
+          dexId: '117bccac249c0c5fcde923a80ac0af53',
+          contractAddress: '0xfec01d8cefc67ed90d8fcad445ef04603ad546d2',
+          direction: 'up'
+        },
+        {
+          name: 'Astra',
+          symbol: 'Astra',
+          dexId: '117bccac249c0c5fcde923a80ac0af53',
+          contractAddress: '0xfec01d8cefc67ed90d8fcad445ef04603ad546d2',
+          direction: 'up'
+        },
+        {
+          name: 'Starl',
+          symbol: 'Starl',
+          dexId: '117bccac249c0c5fcde923a80ac0af53',
+          contractAddress: '0xfec01d8cefc67ed90d8fcad445ef04603ad546d2',
+        },
+        {
+          name: 'Floki',
+          symbol: 'Floki',
+          dexId: '117bccac249c0c5fcde923a80ac0af53',
+          contractAddress: '0xfec01d8cefc67ed90d8fcad445ef04603ad546d2',
+          direction: 'down'
+        },
+        {
+          name: 'Dext',
+          symbol: 'Dext',
+          dexId: '117bccac249c0c5fcde923a80ac0af53',
+          contractAddress: '0xfec01d8cefc67ed90d8fcad445ef04603ad546d2',
+        },
+        {
+          name: 'Dext',
+          symbol: 'Dext',
+          dexId: '117bccac249c0c5fcde923a80ac0af53',
+          contractAddress: '0xfec01d8cefc67ed90d8fcad445ef04603ad546d2',
+          direction: 'up'
+        },
+        {
+          name: 'F9',
+          symbol: 'F9',
+          dexId: '117bccac249c0c5fcde923a80ac0af53',
+          contractAddress: '0xfec01d8cefc67ed90d8fcad445ef04603ad546d2',
+          direction: 'down'
+        },
+        {
+          name: 'BTC',
+          symbol: 'BTC',
+          dexId: '117bccac249c0c5fcde923a80ac0af53',
+          contractAddress: '0xfec01d8cefc67ed90d8fcad445ef04603ad546d2',
+        },
+        {
+          name: 'THUN',
+          symbol: 'THUN',
+          dexId: '117bccac249c0c5fcde923a80ac0af53',
+          contractAddress: '0xfec01d8cefc67ed90d8fcad445ef04603ad546d2',
+        },
 
-      console.log(tokens.data.tokens)
-
+      ]
+      setHotTokens(hotTokendata)
+      
+      setCurrentToken(null)
       // TODO, Get first token info
-      const tokenInfo = await getTokenInfo(tokens.data.tokens[3].dexId)
-      setCurrentToken(tokenInfo.data.token ?? null)
+      // const tokenInfo = await getTokenInfo(tokens.data.tokens[3].dexId)
+      // setCurrentToken(tokenInfo.data.token ?? null)
 
       // const historical = await getHistoricalData(tokenInfo.geckoId, 200)
       // setHistoricalData(historical.data.bars ?? null)
