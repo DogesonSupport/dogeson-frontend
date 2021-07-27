@@ -10,11 +10,13 @@ import { injected, bsc, walletconnect } from 'connectors'
 import MainLogo from 'assets/images/MainLogo.png'
 import { ReactComponent as MenuOpenIcon } from 'assets/svg/icon/MenuOpenIcon.svg'
 import { ReactComponent as WalletIcon } from 'assets/svg/icon/WalletIcon.svg'
+import { ReactComponent as TwitterIcon } from 'assets/svg/icon/TwitterIcon.svg'
+import { ReactComponent as SocialIcon2 } from 'assets/svg/icon/SocialIcon2.svg'
+import { ReactComponent as TelegramIcon } from 'assets/svg/icon/TelegramIcon.svg'
 import links from './config'
 
 const MenuWrapper = styled.div`
   width: 320px;
-  height: 100vh;
   background: #1A1A27;
   border-right: 1px solid #AFAFAF;
   display: flex;
@@ -90,12 +92,40 @@ const ButtonWrapper = styled.div`
   border-radius: 8px;
 `
 
-const MenuItemWrapper = styled.div`
+const MenuItem = styled.a`
   width: 100%;
   height: 56px;
   display: flex;
   align-items: center;
   padding: 0 24px;
+  border-radius: 10px;
+  & svg {
+    margin-right: 12px;
+  }
+  &:hover {
+    background: #F9AC61;
+  }
+`
+const SocialWrapper = styled.div`
+  margin-top: 10px;
+  & p {
+    margin-left: 12px;
+    margin-bottom: 10px;
+  }
+`
+
+const SocialIconsWrapper = styled.div`
+  display: flex;
+  height: 48px;
+  & div {
+    display: flex;
+    align-items: center;
+    background: rgba(159, 219, 236, 0.2);
+    border-radius: 20px;
+    & svg {
+      margin: 0 11px;
+    }
+  }
 `
 
 const Menu: React.FC = props => {
@@ -159,17 +189,30 @@ const Menu: React.FC = props => {
             </TokenItemWrapper>
           ))
         }
-        <ButtonWrapper style={{ marginTop: 10 }}>
+        <ButtonWrapper style={{ margin: '10px 0' }}>
           <p><b>Show All Tokens</b></p>
         </ButtonWrapper>
+        {
+          links.map((link) => {
+            const Icon = link.icon
+            return (
+              <MenuItem href={link.href}>
+                <Icon />
+                <p><b>{ link.label }</b></p>
+              </MenuItem>
+          )})
+        }
+        <SocialWrapper>
+          <p><b>Socials</b></p>
+          <SocialIconsWrapper>
+            <div>
+              <TwitterIcon />
+              <SocialIcon2 />
+              <TelegramIcon />
+            </div>
+          </SocialIconsWrapper>
+        </SocialWrapper>
       </MenuContentWrapper>
-      {
-        links.map((link) => (
-          <MenuItemWrapper>
-            { link.icon }
-          </MenuItemWrapper>
-        ))
-      }
       {/* <UikitMenu
         links={links}
         priceLink="https://www.coingecko.com/en/coins/goose-finance"
