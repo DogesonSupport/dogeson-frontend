@@ -1,7 +1,7 @@
 import { CurrencyAmount, JSBI, Token, Trade } from '@pancakeswap-libs/sdk'
 import React, { useCallback, useContext, useEffect, useMemo, useState, useRef } from 'react'
 import { ArrowDown } from 'react-feather'
-import { CardBody, ArrowDownIcon, Button, IconButton, Text } from '@pancakeswap-libs/uikit'
+import { CardBody, ArrowDownIcon, Button, IconButton, Text, Flex } from '@pancakeswap-libs/uikit'
 import { ThemeContext } from 'styled-components'
 import Page from 'components/Layout/Page'
 import AddressInputPanel from 'components/AddressInputPanel'
@@ -39,7 +39,6 @@ import Loader from 'components/Loader'
 import { TranslateString } from 'utils/translateTextHelpers'
 
 import { getHotTokens, getTokenInfo } from 'utils/request'
-import HotTokens from 'utils/hotTokens.json'
 import PageHeader from 'components/PageHeader'
 import ConnectWalletButton from 'components/ConnectWalletButton'
 import AppBody from '../AppBody'
@@ -398,7 +397,9 @@ const Swap = () => {
       />
       <Cards>
         <LeftTopCard>
-          <CardNav />
+          <Flex alignItems='center' justifyContent='center' style={{ height: 48, marginBottom: 30 }}>
+            <CardNav />
+          </Flex>
           <AppBody>
             <Wrapper id="swap-page">
               <ConfirmSwapModal
@@ -414,7 +415,7 @@ const Swap = () => {
                 swapErrorMessage={swapErrorMessage}
                 onDismiss={handleConfirmDismiss}
               />
-              <PageHeader title="Exchange" description="" />
+              <PageHeader title="Swap" description="" />
               <CardBody>
                 <AutoColumn gap="md">
                   <CurrencyInputPanel

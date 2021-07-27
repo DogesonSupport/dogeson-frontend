@@ -5,17 +5,23 @@ import { ButtonMenu, ButtonMenuItem } from '@pancakeswap-libs/uikit'
 import TranslatedText from '../TranslatedText'
 
 const StyledNav = styled.div`
-  margin-bottom: 40px;
   text-align: center;
+  & a {
+    color: black;
+  }
+  & .active {
+    background: #F9AC61;
+    color: white;
+  }
 `
 
 const Nav = ({ activeIndex = 0 }: { activeIndex?: number }) => (
   <StyledNav>
     <ButtonMenu activeIndex={activeIndex} size="sm" variant="primary">
-      <ButtonMenuItem id="swap-nav-link" to="/swap" as={Link}>
+      <ButtonMenuItem className={activeIndex === 0 ? 'active' : ''} id="swap-nav-link" to="/swap" as={Link}>
         <TranslatedText translationId={8}>Swap</TranslatedText>
       </ButtonMenuItem>
-      <ButtonMenuItem id="pool-nav-link" to="/pool" as={Link}>
+      <ButtonMenuItem className={activeIndex === 1 ? 'active' : ''} id="pool-nav-link" to="/pool" as={Link}>
         <TranslatedText translationId={74}>Liquidity</TranslatedText>
       </ButtonMenuItem>
     </ButtonMenu>

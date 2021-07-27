@@ -73,6 +73,8 @@ const SearchWrapper = styled.div`
     margin-left: 8px;
     font-size: 20px;
     margin-top: -5px;
+    outline: none;
+    color: white;
     &::placeholder {
       color: white;
     }
