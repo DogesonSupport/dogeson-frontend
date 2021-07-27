@@ -37,6 +37,7 @@ import { maxAmountSpend } from 'utils/maxAmountSpend'
 import { computeTradePriceBreakdown, warningSeverity } from 'utils/prices'
 import Loader from 'components/Loader'
 import { TranslateString } from 'utils/translateTextHelpers'
+
 import { getHotTokens, getTokenInfo } from 'utils/request'
 import HotTokens from 'utils/hotTokens.json'
 import PageHeader from 'components/PageHeader'
@@ -365,8 +366,7 @@ const Swap = () => {
           symbol: 'THUN',
           dexId: '117bccac249c0c5fcde923a80ac0af53',
           contractAddress: '0xfec01d8cefc67ed90d8fcad445ef04603ad546d2',
-        },
-
+        }
       ]
       setHotTokens(hotTokendata)
       

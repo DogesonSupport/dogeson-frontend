@@ -1,6 +1,9 @@
 import React, { Suspense, useEffect, useState } from 'react'
 import { HashRouter, Route, Switch } from 'react-router-dom'
 import styled from 'styled-components'
+import { ReactComponent as SearchIcon } from 'assets/svg/icon/SearchIcon.svg'
+import { ReactComponent as EmptyAvatar } from 'assets/svg/icon/EmptyAvatar.svg'
+import { ReactComponent as ChevronDown } from 'assets/svg/icon/ChevronDown.svg'
 // import { Credentials, StringTranslations } from '@crowdin/crowdin-api-client'
 import Popups from '../components/Popups'
 import Web3ReactManager from '../components/Web3ReactManager'
@@ -34,7 +37,7 @@ const BodyWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: calc(100% - 320px);
-  padding: 32px 16px;
+  padding: 0 30px;
   min-height: calc(100vh - 152px);
   align-items: center;
   flex: 1;
@@ -50,6 +53,57 @@ const BodyWrapper = styled.div`
 
 const Marginer = styled.div`
   margin-top: 5rem;
+`
+
+const TopBar = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-top: 32px;
+`
+const SearchWrapper = styled.div`
+  margin-left: 16px;
+  display: flex;
+  align-item: center;
+  & input {
+    background: transparent;
+    box-shadow: none;
+    border: none;
+    margin-left: 8px;
+    font-size: 20px;
+    margin-top: -5px;
+    &::placeholder {
+      color: white;
+    }
+  }
+`
+
+const AccountWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  & > div:first-child {
+    padding: 12px;
+    border-radius: 6px;
+    color: white;
+    background: #3861FB;
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 700;
+    margin-right: 24px;
+  }
+  & > div:last-child {
+    display: flex;
+    align-items: center;
+    & p {
+      font-size: 16px;
+      line-height: 19px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      color: white;
+      margin: 0 4px 0 8px;
+    }
+  }
 `
 
 export default function App() {
@@ -117,6 +171,20 @@ export default function App() {
               <Menu />
               <BodyWrapper>
                 <Popups />
+                <TopBar>
+                  <SearchWrapper>
+                    <SearchIcon />
+                    <input placeholder='Search Data' />
+                  </SearchWrapper>
+                  <AccountWrapper>
+                    <div>Connected</div>
+                    <div>
+                      <EmptyAvatar />
+                      <p>8258e1966...</p>
+                      <ChevronDown />
+                    </div>
+                  </AccountWrapper>
+                </TopBar>
                 <Web3ReactManager>
                   <Switch>
                     <Route exact strict path='/swap' component={Swap} />
