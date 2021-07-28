@@ -16,27 +16,47 @@ import { TranslateString } from '../../utils/translateTextHelpers'
 const InputRow = styled.div<{ selected: boolean }>`
   display: flex;
   flex-flow: row nowrap;
-  align-items: center;
-  padding: ${({ selected }) => (selected ? '0.75rem 0.5rem 0.75rem 1rem' : '0.75rem 0.75rem 0.75rem 1rem')};
+  align-items: flex-start;
+  padding: 12px 16px;
+
+  & input {
+    text-align: right;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    &::placeholder {
+      color: white;
+    }
+  }
 `
 
 const CurrencySelect = styled.button<{ selected: boolean }>`
   align-items: center;
-  height: 34px;
   font-size: 16px;
   font-weight: 500;
-  background-color: transparent;
+  background-color: #996A33;
   color: ${({ selected, theme }) => (selected ? theme.colors.text : '#FFFFFF')};
   border-radius: 12px;
   outline: none;
   cursor: pointer;
   user-select: none;
   border: none;
-  padding: 0 0.5rem;
+  padding: 0 4px;
 
   :focus,
   :hover {
     background-color: ${({ theme }) => darken(0.05, theme.colors.input)};
+  }
+
+  & > span {
+    & > div {
+      font-size: 10px;
+      color: white;
+      font-weight: bold;
+    }
+    & > svg > path {
+      fill: white;
+    }
   }
 `
 
@@ -66,13 +86,20 @@ const InputPanel = styled.div<{ hideInput?: boolean }>`
   position: relative;
   border-radius: ${({ hideInput }) => (hideInput ? '8px' : '20px')};
   background-color: ${({ theme }) => theme.colors.background};
-  z-index: 1;
+  z-index: -1;
 `
 
 const Container = styled.div<{ hideInput: boolean }>`
   border-radius: 16px;
-  background-color: ${({ theme }) => theme.colors.input};
-  box-shadow: ${({ theme }) => theme.shadows.inset};
+  background-color: rgba(0, 0, 0, 0.4);
+`
+
+const USDAmount = styled.p`
+  color: white;
+  text-align: right;
+  padding: 0 16px 12px 0;
+  font-size: 12px;
+  font-weight: bold;
 `
 
 interface CurrencyInputPanelProps {
@@ -119,7 +146,7 @@ export default function CurrencyInputPanel({
   return (
     <InputPanel id={id}>
       <Container hideInput={hideInput}>
-        {!hideInput && (
+        {/* {!hideInput && (
           <LabelRow>
             <RowBetween>
               <Text fontSize="14px">{label}</Text>
@@ -132,24 +159,8 @@ export default function CurrencyInputPanel({
               )}
             </RowBetween>
           </LabelRow>
-        )}
+        )} */}
         <InputRow style={hideInput ? { padding: '0', borderRadius: '8px' } : {}} selected={disableCurrencySelect}>
-          {!hideInput && (
-            <>
-              <NumericalInput
-                className="token-amount-input"
-                value={value}
-                onUserInput={val => {
-                  onUserInput(val)
-                }}
-              />
-              {account && currency && showMaxButton && label !== 'To' && (
-                <Button onClick={onMax} size="sm" variant="text">
-                  MAX
-                </Button>
-              )}
-            </>
-          )}
           <CurrencySelect
             selected={!!currency}
             className="open-currency-select-button"
@@ -161,9 +172,9 @@ export default function CurrencyInputPanel({
           >
             <Aligner>
               {pair ? (
-                <DoubleCurrencyLogo currency0={pair.token0} currency1={pair.token1} size={16} margin />
+                <DoubleCurrencyLogo currency0={pair.token0} currency1={pair.token1} size={12} margin />
               ) : currency ? (
-                <CurrencyLogo currency={currency} size="24px" style={{ marginRight: '8px' }} />
+                <CurrencyLogo currency={currency} size="12px" style={{ marginRight: '8px' }} />
               ) : null}
               {pair ? (
                 <Text>
@@ -181,7 +192,24 @@ export default function CurrencyInputPanel({
               {!disableCurrencySelect && <ChevronDownIcon />}
             </Aligner>
           </CurrencySelect>
+          {!hideInput && (
+            <>
+              <NumericalInput
+                className="token-amount-input"
+                value={value}
+                onUserInput={val => {
+                  onUserInput(val)
+                }}
+              />
+              {account && currency && showMaxButton && label !== 'To' && (
+                <Button onClick={onMax} size="sm" variant="text">
+                  MAX
+                </Button>
+              )}
+            </>
+          )}
         </InputRow>
+        <USDAmount>~$ 2,055.02</USDAmount>
       </Container>
       {!disableCurrencySelect && onCurrencySelect && (
         <CurrencySearchModal

@@ -25,9 +25,27 @@ const IconWrapper = styled.div<{ size?: number }>`
 `
 
 const StyledWrapper = styled.div`
-  background-color: ${({theme}) => theme.card.background};
+  background-color: rgba(0, 0, 0, 0.4);
   border-radius: 12px 12px 0px 0px;
   padding: 12px;
+
+  & > div > div {
+    & > div {
+      &:first-child {
+        color: white;
+        font-size: 16px;
+        line-height: 19px;
+        font-weight: 500;
+        margin-bottom: 2px;
+      }
+      &:last-child {
+        color: #ADB5BD;
+        font-weight: bold;
+        font-size: 14px;
+        line-height: 16px;
+      }
+    }
+  }
 `
 
 export default function CoinStatsBoard({

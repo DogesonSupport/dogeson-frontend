@@ -1,8 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Card, Flex, Text } from '@pancakeswap-libs/uikit'
-import TwitterIcon from '../../../assets/images/twitter.png'
-import TelegramIcon from '../../../assets/images/telegram.png'
+import { ReactComponent as TwitterIcon } from 'assets/svg/icon/TwitterIcon.svg'
+import { ReactComponent as SocialIcon2 } from 'assets/svg/icon/SocialIcon2.svg'
+import { ReactComponent as TelegramIcon } from 'assets/svg/icon/TelegramIcon.svg'
 import { TokenDetailProps } from './types'
 
 export interface ContractPanelProps {
@@ -26,10 +27,30 @@ const IconWrapper = styled.div<{ size?: number }>`
   }
 `
 
-const ContractText = styled(Text)`
-  color: ${({theme}) => theme.colors.primary};
-  padding: 0.5rem 1rem;
+const ContractCard = styled(Text)`
+  padding: 0 12px;
+  height: 48px;
   text-overflow: ellipsis;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+  & p {
+    color: #F7931A;
+    font-size: 16px;
+  }
+`
+
+const SocialIconsWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  height: 48px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 20px;
+  & svg {
+    margin: 0 11px;
+  }
 `
 
 export default function ContractPanel({
@@ -38,18 +59,15 @@ export default function ContractPanel({
 
   return (
     <>
-      <Flex justifyContent="space-between" mb="30px">
-        <Card>
-          <ContractText>{token ? token.contractAddress : ''}</ContractText>
-        </Card>
-        <Flex>
-          <IconWrapper size={32}>
-            <img src={TwitterIcon} alt="Twitter icon" />
-          </IconWrapper>
-          <IconWrapper size={32}>
-            <img src={TelegramIcon} alt="Telegram icon" />
-          </IconWrapper>
-        </Flex>
+      <Flex justifyContent="flex-end" mb="30px">
+        <ContractCard>
+          <p>{token ? token.contractAddress : '0xB09FE1613fE03E7361319d2a43eDc17422f36B09'}</p>
+        </ContractCard>
+        <SocialIconsWrapper>
+          <TwitterIcon />
+          <SocialIcon2 />
+          <TelegramIcon />
+        </SocialIconsWrapper>
       </Flex>
     </>
   )
