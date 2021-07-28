@@ -399,7 +399,7 @@ const Swap = () => {
           <Flex alignItems='center' justifyContent='center' style={{ height: 48, marginBottom: 30 }}>
             <CardNav />
           </Flex>
-          <Card bgColor='rgba(0, 0, 0, 0.4)' borderRadius='8px' padding='10px 10px 46px 10px'>
+          <Card bgColor='rgba(0, 0, 0, 0.2)' borderRadius='8px' padding='10px 10px 46px 10px'>
             <Wrapper id="swap-page">
               <ConfirmSwapModal
                 isOpen={showConfirm}

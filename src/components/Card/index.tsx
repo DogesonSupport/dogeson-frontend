@@ -6,6 +6,7 @@ const Card = styled.div<any>`
   width: 100%;
   border-radius: 16px;
   padding: 1.25rem;
+  box-shadow: 0px 2px 12px rgba(37, 51, 66, 0.15);
   background-color: ${({ bgColor }) => bgColor};
   padding: ${({ padding }) => padding};
   border: ${({ border }) => border};
