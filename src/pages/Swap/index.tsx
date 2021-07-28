@@ -9,6 +9,7 @@ import { AutoColumn, FullHeightColumn } from 'components/Column'
 import ConfirmSwapModal from 'components/swap/ConfirmSwapModal'
 import CurrencyInputPanel from 'components/CurrencyInputPanel'
 import CardNav from 'components/CardNav'
+import AutoCardNav from 'components/AutoCardNav'
 import { AutoRow, RowBetween } from 'components/Row'
 import AdvancedSwapDetailsDropdown from 'components/swap/AdvancedSwapDetailsDropdown'
 import BetterTradeLink from 'components/swap/BetterTradeLink'
@@ -513,9 +514,14 @@ const Swap = () => {
       />
       <Cards>
         <LeftTopCard>
-          <Flex alignItems='center' justifyContent='center' style={{ height: 48, marginBottom: 30 }}>
-            <CardNav />
-          </Flex>
+          <div style={{ height: 48, marginBottom: 30 }}>
+            <Flex alignItems='center' justifyContent='center' style={{ marginBottom: 8 }}>
+              <CardNav />
+            </Flex>
+            <Flex alignItems='center' justifyContent='center'>
+              <AutoCardNav />
+            </Flex>
+          </div>
           <Card bgColor='rgba(0, 0, 0, 0.2)' borderRadius='8px' padding='10px 10px 46px 10px'>
             <Wrapper id="swap-page">
               <ConfirmSwapModal
@@ -531,7 +537,7 @@ const Swap = () => {
                 swapErrorMessage={swapErrorMessage}
                 onDismiss={handleConfirmDismiss}
               />
-              <PageHeader title="Swap" description="" />
+              <PageHeader title="Swap" description="" showAuto />
               <CardBody style={{ padding: 0 }}>
                 <CurrencyInputPanel
                   label={

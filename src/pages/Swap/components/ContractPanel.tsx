@@ -4,6 +4,7 @@ import { Card, Flex, Text } from '@pancakeswap-libs/uikit'
 import { ReactComponent as TwitterIcon } from 'assets/svg/icon/TwitterIcon.svg'
 import { ReactComponent as SocialIcon2 } from 'assets/svg/icon/SocialIcon2.svg'
 import { ReactComponent as TelegramIcon } from 'assets/svg/icon/TelegramIcon.svg'
+import CopyHelper from 'components/AccountDetails/Copy'
 import { TokenDetailProps } from './types'
 
 export interface ContractPanelProps {
@@ -60,6 +61,9 @@ export default function ContractPanel({
   return (
     <>
       <Flex justifyContent="flex-end" mb="30px">
+        <CopyHelper toCopy={token ? token.contractAddress : '0xB09FE1613fE03E7361319d2a43eDc17422f36B09'}>
+          &nbsp;
+        </CopyHelper>
         <ContractCard>
           <p>{token ? token.contractAddress : '0xB09FE1613fE03E7361319d2a43eDc17422f36B09'}</p>
         </ContractCard>
