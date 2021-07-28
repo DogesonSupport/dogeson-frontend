@@ -41,7 +41,6 @@ import { TranslateString } from 'utils/translateTextHelpers'
 import { getHotTokens, getTokenInfo } from 'utils/request'
 import PageHeader from 'components/PageHeader'
 import ConnectWalletButton from 'components/ConnectWalletButton'
-import AppBody from '../AppBody'
 import HotTokenBar from './components/HotTokenBar'
 import { Cards, LeftTopCard, RightTopCard } from './components/Layout'
 import CoinStatsBoard from './components/CoinStatsBoard'
@@ -400,7 +399,7 @@ const Swap = () => {
           <Flex alignItems='center' justifyContent='center' style={{ height: 48, marginBottom: 30 }}>
             <CardNav />
           </Flex>
-          <AppBody>
+          <Card bgColor='rgba(0, 0, 0, 0.4)' borderRadius='8px' padding='10px 10px 46px 10px'>
             <Wrapper id="swap-page">
               <ConfirmSwapModal
                 isOpen={showConfirm}
@@ -416,7 +415,7 @@ const Swap = () => {
                 onDismiss={handleConfirmDismiss}
               />
               <PageHeader title="Swap" description="" />
-              <CardBody>
+              <CardBody style={{ padding: 0 }}>
                 <AutoColumn gap="md">
                   <CurrencyInputPanel
                     label={
@@ -593,7 +592,7 @@ const Swap = () => {
                 </BottomGrouping>
               </CardBody>
             </Wrapper>
-          </AppBody>
+          </Card>
           <AdvancedSwapDetailsDropdown trade={trade} />
         </LeftTopCard>
         <RightTopCard>

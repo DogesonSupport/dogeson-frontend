@@ -31,7 +31,11 @@ const HistoryIcon = () => (
 )
 
 const StyledPageHeader = styled.div`
-  padding: 20px;
+  padding: 10px;
+  & button {
+    color: white;
+    background: transparent !important;
+  }
 `
 
 const Details = styled.div`
@@ -46,7 +50,7 @@ const PageHeader = ({ title, description, showHistory, children }: PageHeaderPro
     <StyledPageHeader>
       <Flex alignItems="center">
         <Details>
-          <Heading mb="8px">{title}</Heading>
+          <Heading mb="8px" color="white">{title}</Heading>
           {description && (
             <Text color="textSubtle" fontSize="14px">
               {description}
