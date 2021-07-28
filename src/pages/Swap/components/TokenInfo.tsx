@@ -1,14 +1,26 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Flex, Text } from '@pancakeswap-libs/uikit'
+import { ReactComponent as MoreIcon2 } from 'assets/svg/icon/MoreIcon2.svg' 
 import numeral from 'numeral'
-import AppBody from '../../AppBody'
 import { TokenDetailProps } from './types'
 
 const TextWrapper = styled.div`
-  border-top: 1px solid ${({theme}) => theme.colors.tertiary};
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
   padding: 12px 20px;
   word-break: break-all;
+  & > div:first-child {
+    color: white;
+    font-size: 16px;
+    line-height: 19px;
+    font-weight: 500;
+  }
+  & > div:last-child {
+    font-size: 14px;
+    line-height: 16px;
+    color: #ADB5BD;
+    margin-top: 2px;
+  }
 `
 
 const IconWrapper = styled.div<{ size?: number }>`
@@ -27,45 +39,60 @@ const IconWrapper = styled.div<{ size?: number }>`
   }
 `
 
+const TokenInfoContainer = styled.div`
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+`
+
 export default function TokenInfo({
   tokenInfo
 }: {
   tokenInfo?: TokenDetailProps | null
 }) {
   return (
-    <AppBody>
-      <Flex alignItems="center">
-        {
-          tokenInfo ?
-            <IconWrapper size={32}>
-              <img src={tokenInfo.iconSmall} alt="Coin icon" />
-            </IconWrapper>
-            : <></>
-        }
-        <Text>{tokenInfo ? tokenInfo.name : ''}</Text>
+    <TokenInfoContainer>
+      <Flex alignItems="center" justifyContent='space-between'>
+        <Flex alignItems='center'>
+          {
+            tokenInfo ?
+              <IconWrapper size={32}>
+                <img src={tokenInfo.iconSmall} alt="Coin icon" />
+              </IconWrapper>
+              : <></>
+          }
+          <Text color='white'>{tokenInfo ? tokenInfo.name : ''}</Text>
+        </Flex>
+        <Flex style={{ width: 40 }}>
+          <MoreIcon2 />
+        </Flex>
       </Flex>
       <Flex flexDirection="column">
         <TextWrapper>
-          <Text><div>Total Supply</div>{tokenInfo ? numeral(tokenInfo.totalSupply).format('0,0') : ''}</Text>
+          <Text>Total Supply</Text>
+          <Text>{tokenInfo ? numeral(tokenInfo.totalSupply).format('0,0') : ''}</Text>
         </TextWrapper>
         <TextWrapper>
-          <Text><div>Market Cap:<span style={{ fontSize: '70%' }}>(includes locked, excludes burned)</span></div>{tokenInfo ? numeral(tokenInfo.marketCap).format('$0,0.00') : ''}</Text>
+          <Text>Market Cap:<span style={{ fontSize: '70%' }}>(includes locked, excludes burned)</span></Text>
+          <Text>{tokenInfo ? numeral(tokenInfo.marketCap).format('$0,0.00') : ''}</Text>
         </TextWrapper>
         <TextWrapper>
-          <Text>
-          Pc v2| DOGESON/BNB LP Holdings: <div>{tokenInfo ? `${numeral(tokenInfo.bnbLPHoldings).format('0,0')} BNB` : ''}({tokenInfo ? `${numeral(tokenInfo.bnbLPHoldingsUSD).format('0,0')}` : ''})|Chart|Holders</div>
+          <Text>Pc v2| DOGESON/BNB LP Holdings:</Text>
+          <Text>{tokenInfo ? `${numeral(tokenInfo.bnbLPHoldings).format('0,0')} BNB` : ''}({tokenInfo ? `${numeral(tokenInfo.bnbLPHoldingsUSD).format('0,0')}` : ''})|Chart|Holders
           </Text>
         </TextWrapper>
         <TextWrapper>
-          <Text>Transactions: {tokenInfo ? numeral(tokenInfo?.transactions).format('0,0') : ''}</Text>
+          <Text>Transactions</Text>
+          <Text>{tokenInfo ? numeral(tokenInfo?.transactions).format('0,0') : ''}</Text>
         </TextWrapper>
         <TextWrapper>
-          <Text>{tokenInfo ? tokenInfo.contractAddress : 'Contract Address: '}</Text>
+          <Text>Contract Address</Text>
+          <Text>{tokenInfo ? tokenInfo.contractAddress : ''}</Text>
         </TextWrapper>
         <TextWrapper>
-          <Text>Holders: {tokenInfo ? numeral(tokenInfo.holders).format('0,0') : ''}</Text>
+          <Text>Holders</Text>
+          <Text>{tokenInfo ? numeral(tokenInfo.holders).format('0,0') : ''}</Text>
         </TextWrapper>
       </Flex>
-    </AppBody>
+    </TokenInfoContainer>
   )
 }

@@ -1,8 +1,7 @@
 import { CurrencyAmount, JSBI, Token, Trade } from '@pancakeswap-libs/sdk'
 import React, { useCallback, useContext, useEffect, useMemo, useState, useRef } from 'react'
-import { ArrowDown } from 'react-feather'
 import { CardBody, ArrowDownIcon, Button, IconButton, Text, Flex } from '@pancakeswap-libs/uikit'
-import { ThemeContext } from 'styled-components'
+import styled, { ThemeContext } from 'styled-components'
 import Page from 'components/Layout/Page'
 import AddressInputPanel from 'components/AddressInputPanel'
 import Card, { GreyCard } from 'components/Card'
@@ -38,6 +37,11 @@ import { computeTradePriceBreakdown, warningSeverity } from 'utils/prices'
 import Loader from 'components/Loader'
 import { TranslateString } from 'utils/translateTextHelpers'
 
+import { ReactComponent as DownArrow } from 'assets/svg/icon/DownArrow.svg'
+import { ReactComponent as HelpIcon } from 'assets/svg/icon/HelpIcon.svg'
+import { ReactComponent as HelpIcon1 } from 'assets/svg/icon/HelpIcon1.svg'
+import BinanceLogo from 'assets/images/binance-logo.png'
+
 import { getHotTokens, getTokenInfo } from 'utils/request'
 import PageHeader from 'components/PageHeader'
 import ConnectWalletButton from 'components/ConnectWalletButton'
@@ -50,6 +54,35 @@ import ContractPanel from './components/ContractPanel'
 import { HotTokenType, TokenDetailProps, HistoricalDataProps } from './components/types'
 
 const { main: Main } = TYPE
+
+const ArrowContainer = styled.div`
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid rgba(255, 255, 255, 0.4);
+  border-radius: 8px;
+  margin: 0;
+`
+
+const ArrowContent = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: -4px 0;
+`
+
+const SlippageText = styled.p`
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 12px;
+  color: white;
+  margin: 0 8px;
+  & span {
+    text-decoration: underline;
+  }
+`
 
 const Swap = () => {
   const loadedUrlParams = useDefaultsFromURLSearch()
@@ -368,7 +401,26 @@ const Swap = () => {
       ]
       setHotTokens(hotTokendata)
       
-      setCurrentToken(null)
+      const currentTokenInfo = {
+        iconSmall: BinanceLogo,
+        iconLarge: BinanceLogo,
+        iconThumb: BinanceLogo,
+        name: 'BNB',
+        symbol: 'BNB',
+        contractAddress: '0xfec01d8cefc67ed90d8fcad445ef04603ad546d2',
+        website: '',
+        price: 0.984754,
+        priceChange24H: 2.5,
+        volumne24H: 177938,
+        liquidity: 5359493,
+        marketCap: 13377791,
+        totalSupply: 0,
+        bnbLPHoldings: 0,
+        bnbLPHoldingsUSD: 0,
+        transactions: 0,
+        holders: 0
+      }
+      setCurrentToken(currentTokenInfo);
       // TODO, Get first token info
       // const tokenInfo = await getTokenInfo(tokens.data.tokens[3].dexId)
       // setCurrentToken(tokenInfo.data.token ?? null)
@@ -416,94 +468,96 @@ const Swap = () => {
               />
               <PageHeader title="Swap" description="" />
               <CardBody style={{ padding: 0 }}>
-                <AutoColumn gap="md">
-                  <CurrencyInputPanel
-                    label={
-                      independentField === Field.OUTPUT && !showWrap && trade
-                        ? 'From (estimated)'
-                        : TranslateString(76, 'From')
-                    }
-                    value={formattedAmounts[Field.INPUT]}
-                    showMaxButton={!atMaxAmountInput}
-                    currency={currencies[Field.INPUT]}
-                    onUserInput={handleTypeInput}
-                    onMax={handleMaxInput}
-                    onCurrencySelect={handleInputSelect}
-                    otherCurrency={currencies[Field.OUTPUT]}
-                    id="swap-currency-input"
-                  />
-                  <AutoColumn justify="space-between">
-                    <AutoRow justify={isExpertMode ? 'space-between' : 'center'} style={{ padding: '0 1rem' }}>
-                      <ArrowWrapper clickable>
-                        <IconButton
-                          variant="tertiary"
-                          onClick={() => {
-                            setApprovalSubmitted(false) // reset 2 step UI for approvals
-                            onSwitchTokens()
-                          }}
-                          style={{ borderRadius: '50%' }}
-                          size="sm"
-                        >
-                          <ArrowDownIcon color="primary" width="24px" />
-                        </IconButton>
-                      </ArrowWrapper>
-                      {recipient === null && !showWrap && isExpertMode ? (
-                        <LinkStyledButton id="add-recipient-button" onClick={() => onChangeRecipient('')}>
-                          + Add a send (optional)
-                        </LinkStyledButton>
-                      ) : null}
-                    </AutoRow>
-                  </AutoColumn>
-                  <CurrencyInputPanel
-                    value={formattedAmounts[Field.OUTPUT]}
-                    onUserInput={handleTypeOutput}
-                    label={
-                      independentField === Field.INPUT && !showWrap && trade ? 'To (estimated)' : TranslateString(80, 'To')
-                    }
-                    showMaxButton={false}
-                    currency={currencies[Field.OUTPUT]}
-                    onCurrencySelect={handleOutputSelect}
-                    otherCurrency={currencies[Field.INPUT]}
-                    id="swap-currency-output"
-                  />
-
-                  {recipient !== null && !showWrap ? (
-                    <>
-                      <AutoRow justify="space-between" style={{ padding: '0 1rem' }}>
-                        <ArrowWrapper clickable={false}>
-                          <ArrowDown size="16" color={theme.colors.textSubtle} />
-                        </ArrowWrapper>
-                        <LinkStyledButton id="remove-recipient-button" onClick={() => onChangeRecipient(null)}>
-                          - Remove send
-                        </LinkStyledButton>
-                      </AutoRow>
-                      <AddressInputPanel id="recipient" value={recipient} onChange={onChangeRecipient} />
-                    </>
+                <CurrencyInputPanel
+                  label={
+                    independentField === Field.OUTPUT && !showWrap && trade
+                      ? 'From (estimated)'
+                      : TranslateString(76, 'From')
+                  }
+                  value={formattedAmounts[Field.INPUT]}
+                  showMaxButton={!atMaxAmountInput}
+                  currency={currencies[Field.INPUT]}
+                  onUserInput={handleTypeInput}
+                  onMax={handleMaxInput}
+                  onCurrencySelect={handleInputSelect}
+                  otherCurrency={currencies[Field.OUTPUT]}
+                  id="swap-currency-input"
+                />
+                <ArrowContent>
+                  <ArrowContainer
+                    onClick={() => {
+                      setApprovalSubmitted(false) // reset 2 step UI for approvals
+                      onSwitchTokens()
+                    }}>
+                      <DownArrow />
+                  </ArrowContainer>
+                  {recipient === null && !showWrap && isExpertMode ? (
+                    <LinkStyledButton id="add-recipient-button" onClick={() => onChangeRecipient('')}>
+                      + Add a send (optional)
+                    </LinkStyledButton>
                   ) : null}
+                </ArrowContent>
+                <CurrencyInputPanel
+                  value={formattedAmounts[Field.OUTPUT]}
+                  onUserInput={handleTypeOutput}
+                  label={
+                    independentField === Field.INPUT && !showWrap && trade ? 'To (estimated)' : TranslateString(80, 'To')
+                  }
+                  showMaxButton={false}
+                  currency={currencies[Field.OUTPUT]}
+                  onCurrencySelect={handleOutputSelect}
+                  otherCurrency={currencies[Field.INPUT]}
+                  id="swap-currency-output"
+                />
 
-                  {showWrap ? null : (
-                    <Card padding=".25rem .75rem 0 .75rem" borderRadius="20px">
-                      <AutoColumn gap="4px">
-                        {Boolean(trade) && (
-                          <RowBetween align="center">
-                            <Text fontSize="14px">Price</Text>
-                            <TradePrice
-                              price={trade?.executionPrice}
-                              showInverted={showInverted}
-                              setShowInverted={setShowInverted}
-                            />
-                          </RowBetween>
-                        )}
-                        {allowedSlippage !== INITIAL_ALLOWED_SLIPPAGE && (
-                          <RowBetween align="center">
-                            <Text fontSize="14px">Slippage Tolerance</Text>
-                            <Text fontSize="14px">{allowedSlippage / 100}%</Text>
-                          </RowBetween>
-                        )}
-                      </AutoColumn>
-                    </Card>
-                  )}
-                </AutoColumn>
+                {recipient !== null && !showWrap ? (
+                  <>
+                    <ArrowContent>
+                      <ArrowContainer>
+                        <DownArrow />
+                      </ArrowContainer>
+                      <LinkStyledButton id="remove-recipient-button" onClick={() => onChangeRecipient(null)}>
+                        - Remove send
+                      </LinkStyledButton>
+                    </ArrowContent>
+                    <AddressInputPanel id="recipient" value={recipient} onChange={onChangeRecipient} />
+                  </>
+                ) : null}
+
+                {/* {showWrap ? null : (
+                  <Card padding=".25rem .75rem 0 .75rem" borderRadius="20px">
+                    <AutoColumn gap="4px">
+                      {Boolean(trade) && (
+                        <RowBetween align="center">
+                          <Text fontSize="14px">Price</Text>
+                          <TradePrice
+                            price={trade?.executionPrice}
+                            showInverted={showInverted}
+                            setShowInverted={setShowInverted}
+                          />
+                        </RowBetween>
+                      )}
+                      {allowedSlippage !== INITIAL_ALLOWED_SLIPPAGE && (
+                        <RowBetween align="center">
+                          <Text fontSize="14px">Slippage Tolerance</Text>
+                          <Text fontSize="14px">{allowedSlippage / 100}%</Text>
+                        </RowBetween>
+                      )}
+                    </AutoColumn>
+                  </Card>
+                )} */}
+
+                <Flex justifyContent='space-between' alignItems='center' marginTop='20px'>
+                  <Flex alignItems='center'>
+                    <HelpIcon />
+                    <SlippageText><span>Slippage Tolerance</span><b>: 1%</b></SlippageText>
+                  </Flex>
+                  <Flex alignItems='center'>
+                    <SlippageText><b>1 WBTC = 16.35 ETH</b></SlippageText>
+                    <HelpIcon1 />
+                  </Flex>
+                </Flex>
+
                 <BottomGrouping>
                   {!account ? (
                     <ConnectWalletButton fullWidth />
@@ -612,9 +666,7 @@ const Swap = () => {
           </FullHeightColumn>
         </RightTopCard>
         <div>
-          <TokenInfo
-            tokenInfo={currentToken}
-          />
+          <TokenInfo tokenInfo={currentToken} />
         </div>
         <div>
           <TransactionCard
