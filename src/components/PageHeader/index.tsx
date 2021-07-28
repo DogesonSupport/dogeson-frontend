@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react'
 import styled from 'styled-components'
-import { Heading, IconButton, Text, Flex, useModal } from '@pancakeswap-libs/uikit'
+import { Heading, IconButton, Text, Flex, useModal, Button } from '@pancakeswap-libs/uikit'
 import SettingsModal from './SettingsModal'
 import RecentTransactionsModal from './RecentTransactionsModal'
 
@@ -8,7 +8,8 @@ interface PageHeaderProps {
   title: ReactNode
   description?: ReactNode
   children?: ReactNode,
-  showHistory?: boolean
+  showHistory?: boolean,
+  showAuto?: boolean,
 }
 
 // TODO: use UI Kit
@@ -32,9 +33,13 @@ const HistoryIcon = () => (
 
 const StyledPageHeader = styled.div`
   padding: 10px;
+  & h2 {
+    margin: 0;
+  }
   & button {
     color: white;
     background: transparent !important;
+    padding: 0 8px;
   }
 `
 
@@ -42,7 +47,7 @@ const Details = styled.div`
   flex: 1;
 `
 
-const PageHeader = ({ title, description, showHistory, children }: PageHeaderProps) => {
+const PageHeader = ({ title, description, showHistory, children, showAuto }: PageHeaderProps) => {
   const [onPresentSettings] = useModal(<SettingsModal />)
   const [onPresentRecentTransactions] = useModal(<RecentTransactionsModal />)
 
@@ -57,6 +62,11 @@ const PageHeader = ({ title, description, showHistory, children }: PageHeaderPro
             </Text>
           )}
         </Details>
+        { showAuto &&
+          <Button className='button'>
+            Auto
+          </Button>      
+        }
         <IconButton variant="text" onClick={onPresentSettings} title="Settings">
           <CogIcon />
         </IconButton>
