@@ -84,6 +84,71 @@ const SlippageText = styled.p`
   }
 `
 
+const InfoCard = styled.div`
+  padding: 32px;
+  border-radius: 24px;
+  color: white;
+  background: rgba(0, 0, 0, 0.4);
+  & h1 {
+    font-size: 36px;
+    line-height: 42px;
+    font-weight: bold;
+  }
+  & h2 {
+    font-size: 32px;
+    line-height: 37px;
+    font-weight: bold;
+  }
+  & p {
+    font-size: 18px;
+    line-height: 21px;
+    font-weight: 300;
+  }
+`
+
+const InfoCardWrapper = styled.div`
+  display: flex;
+  margin-top: 20px;
+  & > div {
+    flex: 1;
+    &:first-child {
+      margin-right: 10px;
+    }
+    &:last-child {
+      margin-left: 10px;
+    }
+  }
+`
+
+const CountDownContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  max-width: 600px;
+  width: 100%;
+  margin: 16px auto;
+`
+
+const CountDownItem = styled.div`
+  color: white;
+  text-align: center;
+  & > div {
+    width: 94px;
+    height: 94px;
+    background: #F9AC61;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    font-weight: bold;
+    border-radius: 24px;
+  }
+  & > p {
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 4px;
+  }
+`
+
 const Swap = () => {
   const loadedUrlParams = useDefaultsFromURLSearch()
   
@@ -675,6 +740,45 @@ const Swap = () => {
           />
         </div>
       </Cards>
+      <InfoCard>
+        <h1>Dogeson Charity Starts in</h1>
+        <CountDownContainer>
+          <CountDownItem>
+            <div>16</div>
+            <p>Days</p>
+          </CountDownItem>
+          <CountDownItem>
+            <div>27</div>
+            <p>Hours</p>
+          </CountDownItem>
+          <CountDownItem>
+            <div>16</div>
+            <p>Minutes</p>
+          </CountDownItem>
+          <CountDownItem>
+            <div>44</div>
+            <p>Seconds</p>
+          </CountDownItem>
+        </CountDownContainer>
+      </InfoCard>
+      <InfoCardWrapper>
+        <InfoCard>
+          <h1>Dogeson Stats</h1>
+          <Flex justifyContent='space-between' style={{ margin: '24px 0' }}>
+            <p><b>Total AstraCoins Supply</b></p>
+            <p><b>184,502,810</b></p>
+          </Flex>
+          <Flex justifyContent='space-between'>
+            <p><b>Total AstraCoins Burned</b></p>
+            <p><b>152,331,140</b></p>
+          </Flex>
+        </InfoCard>
+        <InfoCard style={{ textAlign: 'center' }}>
+          <h1>Total Value Locked (TVL)</h1>
+          <h2 style={{ margin: '24px 0' }}>$8,799,370,991</h2>
+          <p>Across all LPs</p>
+        </InfoCard>
+      </InfoCardWrapper>
     </Page>
   )
 }
