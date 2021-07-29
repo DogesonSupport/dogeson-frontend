@@ -1,5 +1,7 @@
 import React, { ReactNode } from 'react'
 import styled from 'styled-components'
+import { useSetVersion } from 'state/application/hooks'
+import { Version } from 'hooks/useToggledVersion'
 import { Heading, IconButton, Text, Flex, useModal, Button } from '@pancakeswap-libs/uikit'
 import SettingsModal from './SettingsModal'
 import RecentTransactionsModal from './RecentTransactionsModal'
@@ -50,6 +52,7 @@ const Details = styled.div`
 const PageHeader = ({ title, description, showHistory, children, showAuto }: PageHeaderProps) => {
   const [onPresentSettings] = useModal(<SettingsModal />)
   const [onPresentRecentTransactions] = useModal(<RecentTransactionsModal />)
+  const { setVersion } = useSetVersion()
 
   return (
     <StyledPageHeader>
@@ -63,7 +66,7 @@ const PageHeader = ({ title, description, showHistory, children, showAuto }: Pag
           )}
         </Details>
         { showAuto &&
-          <Button className='button'>
+          <Button className='button' onClick={() => { setVersion(Version.v2)}}>
             Auto
           </Button>      
         }

@@ -1,4 +1,5 @@
 import { createReducer, nanoid } from '@reduxjs/toolkit'
+import { Version } from 'hooks/useToggledVersion'
 import {
   addPopup,
   PopupContent,
@@ -6,7 +7,8 @@ import {
   toggleWalletModal,
   toggleSettingsMenu,
   updateBlockNumber,
-  toggleMenu
+  toggleMenu,
+  setVersion
 } from './actions'
 
 type PopupList = Array<{ key: string; show: boolean; content: PopupContent; removeAfterMs: number | null }>
@@ -17,6 +19,7 @@ export interface ApplicationState {
   walletModalOpen: boolean
   settingsMenuOpen: boolean
   menuToggled: boolean
+  versionSet: Version
 }
 
 const initialState: ApplicationState = {
@@ -24,7 +27,8 @@ const initialState: ApplicationState = {
   popupList: [],
   walletModalOpen: false,
   settingsMenuOpen: false,
-  menuToggled: false
+  menuToggled: false,
+  versionSet: Version.v2
 }
 
 export default createReducer(initialState, builder =>
@@ -62,5 +66,8 @@ export default createReducer(initialState, builder =>
     })
     .addCase(toggleMenu, state => {
       state.menuToggled = !state.menuToggled
+    })
+    .addCase(setVersion, (state, { payload }) => {
+      state.versionSet = payload
     })
 )

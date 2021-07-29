@@ -1,5 +1,6 @@
 import { createAction } from '@reduxjs/toolkit'
 import { TokenList } from '@uniswap/token-lists'
+import { Version } from 'hooks/useToggledVersion'
 
 export type PopupContent =
   | {
@@ -26,3 +27,4 @@ export const addPopup = createAction<{ key?: string; removeAfterMs?: number | nu
 )
 export const removePopup = createAction<{ key: string }>('app/removePopup')
 export const toggleMenu = createAction<boolean>('app/toggleMenu')
+export const setVersion = createAction<Version>('app/setVersion')

@@ -1,7 +1,8 @@
 import { useCallback, useMemo } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { Version } from 'hooks/useToggledVersion'
 import { useActiveWeb3React } from '../../hooks'
-import { addPopup, PopupContent, removePopup, toggleWalletModal, toggleSettingsMenu, toggleMenu as _toggleMenu } from './actions'
+import { addPopup, PopupContent, removePopup, toggleWalletModal, toggleSettingsMenu, toggleMenu as _toggleMenu, setVersion as _setVersion } from './actions'
 import { AppState, AppDispatch } from '../index'
 
 export function useBlockNumber(): number | undefined {
@@ -22,6 +23,20 @@ export function useMenuToggle() {
 
   return { menuToggled, toggleMenu };
 }
+
+export function useSetVersion() {
+  const dispatch = useDispatch<AppDispatch>();
+  const versionSet = useSelector<
+    AppState,
+    AppState['application']['versionSet']
+  >((state) => state.application.versionSet);
+
+  const setVersion = (version: Version) =>
+    dispatch(_setVersion(version));
+
+  return { versionSet, setVersion };
+}
+
 
 export function useWalletModalOpen(): boolean {
   return useSelector((state: AppState) => state.application.walletModalOpen)
