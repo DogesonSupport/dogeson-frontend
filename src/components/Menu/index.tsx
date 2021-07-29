@@ -1,4 +1,4 @@
-import React, { ReactElement, useContext } from 'react'
+import React, { ReactElement, useContext, useState, useMemo } from 'react'
 import styled from 'styled-components'
 import { Button } from '@pancakeswap-libs/uikit'
 import { useWeb3React } from '@web3-react/core'
@@ -104,6 +104,7 @@ const ButtonWrapper = styled.div`
   text-align: center;
   height: 56px;
   border-radius: 8px;
+  cursor: pointer;
 `
 
 const MenuItem = styled.a`
@@ -128,6 +129,11 @@ const SocialWrapper = styled.div`
   }
 `
 
+const TokenListWrapper = styled.div`
+  overflow-y: auto;
+  max-height: 300px;
+`
+
 const SocialIconsWrapper = styled.div<{toggled: boolean}>`
   display: flex;
   height: ${(props) => props.toggled ? 'auto' : '48px'};
@@ -150,33 +156,61 @@ const Menu: React.FC = props => {
   const { isDark, toggleTheme } = useTheme()
   const cakePriceUsd = useGetPriceData()
   const { menuToggled, toggleMenu } = useMenuToggle();
+  const [ showAllToken, setShowAllToken ] = useState(false);
 
-  const tokenData = [
-    {
-      name: 'GLend',
-      rate: '1.10881',
-      price1: '0.10088233231',
-      price2: '0.10001'
-    },
-    {
-      name: 'DOOOG',
-      rate: '1.10881',
-      price1: '0.10088233231',
-      price2: '0.10001'
-    },
-    {
-      name: 'FUDOFF',
-      rate: '1.10881',
-      price1: '0.10088233231',
-      price2: '0.10001'
-    },
-    {
-      name: 'NEWWORLD',
-      rate: '1.10881',
-      price1: '0.10088233231',
-      price2: '0.10001'
-    }
-  ]
+  const sTokens = useMemo(() => {
+    const tokenData = [
+      {
+        name: 'GLend',
+        rate: '1.10881',
+        price1: '0.10088233231',
+        price2: '0.10001'
+      },
+      {
+        name: 'DOOOG',
+        rate: '1.10881',
+        price1: '0.10088233231',
+        price2: '0.10001'
+      },
+      {
+        name: 'FUDOFF',
+        rate: '1.10881',
+        price1: '0.10088233231',
+        price2: '0.10001'
+      },
+      {
+        name: 'NEWWORLD',
+        rate: '1.10881',
+        price1: '0.10088233231',
+        price2: '0.10001'
+      },
+      {
+        name: 'GLend',
+        rate: '1.10881',
+        price1: '0.10088233231',
+        price2: '0.10001'
+      },
+      {
+        name: 'DOOOG',
+        rate: '1.10881',
+        price1: '0.10088233231',
+        price2: '0.10001'
+      },
+      {
+        name: 'FUDOFF',
+        rate: '1.10881',
+        price1: '0.10088233231',
+        price2: '0.10001'
+      },
+      {
+        name: 'NEWWORLD',
+        rate: '1.10881',
+        price1: '0.10088233231',
+        price2: '0.10001'
+      }
+    ];
+    return showAllToken ? tokenData : tokenData.slice(0, 4)
+  }, [showAllToken])
 
   return (
     <MenuWrapper toggled={menuToggled}>
@@ -205,25 +239,27 @@ const Menu: React.FC = props => {
         }
       </WalletHeading>
       <MenuContentWrapper toggled={menuToggled}>
-        {
-          tokenData.map((item) => (
-            <TokenItemWrapper toggled={menuToggled}>
-              <div>
-                <p><b>{ item.name }</b></p>
-                <p><b>${ item.price1 }</b></p>
-              </div>
-              {
-                !menuToggled &&
+        <TokenListWrapper>
+          {
+            sTokens.map((item) => (
+              <TokenItemWrapper toggled={menuToggled}>
                 <div>
-                  <p><b>{ item.rate }</b></p>
-                  <p><b>${ item.price2 }</b></p>
+                  <p><b>{ item.name }</b></p>
+                  <p><b>${ item.price1 }</b></p>
                 </div>
-              }
-            </TokenItemWrapper>
-          ))
-        }
-        <ButtonWrapper style={{ margin: '10px 0' }}>
-          <p><b>Show All Tokens</b></p>
+                {
+                  !menuToggled &&
+                  <div>
+                    <p><b>{ item.rate }</b></p>
+                    <p><b>${ item.price2 }</b></p>
+                  </div>
+                }
+              </TokenItemWrapper>
+            ))
+          }
+        </TokenListWrapper>
+        <ButtonWrapper style={{ margin: '10px 0' }} onClick={() => {setShowAllToken(!showAllToken)}}>
+          <p><b>{ showAllToken ? 'Show Some Tokens' : 'Show All Tokens' }</b></p>
         </ButtonWrapper>
         {
           links.map((link) => {
