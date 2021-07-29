@@ -1,13 +1,26 @@
 import { useCallback, useMemo } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useActiveWeb3React } from '../../hooks'
-import { addPopup, PopupContent, removePopup, toggleWalletModal, toggleSettingsMenu } from './actions'
-import { AppState } from '../index'
+import { addPopup, PopupContent, removePopup, toggleWalletModal, toggleSettingsMenu, toggleMenu as _toggleMenu } from './actions'
+import { AppState, AppDispatch } from '../index'
 
 export function useBlockNumber(): number | undefined {
   const { chainId } = useActiveWeb3React()
 
   return useSelector((state: AppState) => state.application.blockNumber[chainId ?? -1])
+}
+
+export function useMenuToggle() {
+  const dispatch = useDispatch<AppDispatch>();
+  const menuToggled = useSelector<
+    AppState,
+    AppState['application']['menuToggled']
+  >((state) => state.application.menuToggled);
+
+  const toggleMenu = (open: boolean) =>
+    dispatch(_toggleMenu(open));
+
+  return { menuToggled, toggleMenu };
 }
 
 export function useWalletModalOpen(): boolean {

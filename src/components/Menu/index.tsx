@@ -7,6 +7,7 @@ import { LanguageContext } from 'hooks/LanguageContext'
 import useTheme from 'hooks/useTheme'
 import useGetPriceData from 'hooks/useGetPriceData'
 import { injected, bsc, walletconnect } from 'connectors'
+import { useMenuToggle } from 'state/application/hooks'
 import MainLogo from 'assets/images/MainLogo.png'
 import { ReactComponent as MenuOpenIcon } from 'assets/svg/icon/MenuOpenIcon.svg'
 import { ReactComponent as WalletIcon } from 'assets/svg/icon/WalletIcon.svg'
@@ -15,8 +16,8 @@ import { ReactComponent as SocialIcon2 } from 'assets/svg/icon/SocialIcon2.svg'
 import { ReactComponent as TelegramIcon } from 'assets/svg/icon/TelegramIcon.svg'
 import links from './config'
 
-const MenuWrapper = styled.div`
-  width: 320px;
+const MenuWrapper = styled.div<{ toggled: boolean }>`
+  width: ${(props) => (props.toggled ? '100px' : '320px')};
   background: #1A1A27;
   border-right: 1px solid #AFAFAF;
   display: flex;
@@ -26,8 +27,8 @@ const MenuWrapper = styled.div`
     width: 140px;
   }
   & p {
-    font-size: 16px;
-    line-height: 19px;
+    font-size: ${(props) => (props.toggled ? '14px' : '16px')};
+    line-height: ${(props) => (props.toggled ? '16px' : '19px')};
     color: white;
   }
 `;
@@ -50,9 +51,9 @@ const MenuIconWrapper = styled.div`
   }
 `
 
-const MenuContentWrapper = styled.div`
+const MenuContentWrapper = styled.div<{ toggled: boolean }>`
   width: 100%;
-  padding: 0 24px;
+  padding: ${(props) => (props.toggled ? '0 8px' : '0 24px')};
 `
 
 const WalletHeading = styled.div`
@@ -71,15 +72,24 @@ const WalletHeading = styled.div`
     }
   }
 `
-const TokenItemWrapper = styled.div`
+const TokenItemWrapper = styled.div<{ toggled: boolean }>`
   background: #5E5D62;
   border-radius: 8px;
   margin-top: 2px;
   display: flex;
   justify-content: space-between;
-  padding: 8px 12px;
+  padding: ${(props) => (props.toggled ? '4px' : '8px 12px')};
+  position: relative;
+  & div {
+    width: ${(props) => (props.toggled ? '100%' : 'auto')};
+  }
   & div p:last-child {
     margin-top: 8px;
+  }
+  & p {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
   }
 `
 
@@ -88,6 +98,7 @@ const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  text-align: center;
   height: 56px;
   border-radius: 8px;
 `
@@ -99,8 +110,8 @@ const MenuItem = styled.a`
   align-items: center;
   padding: 0 24px;
   border-radius: 10px;
-  & svg {
-    margin-right: 12px;
+  & p {
+    margin-left: 12px;
   }
   &:hover {
     background: #F9AC61;
@@ -114,11 +125,12 @@ const SocialWrapper = styled.div`
   }
 `
 
-const SocialIconsWrapper = styled.div`
+const SocialIconsWrapper = styled.div<{toggled: boolean}>`
   display: flex;
   height: 48px;
   & div {
     display: flex;
+    flex-direction: ${(props) => props.toggled ? 'column' : 'row'};
     align-items: center;
     background: rgba(159, 219, 236, 0.2);
     border-radius: 20px;
@@ -133,6 +145,7 @@ const Menu: React.FC = props => {
   const { selectedLanguage, setSelectedLanguage } = useContext(LanguageContext)
   const { isDark, toggleTheme } = useTheme()
   const cakePriceUsd = useGetPriceData()
+  const { menuToggled, toggleMenu } = useMenuToggle();
 
   const tokenData = [
     {
@@ -162,30 +175,40 @@ const Menu: React.FC = props => {
   ]
 
   return (
-    <MenuWrapper>
+    <MenuWrapper toggled={menuToggled}>
       <img src={MainLogo} alt='Main Logo' />
       <MenuIconWrapper>
-        <span>Main Menu</span>
-        <Button>
+        {!menuToggled && <span>Main Menu</span>
+        }
+        <Button onClick={() => { toggleMenu(!menuToggled) }}>
           <MenuOpenIcon />
         </Button>
       </MenuIconWrapper>
       <WalletHeading>
-        <div><WalletIcon /><p>Wallet</p></div>
-        <p><b>$ 0.014</b></p>
+        <div>
+          <WalletIcon />
+          {
+            !menuToggled && <p>Wallet</p>
+          }
+        </div>
+        {!menuToggled && <p><b>$ 0.014</b></p>
+        }
       </WalletHeading>
-      <MenuContentWrapper>
+      <MenuContentWrapper toggled={menuToggled}>
         {
           tokenData.map((item) => (
-            <TokenItemWrapper>
+            <TokenItemWrapper toggled={menuToggled}>
               <div>
                 <p><b>{ item.name }</b></p>
                 <p><b>${ item.price1 }</b></p>
               </div>
-              <div>
-                <p><b>{ item.rate }</b></p>
-                <p><b>${ item.price2 }</b></p>
-              </div>
+              {
+                !menuToggled &&
+                <div>
+                  <p><b>{ item.rate }</b></p>
+                  <p><b>${ item.price2 }</b></p>
+                </div>
+              }
             </TokenItemWrapper>
           ))
         }
@@ -198,13 +221,15 @@ const Menu: React.FC = props => {
             return (
               <MenuItem href={link.href} target='_blank'>
                 <Icon />
-                <p><b>{ link.label }</b></p>
+                {
+                  !menuToggled && <p><b>{ link.label }</b></p>
+                }
               </MenuItem>
           )})
         }
         <SocialWrapper>
           <p><b>Socials</b></p>
-          <SocialIconsWrapper>
+          <SocialIconsWrapper toggled={menuToggled}>
             <div>
               <TwitterIcon />
               <SocialIcon2 />

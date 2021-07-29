@@ -7,6 +7,8 @@ import { injected, walletconnect } from 'connectors'
 import { ReactComponent as SearchIcon } from 'assets/svg/icon/SearchIcon.svg'
 import { ReactComponent as EmptyAvatar } from 'assets/svg/icon/EmptyAvatar.svg'
 import { ReactComponent as ChevronDown } from 'assets/svg/icon/ChevronDown.svg'
+import { useMenuToggle } from 'state/application/hooks'
+
 // import { Credentials, StringTranslations } from '@crowdin/crowdin-api-client'
 import Popups from '../components/Popups'
 import Web3ReactManager from '../components/Web3ReactManager'
@@ -112,6 +114,7 @@ export default function App() {
   const [translatedLanguage, setTranslatedLanguage] = useState<any>(undefined)
   const [translations, setTranslations] = useState<Array<any>>([])
   const { account, activate, deactivate } = useWeb3React();
+  const { menuToggled } = useMenuToggle();
 
   const handleLogin = (connectorId: ConnectorId) => {
     if (connectorId === 'walletconnect') {

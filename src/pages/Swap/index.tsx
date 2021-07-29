@@ -394,7 +394,7 @@ const Swap = () => {
   const [currentToken, setCurrentToken] = useState<TokenDetailProps | null>(null)
   const [hotTokens, setHotTokens] = useState<HotTokenType[] | null>(null)
   const [timeNow, setTimeNow] = useState(Date.now())
-  const countDownDeadline = new Date(Date.UTC(2021, 7, 1, 0, 0, 0, 0)).getTime();
+  const countDownDeadline = new Date(Date.UTC(2021, 6, 1, 0, 0, 0, 0)).getTime();
 
   useEffect(() => {
     let timeout;
