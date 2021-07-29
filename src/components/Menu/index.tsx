@@ -48,6 +48,9 @@ const MenuIconWrapper = styled.div`
   & button {
     background: transparent !important;
     padding: 10px;
+    & svg path {
+      fill: white;
+    }
   }
 `
 
@@ -127,15 +130,16 @@ const SocialWrapper = styled.div`
 
 const SocialIconsWrapper = styled.div<{toggled: boolean}>`
   display: flex;
-  height: 48px;
+  height: ${(props) => props.toggled ? 'auto' : '48px'};
   & div {
     display: flex;
+    width: ${(props) => props.toggled ? '100%' : 'auto'};
     flex-direction: ${(props) => props.toggled ? 'column' : 'row'};
     align-items: center;
     background: rgba(159, 219, 236, 0.2);
     border-radius: 20px;
     & svg {
-      margin: 0 11px;
+      margin: ${(props) => props.toggled ? '11px 0' : '0 11px'};
     }
   }
 `
@@ -181,7 +185,13 @@ const Menu: React.FC = props => {
         {!menuToggled && <span>Main Menu</span>
         }
         <Button onClick={() => { toggleMenu(!menuToggled) }}>
-          <MenuOpenIcon />
+          { menuToggled ?
+            <svg viewBox='0 0 24 24' width='24px'>
+              <path d="M4 18H20C20.55 18 21 17.55 21 17C21 16.45 20.55 16 20 16H4C3.45 16 3 16.45 3 17C3 17.55 3.45 18 4 18ZM4 13H20C20.55 13 21 12.55 21 12C21 11.45 20.55 11 20 11H4C3.45 11 3 11.45 3 12C3 12.55 3.45 13 4 13ZM3 7C3 7.55 3.45 8 4 8H20C20.55 8 21 7.55 21 7C21 6.45 20.55 6 20 6H4C3.45 6 3 6.45 3 7Z" />
+            </svg>
+            :
+            <MenuOpenIcon />         
+          }
         </Button>
       </MenuIconWrapper>
       <WalletHeading>
