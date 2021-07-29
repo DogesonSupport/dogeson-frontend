@@ -86,7 +86,6 @@ const InputPanel = styled.div<{ hideInput?: boolean }>`
   position: relative;
   border-radius: ${({ hideInput }) => (hideInput ? '8px' : '20px')};
   background-color: ${({ theme }) => theme.colors.background};
-  z-index: -1;
 `
 
 const Container = styled.div<{ hideInput: boolean }>`

@@ -73,6 +73,8 @@ const ArrowContent = styled.div`
   align-items: center;
   justify-content: center;
   margin: -4px 0;
+  z-index: 3;
+  position: relative;
 `
 
 const SlippageText = styled.p`
@@ -639,7 +641,7 @@ const Swap = () => {
                 <Flex justifyContent='space-between' alignItems='center' marginTop='20px'>
                   <Flex alignItems='center'>
                     <HelpIcon />
-                    <SlippageText><span>Slippage Tolerance</span><b>: 1%</b></SlippageText>
+                    <SlippageText><span>Slippage Tolerance</span><b>: {allowedSlippage / 100}%</b></SlippageText>
                   </Flex>
                   <Flex alignItems='center'>
                     <SlippageText><b>1 WBTC = 16.35 ETH</b></SlippageText>
