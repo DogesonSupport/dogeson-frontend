@@ -1,6 +1,9 @@
 import React, { Suspense, useEffect, useState } from 'react'
 import { HashRouter, Route, Switch } from 'react-router-dom'
 import styled from 'styled-components'
+import { useWeb3React } from '@web3-react/core'
+import { Button, useWalletModal, ConnectorId } from '@pancakeswap-libs/uikit'
+import { injected, walletconnect } from 'connectors'
 import { ReactComponent as SearchIcon } from 'assets/svg/icon/SearchIcon.svg'
 import { ReactComponent as EmptyAvatar } from 'assets/svg/icon/EmptyAvatar.svg'
 import { ReactComponent as ChevronDown } from 'assets/svg/icon/ChevronDown.svg'
@@ -108,6 +111,16 @@ export default function App() {
   const [selectedLanguage, setSelectedLanguage] = useState<any>(undefined)
   const [translatedLanguage, setTranslatedLanguage] = useState<any>(undefined)
   const [translations, setTranslations] = useState<Array<any>>([])
+  const { account, activate, deactivate } = useWeb3React();
+
+  const handleLogin = (connectorId: ConnectorId) => {
+    if (connectorId === 'walletconnect') {
+      return activate(walletconnect)
+    }
+    return activate(injected)
+  }
+  const { onPresentConnectModal } = useWalletModal(handleLogin, deactivate, account as string)
+
   // const apiKey = `${process.env.REACT_APP_CROWDIN_APIKEY}`
   // const projectId = parseInt(`${process.env.REACT_APP_CROWDIN_PROJECTID}`)
   // const fileId = 6
@@ -174,14 +187,19 @@ export default function App() {
                     <SearchIcon />
                     <input placeholder='Search Data' />
                   </SearchWrapper>
-                  <AccountWrapper>
-                    <div>Connected</div>
-                    <div>
-                      <EmptyAvatar />
-                      <p>8258e1966...</p>
-                      <ChevronDown />
-                    </div>
-                  </AccountWrapper>
+                  {
+                    account ?
+                      <AccountWrapper>
+                        <div>Connected</div>
+                        <div>
+                          <EmptyAvatar />
+                          <p>{ account.substring(0, 8) }...{ account.substr(account.length - 4) }</p>
+                          <ChevronDown />
+                        </div>
+                      </AccountWrapper>
+                    :
+                      <Button onClick={onPresentConnectModal}>Connect</Button>
+                  }
                 </TopBar>
                 <Web3ReactManager>
                   <Switch>

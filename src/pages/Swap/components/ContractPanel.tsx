@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Card, Flex, Text } from '@pancakeswap-libs/uikit'
 import { ReactComponent as TwitterIcon } from 'assets/svg/icon/TwitterIcon.svg'
@@ -37,9 +37,17 @@ const ContractCard = styled(Text)`
   display: flex;
   align-items: center;
   margin-right: 20px;
-  & p {
+  & input {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    outline: none;
     color: #F7931A;
     font-size: 16px;
+    min-width: 300px;
+    &::placeholder {
+      color: #F7931A;
+    }
   }
 `
 
@@ -58,14 +66,16 @@ export default function ContractPanel({
   token
 } : ContractPanelProps) {
 
+  const [ addressSearch, setAddressSearch ] = useState('');
+
   return (
     <>
       <Flex justifyContent="flex-end" mb="30px">
-        <CopyHelper toCopy={token ? token.contractAddress : '0xB09FE1613fE03E7361319d2a43eDc17422f36B09'}>
+        <CopyHelper toCopy={token ? token.contractAddress : addressSearch}>
           &nbsp;
         </CopyHelper>
         <ContractCard>
-          <p>{token ? token.contractAddress : '0xB09FE1613fE03E7361319d2a43eDc17422f36B09'}</p>
+          <input placeholder='0xB09FE1613fE03E7361319d2a43eDc17422f36B09' value={addressSearch} onChange={(e) => { setAddressSearch(e.target.value)}} />
         </ContractCard>
         <SocialIconsWrapper>
           <TwitterIcon />

@@ -20,6 +20,7 @@ import TokenWarningModal from 'components/TokenWarningModal'
 import SyrupWarningModal from 'components/SyrupWarningModal'
 import ProgressSteps from 'components/ProgressSteps'
 import TradingViewWidget, { Themes } from 'react-tradingview-widget';
+import moment from 'moment';
 
 import { BETTER_TRADE_LINK_THRESHOLD, INITIAL_ALLOWED_SLIPPAGE } from 'constants/index'
 import { isTradeBetter } from 'data/V1'
@@ -392,7 +393,24 @@ const Swap = () => {
 
   const [currentToken, setCurrentToken] = useState<TokenDetailProps | null>(null)
   const [hotTokens, setHotTokens] = useState<HotTokenType[] | null>(null)
+  const [timeNow, setTimeNow] = useState(Date.now())
+  const countDownDeadline = new Date(Date.UTC(2021, 7, 1, 0, 0, 0, 0)).getTime();
+
+  useEffect(() => {
+    let timeout;
+    if (timeNow < countDownDeadline) {
+      timeout = setTimeout(() => {
+        setTimeNow(Date.now());
+      }, 1000)
+    } else {
+      clearTimeout(timeout);
+      setTimeNow(countDownDeadline);
+    }
+  }, [timeNow, countDownDeadline])
   // const [historicalData, setHistoricalData = useState<HistoricalDataProps[] | null>(null)
+
+  const countSeconds = useMemo(() => moment(countDownDeadline).diff(moment(timeNow), 'seconds')
+  , [timeNow, countDownDeadline])
 
   useEffect(() => {
     const init = async () => {
@@ -750,19 +768,19 @@ const Swap = () => {
         <h1>Dogeson Charity Starts in</h1>
         <CountDownContainer>
           <CountDownItem>
-            <div>16</div>
+            <div>{ Math.floor(countSeconds / (3600 * 24)) }</div>
             <p>Days</p>
           </CountDownItem>
           <CountDownItem>
-            <div>27</div>
+            <div>{ Math.floor(countSeconds / 3600) % 24 }</div>
             <p>Hours</p>
           </CountDownItem>
           <CountDownItem>
-            <div>16</div>
+            <div>{ Math.floor(countSeconds / 60) % 60 }</div>
             <p>Minutes</p>
           </CountDownItem>
           <CountDownItem>
-            <div>44</div>
+            <div>{ countSeconds % 60 }</div>
             <p>Seconds</p>
           </CountDownItem>
         </CountDownContainer>
