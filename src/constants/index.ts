@@ -6,7 +6,7 @@ import { injected, bsc } from '../connectors'
 // TODO
 // export const ROUTER_ADDRESS = '0x05fF2B0DB69458A0750badebc4f9e13aDd608C7F'
 // export const ROUTER_ADDRESS = '0xD99D1c33F9fC3444f8101754aBC46c52416550D1' // pancakeswap router for testnet
-export const ROUTER_ADDRESS = '0x9Ac64Cc6e4415144C455BD8E4837Fea55603e5c3 ' // pancakeswap router for pancake.kiemtienonline360.com
+export const ROUTER_ADDRESS = '0x9Ac64Cc6e4415144C455BD8E4837Fea55603e5c3' // pancakeswap router for pancake.kiemtienonline360.com
 
 // a list of tokens by chain
 type ChainTokenList = {

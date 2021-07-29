@@ -267,6 +267,8 @@ const Swap = () => {
       : parsedAmounts[dependentField]?.toSignificant(6) ?? '',
   }
 
+  console.log('ccc', trade);
+
   const route = trade?.route
   const userHasSpecifiedInputOutput = Boolean(
     currencies[Field.INPUT] && currencies[Field.OUTPUT] && parsedAmounts[independentField]?.greaterThan(JSBI.BigInt(0))
@@ -643,10 +645,12 @@ const Swap = () => {
                     <HelpIcon />
                     <SlippageText><span>Slippage Tolerance</span><b>: {allowedSlippage / 100}%</b></SlippageText>
                   </Flex>
-                  <Flex alignItems='center'>
-                    <SlippageText><b>1 WBTC = 16.35 ETH</b></SlippageText>
-                    <HelpIcon1 />
-                  </Flex>
+                  {currencies[Field.INPUT] && currencies[Field.OUTPUT] &&
+                    <Flex alignItems='center'>
+                      <SlippageText><b>1 {currencies[Field.INPUT]?.symbol} = { trade?.executionPrice.toSignificant(6) } {currencies[Field.OUTPUT]?.symbol}</b></SlippageText>
+                      <HelpIcon1 />
+                    </Flex>                
+                  }
                 </Flex>
 
                 <BottomGrouping>
