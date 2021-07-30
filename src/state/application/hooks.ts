@@ -2,7 +2,7 @@ import { useCallback, useMemo } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Version } from 'hooks/useToggledVersion'
 import { useActiveWeb3React } from '../../hooks'
-import { addPopup, PopupContent, removePopup, toggleWalletModal, toggleSettingsMenu, toggleMenu as _toggleMenu, setVersion as _setVersion } from './actions'
+import { addPopup, PopupContent, removePopup, toggleWalletModal, toggleSettingsMenu, toggleMenu as _toggleMenu, setVersion as _setVersion, setSwapType as _setSwapType } from './actions'
 import { AppState, AppDispatch } from '../index'
 
 export function useBlockNumber(): number | undefined {
@@ -35,6 +35,19 @@ export function useSetVersion() {
     dispatch(_setVersion(version));
 
   return { versionSet, setVersion };
+}
+
+export function useSwapType() {
+  const dispatch = useDispatch<AppDispatch>();
+  const swapType = useSelector<
+    AppState,
+    AppState['application']['swapType']
+  >((state) => state.application.swapType);
+
+  const setSwapType = (stype: string) =>
+    dispatch(_setSwapType(stype));
+
+  return { swapType, setSwapType };
 }
 
 

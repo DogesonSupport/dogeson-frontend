@@ -8,7 +8,8 @@ import {
   toggleSettingsMenu,
   updateBlockNumber,
   toggleMenu,
-  setVersion
+  setVersion,
+  setSwapType
 } from './actions'
 
 type PopupList = Array<{ key: string; show: boolean; content: PopupContent; removeAfterMs: number | null }>
@@ -20,6 +21,7 @@ export interface ApplicationState {
   settingsMenuOpen: boolean
   menuToggled: boolean
   versionSet: Version
+  swapType: string
 }
 
 const initialState: ApplicationState = {
@@ -28,7 +30,8 @@ const initialState: ApplicationState = {
   walletModalOpen: false,
   settingsMenuOpen: false,
   menuToggled: false,
-  versionSet: Version.v2
+  versionSet: Version.v2,
+  swapType: 'swap'
 }
 
 export default createReducer(initialState, builder =>
@@ -69,5 +72,8 @@ export default createReducer(initialState, builder =>
     })
     .addCase(setVersion, (state, { payload }) => {
       state.versionSet = payload
+    })
+    .addCase(setSwapType, (state, { payload }) => {
+      state.swapType = payload
     })
 )

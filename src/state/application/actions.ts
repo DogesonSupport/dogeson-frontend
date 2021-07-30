@@ -28,3 +28,4 @@ export const addPopup = createAction<{ key?: string; removeAfterMs?: number | nu
 export const removePopup = createAction<{ key: string }>('app/removePopup')
 export const toggleMenu = createAction<boolean>('app/toggleMenu')
 export const setVersion = createAction<Version>('app/setVersion')
+export const setSwapType = createAction<string>('app/setSwapType')
