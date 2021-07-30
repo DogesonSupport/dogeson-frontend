@@ -83,7 +83,7 @@ const TopBar = styled.div`
   width: 100%;
   margin-top: 32px;
   flex-wrap: wrap;
-  & button {
+  & button:first-child {
     background: transparent;
     padding: 0;
     outline: none;
