@@ -811,7 +811,7 @@ const Swap = () => {
               tokenInfo={currentToken}
             />
             <TradingViewWidget
-              symbol="BNB"
+              symbol={currentToken?.symbol}
               theme={Themes.DARK}
               locale="en"
               autosize
