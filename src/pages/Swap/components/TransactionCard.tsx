@@ -4,6 +4,7 @@ import { Flex } from '@pancakeswap-libs/uikit'
 import moment from 'moment'
 import DataTable, { createTheme } from 'react-data-table-component';
 
+
 createTheme('solarized', {
   text: {
     primary: '#268bd2',

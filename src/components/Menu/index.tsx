@@ -157,7 +157,8 @@ const Menu: React.FC = props => {
   const cakePriceUsd = useGetPriceData()
   const { menuToggled, toggleMenu } = useMenuToggle();
   const [ showAllToken, setShowAllToken ] = useState(false);
-
+    
+  
   const sTokens = useMemo(() => {
     const tokenData = [
       {
@@ -239,7 +240,16 @@ const Menu: React.FC = props => {
         }
       </WalletHeading>
       <MenuContentWrapper toggled={menuToggled}>
-        <TokenListWrapper>
+       
+       
+      
+      
+         { 
+         account?
+         <div>
+
+         
+          <TokenListWrapper>
           {
             sTokens.map((item) => (
               <TokenItemWrapper toggled={menuToggled}>
@@ -258,9 +268,16 @@ const Menu: React.FC = props => {
             ))
           }
         </TokenListWrapper>
-        <ButtonWrapper style={{ margin: '10px 0' }} onClick={() => {setShowAllToken(!showAllToken)}}>
-          <p><b>{ showAllToken ? 'Show Some Tokens' : 'Show All Tokens' }</b></p>
-        </ButtonWrapper>
+         <ButtonWrapper style={{ margin: '10px 0' }} onClick={() => {setShowAllToken(!showAllToken)}}>
+         <p><b>{ showAllToken ? 'Show Some Tokens' : 'Show All Tokens' }</b></p>
+       </ButtonWrapper>
+       </div>
+        :""
+
+         }
+          
+
+       
         {
           links.map((link) => {
             const Icon = link.icon

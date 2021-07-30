@@ -21,6 +21,7 @@ import SyrupWarningModal from 'components/SyrupWarningModal'
 import ProgressSteps from 'components/ProgressSteps'
 import TradingViewWidget, { Themes } from 'react-tradingview-widget';
 import moment from 'moment';
+import axios from 'axios';
 
 import { BETTER_TRADE_LINK_THRESHOLD, INITIAL_ALLOWED_SLIPPAGE } from 'constants/index'
 import { isTradeBetter } from 'data/V1'
@@ -54,7 +55,10 @@ import CoinStatsBoard from './components/CoinStatsBoard'
 import TokenInfo from './components/TokenInfo'
 import TransactionCard from './components/TransactionCard'
 import ContractPanel from './components/ContractPanel'
+
 import { HotTokenType, TokenDetailProps, HistoricalDataProps } from './components/types'
+
+
 
 const { main: Main } = TYPE
 
@@ -155,6 +159,18 @@ const CountDownItem = styled.div`
 `
 
 const Swap = () => {
+
+  const getapi=()=>{
+    axios.get('http://192.168.18.65:8080/v1.0/dogeson/historical?dexId=0x3b9dd0ac3fa49988a177b7c020f680295fb21996&span=month').then((response)=>{
+      console.log("getapi",response);
+      
+    })
+    .catch((error) => { console.log("Error", error); })
+  }
+
+  useEffect(()=>{
+    getapi();
+  },[])
   const loadedUrlParams = useDefaultsFromURLSearch()
   
   // token warning stuff
