@@ -14,7 +14,9 @@ import { ReactComponent as WalletIcon } from 'assets/svg/icon/WalletIcon.svg'
 import { ReactComponent as TwitterIcon } from 'assets/svg/icon/TwitterIcon.svg'
 import { ReactComponent as SocialIcon2 } from 'assets/svg/icon/SocialIcon2.svg'
 import { ReactComponent as TelegramIcon } from 'assets/svg/icon/TelegramIcon.svg'
+import web3 from 'web3';
 import links from './config'
+
 
 const MenuWrapper = styled.div<{ toggled: boolean }>`
   width: 320px;
@@ -175,7 +177,12 @@ const Menu: React.FC = props => {
   const cakePriceUsd = useGetPriceData()
   const { menuToggled, toggleMenu } = useMenuToggle();
   const [ showAllToken, setShowAllToken ] = useState(false);
+  
+//   const web3 = new Web3(new Web3.providers.HttpProvider(testnet));
+// var balance = web3.eth.getBalance(walletAddress);
 
+    
+  
   const sTokens = useMemo(() => {
     const tokenData = [
       {
@@ -257,7 +264,16 @@ const Menu: React.FC = props => {
         }
       </WalletHeading>
       <MenuContentWrapper toggled={menuToggled}>
-        <TokenListWrapper>
+       
+       
+      
+      
+         { 
+         account?
+         <div>
+
+         
+          <TokenListWrapper>
           {
             sTokens.map((item) => (
               <TokenItemWrapper toggled={menuToggled}>
@@ -276,9 +292,16 @@ const Menu: React.FC = props => {
             ))
           }
         </TokenListWrapper>
-        <ButtonWrapper style={{ margin: '10px 0' }} onClick={() => {setShowAllToken(!showAllToken)}}>
-          <p><b>{ showAllToken ? 'Show Some Tokens' : 'Show All Tokens' }</b></p>
-        </ButtonWrapper>
+         <ButtonWrapper style={{ margin: '10px 0' }} onClick={() => {setShowAllToken(!showAllToken)}}>
+         <p><b>{ showAllToken ? 'Show Some Tokens' : 'Show All Tokens' }</b></p>
+       </ButtonWrapper>
+       </div>
+        :""
+
+         }
+          
+
+       
         {
           links.map((link) => {
             const Icon = link.icon
