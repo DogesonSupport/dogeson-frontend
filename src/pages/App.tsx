@@ -2,7 +2,7 @@ import React, { Suspense, useEffect, useState } from 'react'
 import { HashRouter, Route, Switch } from 'react-router-dom'
 import styled from 'styled-components'
 import { useWeb3React } from '@web3-react/core'
-import { Button, useWalletModal, ConnectorId } from '@pancakeswap-libs/uikit'
+import { Button, useWalletModal, ConnectorId, useMatchBreakpoints } from '@pancakeswap-libs/uikit'
 import { injected, walletconnect } from 'connectors'
 import { ReactComponent as SearchIcon } from 'assets/svg/icon/SearchIcon.svg'
 import { ReactComponent as EmptyAvatar } from 'assets/svg/icon/EmptyAvatar.svg'
@@ -38,11 +38,11 @@ const AppWrapper = styled.div`
   display: flex;
 `
 
-const BodyWrapper = styled.div`
+const BodyWrapper = styled.div<{ toggled: boolean }>`
   display: flex;
   flex-direction: column;
-  width: calc(100% - 320px);
-  padding: 0 30px;
+  width: 100%;
+  padding: 0 12px;
   min-height: calc(100vh - 152px);
   align-items: center;
   flex: 1;
@@ -50,6 +50,24 @@ const BodyWrapper = styled.div`
   overflow-x: hidden;
   z-index: 1;
   background: #1A1A27;
+  ${({ theme }) => theme.mediaQueries.sm} {
+    width: ${(props) => props.toggled ? 'calc(100% - 100px)' : 'calc(100% - 320px)'};
+    margin-left: ${(props) => props.toggled ? '100px' : '320px'};
+  }
+  ${({ theme }) => theme.mediaQueries.md} {
+    padding: 0 32px;
+  }
+`
+
+const BodyOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: white;
+  opacity: 0.2;
+  z-index: 9;
 `
 
 const Marginer = styled.div`
@@ -62,12 +80,33 @@ const TopBar = styled.div`
   align-items: center;
   width: 100%;
   margin-top: 32px;
+  flex-wrap: wrap;
+  & button {
+    background: transparent;
+    padding: 0;
+    outline: none;
+    border: none;
+    box-shadow: none;
+    margin-right: 12px;
+    margin-bottom: 8px;
+    height: 32px;
+    & svg path {
+      fill: white;
+    }
+  }
 `
 const SearchWrapper = styled.div`
-  margin-left: 16px;
   display: flex;
   align-item: center;
+  max-width: 350px;
+  width: calc(100% - 100px);
+  position: relative;
+  & svg {
+    width: 16px;
+    height: 19px;
+  }
   & input {
+    width: calc(100% - 20px);
     background: transparent;
     box-shadow: none;
     border: none;
@@ -79,6 +118,9 @@ const SearchWrapper = styled.div`
     &::placeholder {
       color: white;
     }
+  }
+  ${({ theme }) => theme.mediaQueries.sm} {
+    margin-left: 16px;
   }
 `
 
@@ -114,7 +156,8 @@ export default function App() {
   const [translatedLanguage, setTranslatedLanguage] = useState<any>(undefined)
   const [translations, setTranslations] = useState<Array<any>>([])
   const { account, activate, deactivate } = useWeb3React();
-  const { menuToggled } = useMenuToggle();
+  const { menuToggled, toggleMenu } = useMenuToggle();
+  const { isSm } = useMatchBreakpoints();
 
   const handleLogin = (connectorId: ConnectorId) => {
     if (connectorId === 'walletconnect') {
@@ -183,9 +226,19 @@ export default function App() {
           >
             <TranslationsContext.Provider value={{ translations, setTranslations }}>
               <Menu />
-              <BodyWrapper>
+              <BodyWrapper toggled={menuToggled}>
+                { isSm && !menuToggled &&
+                  <BodyOverlay />
+                }
                 <Popups />
                 <TopBar>
+                  { isSm &&
+                  <Button onClick={() => {toggleMenu(!menuToggled)}}>
+                    <svg viewBox='0 0 24 24' width='24px'>
+                      <path d="M4 18H20C20.55 18 21 17.55 21 17C21 16.45 20.55 16 20 16H4C3.45 16 3 16.45 3 17C3 17.55 3.45 18 4 18ZM4 13H20C20.55 13 21 12.55 21 12C21 11.45 20.55 11 20 11H4C3.45 11 3 11.45 3 12C3 12.55 3.45 13 4 13ZM3 7C3 7.55 3.45 8 4 8H20C20.55 8 21 7.55 21 7C21 6.45 20.55 6 20 6H4C3.45 6 3 6.45 3 7Z" />
+                    </svg>
+                  </Button>
+                  }
                   <SearchWrapper>
                     <SearchIcon />
                     <input placeholder='Search Data' />
