@@ -1,11 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import styled from 'styled-components'
 import { Card, Flex, Text } from '@pancakeswap-libs/uikit'
 import { ReactComponent as TwitterIcon } from 'assets/svg/icon/TwitterIcon.svg'
 import { ReactComponent as SocialIcon2 } from 'assets/svg/icon/SocialIcon2.svg'
 import { ReactComponent as TelegramIcon } from 'assets/svg/icon/TelegramIcon.svg'
 import CopyHelper from 'components/AccountDetails/Copy'
+import axios from 'axios'
 import { TokenDetailProps } from './types'
+
 
 export interface ContractPanelProps {
   token?: TokenDetailProps | null
@@ -88,8 +90,19 @@ export default function ContractPanel({
 } : ContractPanelProps) {
 
   const [ addressSearch, setAddressSearch ] = useState('');
-    console.log("get input",addressSearch);
+     
+   
 
+    useEffect(() => {
+      const getalldata=()=>{
+        axios.get(`http://192.168.18.65:8080/v1.0/dogeson/info/contract/${addressSearch}`).then((response)=>{
+          console.log("get api",response)
+        })
+    }
+
+       getalldata();
+    },[addressSearch]);
+    
   return (
     <ContractPanelWrapper>
       <ContractCard>
