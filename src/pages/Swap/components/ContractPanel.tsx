@@ -88,6 +88,7 @@ export default function ContractPanel({
 } : ContractPanelProps) {
 
   const [ addressSearch, setAddressSearch ] = useState('');
+    console.log("get input",addressSearch);
 
   return (
     <ContractPanelWrapper>

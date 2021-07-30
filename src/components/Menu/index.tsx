@@ -16,6 +16,7 @@ import { ReactComponent as SocialIcon2 } from 'assets/svg/icon/SocialIcon2.svg'
 import { ReactComponent as TelegramIcon } from 'assets/svg/icon/TelegramIcon.svg'
 import links from './config'
 
+
 const MenuWrapper = styled.div<{ toggled: boolean }>`
   width: 320px;
   background: #1A1A27;
@@ -175,6 +176,8 @@ const Menu: React.FC = props => {
   const cakePriceUsd = useGetPriceData()
   const { menuToggled, toggleMenu } = useMenuToggle();
   const [ showAllToken, setShowAllToken ] = useState(false);
+
+
     
   
   const sTokens = useMemo(() => {
