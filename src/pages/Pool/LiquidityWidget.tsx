@@ -14,13 +14,14 @@ import { AutoColumn } from 'components/Column'
 
 import { useActiveWeb3React } from 'hooks'
 import { usePairs } from 'data/Reserves'
+import { useSwapType } from 'state/application/hooks'
 import { toV2LiquidityToken, useTrackedTokenPairs } from 'state/user/hooks'
 import { Dots } from 'components/swap/styleds'
 import TranslatedText from 'components/TranslatedText'
 import { TranslateString } from 'utils/translateTextHelpers'
 import PageHeader from 'components/PageHeader'
+import AddLiquidityWidget from 'pages/AddLiquidity/AddLiquidityWidget'
 import AppBody from '../AppBody'
-import AddLiquidity from '../AddLiquidity'
 
 const { body: Body } = TYPE
 
@@ -59,23 +60,17 @@ export default function LiquidityWidget() {
 
   const hasV1Liquidity = useUserHasLiquidityInAllTokens()
 
-  const [ showLiquidity, setShowLiquidty ] = useState(false);
-
-  const liquidityProps = {
-    match: {
-      params: { currencyIdA: 'ETH' }
-    }
-  };
+  const { swapType, setSwapType } = useSwapType();
 
   return (
     <AppBody>
       {
-        showLiquidity ? 
-          <AddLiquidity { ...liquidityProps } />
+        swapType === 'addLiquidity' ? 
+          <AddLiquidityWidget currencyIdA='ETH' />
           :
           <>
             <PageHeader title="Liquidity" description="Add liquidity to receive LP tokens">
-              <Button id="join-pool-button" onClick={() => { setShowLiquidty(true) }}>
+              <Button id="join-pool-button" onClick={() => { setSwapType('addLiquidity') }}>
                 <TranslatedText translationId={100}>Add Liquidity</TranslatedText>
               </Button>
             </PageHeader>

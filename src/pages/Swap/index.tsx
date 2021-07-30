@@ -794,7 +794,7 @@ const Swap = () => {
               </Wrapper>            
             }
             {
-              swapType === 'liquidity' &&
+              (swapType === 'liquidity' || swapType === 'addLiquidity') &&
               <PoolWrapper id="pool-page">
                 <LiquidityWidget />
               </PoolWrapper>

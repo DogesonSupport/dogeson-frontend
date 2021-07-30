@@ -38,15 +38,18 @@ import { ROUTER_ADDRESS } from '../../constants'
 
 const { italic: Italic } = TYPE
 
-export default function AddLiquidity({
-  match: {
-    params: { currencyIdA, currencyIdB },
-  },
-  history,
-}: RouteComponentProps<{ currencyIdA?: string; currencyIdB?: string }>) {
+export default function AddLiquidityWidget({
+  currencyIdA,
+  currencyIdB,
+}: {
+  currencyIdA?: string,
+  currencyIdB?: string
+}) {
   const { account, chainId, library } = useActiveWeb3React()
-  const currencyA = useCurrency(currencyIdA)
-  const currencyB = useCurrency(currencyIdB)
+  const [ currencyA1, setCurrencyA1 ] = useState(currencyIdA || 'ETH');
+  const [ currencyB1, setCurrencyB1 ] = useState(currencyIdB || 'ETH');
+  const currencyA = useCurrency(currencyA1)
+  const currencyB = useCurrency(currencyB1)
 
   const oneCurrencyIsWETH = Boolean(
     chainId &&
@@ -256,27 +259,32 @@ export default function AddLiquidity({
     (currA: Currency) => {
       const newCurrencyIdA = currencyId(currA)
       if (newCurrencyIdA === currencyIdB) {
-        history.push(`/add/${currencyIdB}/${currencyIdA}`)
+        setCurrencyA1(currencyIdB);
+        setCurrencyB1(currencyIdA || 'ETH');
       } else {
-        history.push(`/add/${newCurrencyIdA}/${currencyIdB}`)
+        setCurrencyA1(newCurrencyIdA);
+        setCurrencyB1(currencyIdB || 'ETH');
       }
     },
-    [currencyIdB, history, currencyIdA]
+    [currencyIdB, currencyIdA]
   )
   const handleCurrencyBSelect = useCallback(
     (currB: Currency) => {
       const newCurrencyIdB = currencyId(currB)
       if (currencyIdA === newCurrencyIdB) {
         if (currencyIdB) {
-          history.push(`/add/${currencyIdB}/${newCurrencyIdB}`)
+          setCurrencyA1(currencyIdB);
+          setCurrencyB1(newCurrencyIdB);
         } else {
-          history.push(`/add/${newCurrencyIdB}`)
+          setCurrencyA1(newCurrencyIdB);
+          setCurrencyB1('ETH');
         }
       } else {
-        history.push(`/add/${currencyIdA || 'ETH'}/${newCurrencyIdB}`)
+        setCurrencyA1(currencyIdA || 'ETH');
+        setCurrencyB1(newCurrencyIdB);
       }
     },
-    [currencyIdA, history, currencyIdB]
+    [currencyIdA, currencyIdB]
   )
 
   const handleDismissConfirmation = useCallback(() => {
@@ -290,9 +298,8 @@ export default function AddLiquidity({
 
   return (
     <>
-      <CardNav activeIndex={1} />
       <AppBody>
-        <AddRemoveTabs adding />
+        <AddRemoveTabs adding isWidget />
         <Wrapper>
           <TransactionConfirmationModal
             isOpen={showConfirm}

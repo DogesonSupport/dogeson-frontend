@@ -4,6 +4,7 @@ import { ButtonMenu, ButtonMenuItem } from '@pancakeswap-libs/uikit'
 import { darken } from 'polished'
 import { NavLink, Link as HistoryLink } from 'react-router-dom'
 import { ArrowLeft } from 'react-feather'
+import { useSwapType } from 'state/application/hooks'
 import { RowBetween } from 'components/Row'
 import QuestionHelper from 'components/QuestionHelper'
 import TranslatedText from 'components/TranslatedText'
@@ -79,6 +80,10 @@ const StyledArrowLeft = styled(ArrowLeft)`
   color: ${({ theme }) => theme.colors.text};
 `
 
+const StyledWidgetArrowLeft = styled(ArrowLeft)`
+  color: white;
+`
+
 export function SwapPoolTabs({ active }: { active: 'swap' | 'pool' }) {
   return (
     <Tabs style={{ marginBottom: '20px' }}>
@@ -120,13 +125,18 @@ export function FindPoolTabs() {
   )
 }
 
-export function AddRemoveTabs({ adding }: { adding: boolean }) {
+export function AddRemoveTabs({ adding, isWidget }: { adding: boolean, isWidget?: boolean }) {
+  const { setSwapType } = useSwapType();
   return (
     <Tabs>
       <RowBetween style={{ padding: '1rem' }}>
-        <HistoryLink to="/pool">
-          <StyledArrowLeft />
-        </HistoryLink>
+        {isWidget ?
+          <StyledWidgetArrowLeft onClick={() => { setSwapType('liquidity') }} />                    
+          :
+          <HistoryLink to="/pool">
+            <StyledArrowLeft />
+          </HistoryLink>
+        }
         <ActiveText>{adding ? 'Add' : 'Remove'} Liquidity</ActiveText>
         <QuestionHelper
           text={
