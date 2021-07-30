@@ -11,6 +11,17 @@ export interface ContractPanelProps {
   token?: TokenDetailProps | null
 }
 
+const ContractPanelWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 28px;
+  ${({ theme }) => theme.mediaQueries.sm} {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;   
+  }
+`
+
 const IconWrapper = styled.div<{ size?: number }>`
   display: flex;
   flex-flow: column nowrap;
@@ -36,23 +47,33 @@ const ContractCard = styled(Text)`
   border-radius: 16px;
   display: flex;
   align-items: center;
-  margin-right: 20px;
+  margin: 12px 0;
   & input {
     background: transparent;
     border: none;
+    flex: 1;
+    overflow: hidden;
     box-shadow: none;
     outline: none;
     color: #F7931A;
     font-size: 16px;
-    min-width: 300px;
     &::placeholder {
       color: #F7931A;
     }
+  }
+  ${({ theme }) => theme.mediaQueries.sm} {
+    & input {
+      min-width: 300px;
+    }
+  }
+  ${({ theme }) => theme.mediaQueries.md} {
+    margin: 0;
   }
 `
 
 const SocialIconsWrapper = styled.div`
   display: flex;
+  justify-content: center;
   align-items: center;
   height: 48px;
   background: rgba(0, 0, 0, 0.4);
@@ -69,20 +90,18 @@ export default function ContractPanel({
   const [ addressSearch, setAddressSearch ] = useState('');
 
   return (
-    <>
-      <Flex justifyContent="flex-end" mb="30px">
+    <ContractPanelWrapper>
+      <ContractCard>
         <CopyHelper toCopy={token ? token.contractAddress : addressSearch}>
           &nbsp;
         </CopyHelper>
-        <ContractCard>
-          <input placeholder='0xB09FE1613fE03E7361319d2a43eDc17422f36B09' value={addressSearch} onChange={(e) => { setAddressSearch(e.target.value)}} />
-        </ContractCard>
-        <SocialIconsWrapper>
-          <TwitterIcon />
-          <SocialIcon2 />
-          <TelegramIcon />
-        </SocialIconsWrapper>
-      </Flex>
-    </>
+        <input placeholder='0xB09FE1613fE03E7361319d2a43eDc17422f36B09' value={addressSearch} onChange={(e) => { setAddressSearch(e.target.value)}} />
+      </ContractCard>
+      <SocialIconsWrapper>
+        <TwitterIcon />
+        <SocialIcon2 />
+        <TelegramIcon />
+      </SocialIconsWrapper>
+    </ContractPanelWrapper>
   )
 }

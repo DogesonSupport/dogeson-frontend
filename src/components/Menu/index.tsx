@@ -17,19 +17,32 @@ import { ReactComponent as TelegramIcon } from 'assets/svg/icon/TelegramIcon.svg
 import links from './config'
 
 const MenuWrapper = styled.div<{ toggled: boolean }>`
-  width: ${(props) => (props.toggled ? '100px' : '320px')};
+  width: 320px;
   background: #1A1A27;
   border-right: 1px solid #AFAFAF;
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: fixed;
+  left: ${(props) => (props.toggled ? '-320px' : 0)};
+  transition: left 0.5s;
+  z-index: 2;
+  height: 100vh;
   & img {
     width: 140px;
   }
   & p {
-    font-size: ${(props) => (props.toggled ? '14px' : '16px')};
-    line-height: ${(props) => (props.toggled ? '16px' : '19px')};
+    font-size: 16px;
+    line-height: 19px;
     color: white;
+  }
+  ${({ theme }) => theme.mediaQueries.xl} {
+    left: 0;
+    width: ${(props) => (props.toggled ? '100px' : '320px')};
+    & p {
+      font-size: ${(props) => (props.toggled ? '14px' : '16px')};
+      line-height: ${(props) => (props.toggled ? '16px' : '19px')};  
+    }
   }
 `;
 
@@ -56,7 +69,12 @@ const MenuIconWrapper = styled.div`
 
 const MenuContentWrapper = styled.div<{ toggled: boolean }>`
   width: 100%;
-  padding: ${(props) => (props.toggled ? '0 8px' : '0 24px')};
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 24px 32px;
+  ${({ theme }) => theme.mediaQueries.xl} {
+    padding: ${(props) => (props.toggled ? '0 8px' : '0 24px')};
+  }
 `
 
 const WalletHeading = styled.div`
@@ -122,7 +140,7 @@ const MenuItem = styled.a`
   }
 `
 const SocialWrapper = styled.div`
-  margin-top: 10px;
+  margin: 10px 0 32px;
   & p {
     margin-left: 12px;
     margin-bottom: 10px;
