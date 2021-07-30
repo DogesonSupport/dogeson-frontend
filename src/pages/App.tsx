@@ -50,16 +50,14 @@ const BodyWrapper = styled.div<{ toggled: boolean }>`
   overflow-x: hidden;
   z-index: 1;
   background: #1A1A27;
-  ${({ theme }) => theme.mediaQueries.sm} {
+  ${({ theme }) => theme.mediaQueries.xl} {
     width: ${(props) => props.toggled ? 'calc(100% - 100px)' : 'calc(100% - 320px)'};
     margin-left: ${(props) => props.toggled ? '100px' : '320px'};
-  }
-  ${({ theme }) => theme.mediaQueries.md} {
     padding: 0 32px;
   }
 `
 
-const BodyOverlay = styled.div`
+const BodyOverlay = styled.div<{ toggled: boolean }>`
   position: fixed;
   top: 0;
   left: 0;
@@ -68,6 +66,10 @@ const BodyOverlay = styled.div`
   background: white;
   opacity: 0.2;
   z-index: 9;
+  display: ${(props) => props.toggled ? 'none' : 'block'};
+  ${({ theme }) => theme.mediaQueries.xl} {
+    display: none;
+  }
 `
 
 const Marginer = styled.div`
@@ -92,6 +94,9 @@ const TopBar = styled.div`
     height: 32px;
     & svg path {
       fill: white;
+    }
+    ${({ theme }) => theme.mediaQueries.xl} {
+      display: none;
     }
   }
 `
@@ -119,7 +124,7 @@ const SearchWrapper = styled.div`
       color: white;
     }
   }
-  ${({ theme }) => theme.mediaQueries.sm} {
+  ${({ theme }) => theme.mediaQueries.lg} {
     margin-left: 16px;
   }
 `
@@ -157,7 +162,7 @@ export default function App() {
   const [translations, setTranslations] = useState<Array<any>>([])
   const { account, activate, deactivate } = useWeb3React();
   const { menuToggled, toggleMenu } = useMenuToggle();
-  const { isSm } = useMatchBreakpoints();
+  const { isXl } = useMatchBreakpoints();
 
   const handleLogin = (connectorId: ConnectorId) => {
     if (connectorId === 'walletconnect') {
@@ -227,18 +232,14 @@ export default function App() {
             <TranslationsContext.Provider value={{ translations, setTranslations }}>
               <Menu />
               <BodyWrapper toggled={menuToggled}>
-                { isSm && !menuToggled &&
-                  <BodyOverlay />
-                }
+                <BodyOverlay toggled={menuToggled} />
                 <Popups />
                 <TopBar>
-                  { isSm &&
                   <Button onClick={() => {toggleMenu(!menuToggled)}}>
                     <svg viewBox='0 0 24 24' width='24px'>
                       <path d="M4 18H20C20.55 18 21 17.55 21 17C21 16.45 20.55 16 20 16H4C3.45 16 3 16.45 3 17C3 17.55 3.45 18 4 18ZM4 13H20C20.55 13 21 12.55 21 12C21 11.45 20.55 11 20 11H4C3.45 11 3 11.45 3 12C3 12.55 3.45 13 4 13ZM3 7C3 7.55 3.45 8 4 8H20C20.55 8 21 7.55 21 7C21 6.45 20.55 6 20 6H4C3.45 6 3 6.45 3 7Z" />
                     </svg>
                   </Button>
-                  }
                   <SearchWrapper>
                     <SearchIcon />
                     <input placeholder='Search Data' />

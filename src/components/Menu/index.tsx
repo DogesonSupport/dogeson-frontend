@@ -36,7 +36,7 @@ const MenuWrapper = styled.div<{ toggled: boolean }>`
     line-height: 19px;
     color: white;
   }
-  ${({ theme }) => theme.mediaQueries.sm} {
+  ${({ theme }) => theme.mediaQueries.xl} {
     left: 0;
     width: ${(props) => (props.toggled ? '100px' : '320px')};
     & p {
@@ -72,7 +72,7 @@ const MenuContentWrapper = styled.div<{ toggled: boolean }>`
   flex: 1;
   overflow-y: auto;
   padding: 0 24px 32px;
-  ${({ theme }) => theme.mediaQueries.sm} {
+  ${({ theme }) => theme.mediaQueries.xl} {
     padding: ${(props) => (props.toggled ? '0 8px' : '0 24px')};
   }
 `
@@ -140,7 +140,7 @@ const MenuItem = styled.a`
   }
 `
 const SocialWrapper = styled.div`
-  margin-top: 10px;
+  margin: 10px 0 32px;
   & p {
     margin-left: 12px;
     margin-bottom: 10px;
