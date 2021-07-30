@@ -42,6 +42,10 @@ const IconWrapper = styled.div<{ size?: number }>`
 const TokenInfoContainer = styled.div`
   background: rgba(0, 0, 0, 0.2);
   border-radius: 12px;
+  margin: 12px 0;
+  ${({ theme }) => theme.mediaQueries.md} {
+    margin: 0;
+  }
 `
 
 export default function TokenInfo({

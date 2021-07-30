@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import styled, { ThemeContext } from 'styled-components'
-import { Text } from '@pancakeswap-libs/uikit'
+import { Text, Flex } from '@pancakeswap-libs/uikit'
 import numeral from 'numeral'
 import Column, { AutoColumn } from '../../../components/Column'
 import { RowBetween } from '../../../components/Row'
@@ -28,9 +28,12 @@ const StyledWrapper = styled.div`
   background-color: rgba(0, 0, 0, 0.4);
   border-radius: 12px 12px 0px 0px;
   padding: 12px;
+  display: flex;
+  flex-direction: column;
 
-  & > div > div {
-    & > div {
+  & > div {
+    margin: 0 0 12px;
+    & > div, & > div > div > div {
       &:first-child {
         color: white;
         font-size: 16px;
@@ -46,6 +49,13 @@ const StyledWrapper = styled.div`
       }
     }
   }
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0;
+  }
 `
 
 export default function CoinStatsBoard({
@@ -57,7 +67,8 @@ export default function CoinStatsBoard({
 
   return (
     <StyledWrapper>
-      <RowBetween style={{ textAlign: 'center' }}>
+      <Column>
+        <Flex>
         {
           tokenInfo ?
             <IconWrapper size={32}>
@@ -65,31 +76,32 @@ export default function CoinStatsBoard({
             </IconWrapper>
             : <></>
         }
-        <Column>
+        <div>
           <Text>Coin</Text>
           <Text>{tokenInfo ? tokenInfo.name : ''}</Text>
-        </Column>
-        <Column>
-          <Text>Price</Text>
-          <Text>{tokenInfo ? tokenInfo.price : ''}</Text>
-        </Column>
-        <Column>
-          <Text>24h Change</Text>
-          <Text>{tokenInfo ? `${tokenInfo.priceChange24H.toFixed(2)}%` : ''}</Text>
-        </Column>
-        <Column>
-          <Text>24h Volume</Text>
-          <Text>{tokenInfo ? numeral(tokenInfo.volumne24H).format('0,0.00') : ''}</Text>
-        </Column>
-        <Column>
-          <Text>Liquidity</Text>
-          <Text>{tokenInfo ? numeral(tokenInfo.liquidity).format('$0,0.00') : ''}</Text>
-        </Column>
-        <Column>
-          <Text>MarketCap</Text>
-          <Text>{tokenInfo ? numeral(tokenInfo.marketCap).format('$0,0.00') : ''}</Text>
-        </Column>
-      </RowBetween>
+        </div>
+        </Flex>
+      </Column>
+      <Column>
+        <Text>Price</Text>
+        <Text>{tokenInfo ? tokenInfo.price : ''}</Text>
+      </Column>
+      <Column>
+        <Text>24h Change</Text>
+        <Text>{tokenInfo ? `${tokenInfo.priceChange24H.toFixed(2)}%` : ''}</Text>
+      </Column>
+      <Column>
+        <Text>24h Volume</Text>
+        <Text>{tokenInfo ? numeral(tokenInfo.volumne24H).format('0,0.00') : ''}</Text>
+      </Column>
+      <Column>
+        <Text>Liquidity</Text>
+        <Text>{tokenInfo ? numeral(tokenInfo.liquidity).format('$0,0.00') : ''}</Text>
+      </Column>
+      <Column>
+        <Text>MarketCap</Text>
+        <Text>{tokenInfo ? numeral(tokenInfo.marketCap).format('$0,0.00') : ''}</Text>
+      </Column>
     </StyledWrapper>
   )
 }

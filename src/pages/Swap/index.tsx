@@ -94,33 +94,50 @@ const InfoCard = styled.div`
   border-radius: 24px;
   color: white;
   background: rgba(0, 0, 0, 0.4);
+  margin-bottom: 24px;
   & h1 {
-    font-size: 36px;
-    line-height: 42px;
+    font-size: 32px;
+    line-height: 38px;
     font-weight: bold;
   }
   & h2 {
-    font-size: 32px;
-    line-height: 37px;
+    font-size: 28px;
+    line-height: 32px;
     font-weight: bold;
   }
   & p {
-    font-size: 18px;
-    line-height: 21px;
+    font-size: 16px;
+    line-height: 19px;
     font-weight: 300;
+  }
+  ${({ theme }) => theme.mediaQueries.md} {
+    & h1 {
+      font-size: 36px;
+      line-height: 42px;
+    }
+    & h2 {
+      font-size: 32px;
+      line-height: 37px;
+    }
+    & p {
+      font-size: 18px;
+      line-height: 21px;
+    }  
   }
 `
 
 const InfoCardWrapper = styled.div`
-  display: flex;
-  margin-top: 20px;
-  & > div {
-    flex: 1;
-    &:first-child {
-      margin-right: 10px;
-    }
-    &:last-child {
-      margin-left: 10px;
+  ${({ theme }) => theme.mediaQueries.md} {
+    display: flex;
+    margin-top: 20px;
+    & > div {
+      flex: 1;
+      &:first-child {
+        margin-right: 10px;
+      }
+      &:last-child {
+        margin-left: 10px;
+      }
     }
   }
 `
@@ -128,6 +145,7 @@ const InfoCardWrapper = styled.div`
 const CountDownContainer = styled.div`
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
   max-width: 600px;
   width: 100%;
   margin: 16px auto;
@@ -136,6 +154,7 @@ const CountDownContainer = styled.div`
 const CountDownItem = styled.div`
   color: white;
   text-align: center;
+  margin: 12px;
   & > div {
     width: 94px;
     height: 94px;
