@@ -177,11 +177,11 @@ const CountDownItem = styled.div`
 const PoolWrapper = styled.div`
   & > div {
     background: transparent;
-    & div, & button svg {
-      color: white;
+    & div {
+      background: transparent;
     }
-    & svg {
-      color: black;
+    & div {
+      color: white;
     }
   }
 `
