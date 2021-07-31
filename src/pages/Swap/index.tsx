@@ -794,7 +794,7 @@ const Swap = () => {
               </Wrapper>            
             }
             {
-              swapType === 'liquidity' &&
+              (swapType === 'liquidity' || swapType === 'addLiquidity') &&
               <PoolWrapper id="pool-page">
                 <LiquidityWidget />
               </PoolWrapper>
@@ -810,7 +810,7 @@ const Swap = () => {
             <CoinStatsBoard/>
 
             <TradingViewWidget
-              symbol="NASDAQ:AAPL"
+              symbol={currentToken?.symbol}
               theme={Themes.DARK}
               locale="en"
               autosize

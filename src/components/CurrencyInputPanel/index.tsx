@@ -208,7 +208,7 @@ export default function CurrencyInputPanel({
             </>
           )}
         </InputRow>
-        <USDAmount>~$ 2,055.02</USDAmount>
+        {/* <USDAmount>~$ 2,055.02</USDAmount> */}
       </Container>
       {!disableCurrencySelect && onCurrencySelect && (
         <CurrencySearchModal
