@@ -1,7 +1,8 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 import styled from 'styled-components'
 import { Flex } from '@pancakeswap-libs/uikit'
 import moment from 'moment'
+import axios from 'axios';
 import DataTable, { createTheme } from 'react-data-table-component';
 
 
@@ -122,17 +123,16 @@ const ArrowUp = styled.div`
 	margin-right: 4px;
 `
 
-export interface TransactionCardProps {
-  tokenName: string,
-  contract: string
-}
+// export interface TransactionCardProps {
+//   tokenName: string,
+//   contract: string
+// }
 
-const TransactionCard = ({
-  tokenName,
-  contract
-} : TransactionCardProps) => {
+const TransactionCard = () => {
   const [hideDirector, setHideDirector] = React.useState(false);
-  const columns = React.useMemo(() => [
+    
+//   const [alldata, setalldata] = useState([]);
+  const columns=[
     {
       name: 'Time',
       selector: 'time',
@@ -163,18 +163,30 @@ const TransactionCard = ({
 			sortable: true,
 			cell: (row, index) => <h2 className={moment().diff(moment(row.time), 'minute') >= 1 ? 'error' : 'success'}>{ row.dex }</h2>
 		}
-  ], []);
+  ]
 
+
+  
+
+// useEffect(() => {
+//     axios.fetch('https://jsonplaceholder.typicode.com/users')
+// 	.then(res=>res.json()
+// 	.then()
+
+// 	})
+// }, [])
+  
+
+
+
+
+
+  
   const fixedHeader = true
 
   return (
 		<TableWrapper>
-			<DataTable
-				columns={columns}
-				data={data}
-				fixedHeader={fixedHeader}
-				fixedHeaderScrollHeight="350px"
-			/>
+			<DataTable columns={columns} data={data} fixedHeader={fixedHeader} fixedHeaderScrollHeight="350px"/>
 		</TableWrapper>
   )
 }

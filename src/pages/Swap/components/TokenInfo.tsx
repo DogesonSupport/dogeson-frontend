@@ -1,9 +1,11 @@
-import React from 'react'
+import React,{useState,useEffect} from 'react'
 import styled from 'styled-components'
 import { Flex, Text } from '@pancakeswap-libs/uikit'
 import { ReactComponent as MoreIcon2 } from 'assets/svg/icon/MoreIcon2.svg' 
 import numeral from 'numeral'
-import { TokenDetailProps } from './types'
+import axios from 'axios';
+import { idText } from 'typescript'
+// import { TokenDetailProps } from './types'
 
 const TextWrapper = styled.div`
   border-top: 1px solid rgba(255, 255, 255, 0.1);
@@ -47,24 +49,35 @@ const TokenInfoContainer = styled.div`
     margin: 0;
   }
 `
+// {tokenInfo}: {tokenInfo?: TokenDetailProps | null}
+export default function TokenInfo() {
 
-export default function TokenInfo({
-  tokenInfo
-}: {
-  tokenInfo?: TokenDetailProps | null
-}) {
-  return (
-    <TokenInfoContainer>
-      <Flex alignItems="center" justifyContent='space-between'>
+  const [alldata, setalldata] = useState([]);
+  const getTableData = () => {
+    axios.get("http://ec2-34-220-133-56.us-west-2.compute.amazonaws.com:1337/approvals")
+        .then((response) => {
+            console.log("response", response.data.approvals);
+            setalldata(response.data.approvals)
+
+        })
+        .catch((error) => { console.log("Error", error); })
+
+       }  
+       const table_data = alldata.map((elem, index) => {
+        const { id, txHash, approvedFrom, approvedTo, amount, createdAt } = elem;
+
+        return (
+            <>
+        <Flex alignItems="center" justifyContent='space-between'>
         <Flex alignItems='center'>
-          {
-            tokenInfo ?
+          {/* { */}
+            {/* tokenInfo ? */}
               <IconWrapper size={32}>
-                <img src={tokenInfo.iconSmall} alt="Coin icon" />
+                <img src={id} alt="Coin icon" />
               </IconWrapper>
-              : <></>
-          }
-          <Text color='white'>{tokenInfo ? tokenInfo.name : ''}</Text>
+              {/* :  */}
+          {/* } */}
+          <Text color='white'>{id ? createdAt : ''}</Text>
         </Flex>
         <Flex style={{ width: 40 }}>
           <MoreIcon2 />
@@ -73,30 +86,47 @@ export default function TokenInfo({
       <Flex flexDirection="column">
         <TextWrapper>
           <Text>Total Supply</Text>
-          <Text>{tokenInfo ? numeral(tokenInfo.totalSupply).format('0,0') : ''}</Text>
+          <Text>{id ? numeral(amount).format('0,0') : ''}</Text>
         </TextWrapper>
         <TextWrapper>
           <Text>Market Cap:<span style={{ fontSize: '70%' }}>(includes locked, excludes burned)</span></Text>
-          <Text>{tokenInfo ? numeral(tokenInfo.marketCap).format('$0,0.00') : ''}</Text>
+          <Text>{id ? numeral(approvedFrom).format('$0,0.00') : ''}</Text>
         </TextWrapper>
         <TextWrapper>
           <Text>Pc v2| DOGESON/BNB LP Holdings:</Text>
-          <Text>{tokenInfo ? `${numeral(tokenInfo.bnbLPHoldings).format('0,0')} BNB` : ''}({tokenInfo ? `${numeral(tokenInfo.bnbLPHoldingsUSD).format('0,0')}` : ''})|Chart|Holders
+          <Text>{id ? `${numeral(idText).format('0,0')} BNB` : ''}({id ? `${numeral(id).format('0,0')}` : ''})|Chart|Holders
           </Text>
         </TextWrapper>
         <TextWrapper>
           <Text>Transactions</Text>
-          <Text>{tokenInfo ? numeral(tokenInfo?.transactions).format('0,0') : ''}</Text>
+          <Text>{id ? numeral(id).format('0,0') : ''}</Text>
         </TextWrapper>
         <TextWrapper>
           <Text>Contract Address</Text>
-          <Text>{tokenInfo ? tokenInfo.contractAddress : ''}</Text>
+          <Text>{id ? approvedTo : ''}</Text>
         </TextWrapper>
         <TextWrapper>
           <Text>Holders</Text>
-          <Text>{tokenInfo ? numeral(tokenInfo.holders).format('0,0') : ''}</Text>
+          <Text>{amount ? numeral(amount).format('0,0') : ''}</Text>
         </TextWrapper>
       </Flex>
+            
+
+            </>
+        )
+    })
+
+
+
+      
+
+useEffect(() => {
+  getTableData();
+}, [])
+  
+  return (
+    <TokenInfoContainer>
+     {table_data}
     </TokenInfoContainer>
   )
 }

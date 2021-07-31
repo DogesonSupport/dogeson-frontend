@@ -807,9 +807,8 @@ const Swap = () => {
             <ContractPanel
               token={currentToken}
             />
-            <CoinStatsBoard
-              tokenInfo={currentToken}
-            />
+            <CoinStatsBoard/>
+
             <TradingViewWidget
               symbol="NASDAQ:AAPL"
               theme={Themes.DARK}
@@ -819,12 +818,13 @@ const Swap = () => {
           </FullHeightColumn>
         </RightTopCard>
         <div>
-          <TokenInfo tokenInfo={currentToken} />
+            {/* tokenInfo={currentToken} */}
+          <TokenInfo  />
+        
         </div>
         <div>
           <TransactionCard
-            tokenName="Bitcoin"
-            contract="0x740845bab477C80fE55274A707b66Ab65a919aE5"
+        
           />
         </div>
       </Cards>

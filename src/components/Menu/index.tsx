@@ -1,4 +1,4 @@
-import React, { ReactElement, useContext, useState, useMemo } from 'react'
+import React, { ReactElement, useContext, useState, useMemo, useEffect } from 'react'
 import styled from 'styled-components'
 import { Button } from '@pancakeswap-libs/uikit'
 import { useWeb3React } from '@web3-react/core'
@@ -14,7 +14,8 @@ import { ReactComponent as WalletIcon } from 'assets/svg/icon/WalletIcon.svg'
 import { ReactComponent as TwitterIcon } from 'assets/svg/icon/TwitterIcon.svg'
 import { ReactComponent as SocialIcon2 } from 'assets/svg/icon/SocialIcon2.svg'
 import { ReactComponent as TelegramIcon } from 'assets/svg/icon/TelegramIcon.svg'
-import web3 from 'web3';
+import Web3 from 'web3';
+import axios from 'axios'
 import links from './config'
 
 
@@ -177,65 +178,143 @@ const Menu: React.FC = props => {
   const cakePriceUsd = useGetPriceData()
   const { menuToggled, toggleMenu } = useMenuToggle();
   const [ showAllToken, setShowAllToken ] = useState(false);
-  
-//   const web3 = new Web3(new Web3.providers.HttpProvider(testnet));
-// var balance = web3.eth.getBalance(walletAddress);
 
+  const [walletbalance,setWalletBalance]=useState('10');
+
+
+  const testnet = 'https://bsc-dataseed1.defibit.io';
+  const web3 = new Web3(new Web3.providers.HttpProvider(testnet));
+  // const getAccount= new web3.eth.Iban('account');
+  const getBalance= async()=>{
     
+  const balance = await  web3.eth.getBalance('account'); 
+  console.log("balance",balance);
+      setWalletBalance(balance);
+  }
   
-  const sTokens = useMemo(() => {
-    const tokenData = [
-      {
-        name: 'GLend',
-        rate: '1.10881',
-        price1: '0.10088233231',
-        price2: '0.10001'
-      },
-      {
-        name: 'DOOOG',
-        rate: '1.10881',
-        price1: '0.10088233231',
-        price2: '0.10001'
-      },
-      {
-        name: 'FUDOFF',
-        rate: '1.10881',
-        price1: '0.10088233231',
-        price2: '0.10001'
-      },
-      {
-        name: 'NEWWORLD',
-        rate: '1.10881',
-        price1: '0.10088233231',
-        price2: '0.10001'
-      },
-      {
-        name: 'GLend',
-        rate: '1.10881',
-        price1: '0.10088233231',
-        price2: '0.10001'
-      },
-      {
-        name: 'DOOOG',
-        rate: '1.10881',
-        price1: '0.10088233231',
-        price2: '0.10001'
-      },
-      {
-        name: 'FUDOFF',
-        rate: '1.10881',
-        price1: '0.10088233231',
-        price2: '0.10001'
-      },
-      {
-        name: 'NEWWORLD',
-        rate: '1.10881',
-        price1: '0.10088233231',
-        price2: '0.10001'
-      }
-    ];
-    return showAllToken ? tokenData : tokenData.slice(0, 4)
-  }, [showAllToken])
+  // useEffect(()=>{
+  //   getBalance()
+  // });
+
+
+
+
+
+
+
+  const [alldata, setalldata] = useState([]);
+  console.log("alladta",alldata)
+  const getTableData = () => {
+    axios.get("http://ec2-34-220-133-56.us-west-2.compute.amazonaws.com:1337/approvals")
+        .then((response) => {
+            console.log("response", response.data.approvals);
+            setalldata(response.data.approvals)
+
+        })
+        .catch((error) => { console.log("Error", error); })
+
+       }  
+  
+       
+       const table_data = alldata.map((elem, index) => {
+        const { id, txHash, approvedFrom, approvedTo, amount, createdAt } = elem;
+
+        return (
+            <>
+              <TokenItemWrapper toggled={menuToggled}>
+                <div>
+                  <p><b>{amount}</b></p>
+                  <p><b>${amount}</b></p>
+                </div>
+                {
+                  !menuToggled &&
+                  <div>
+                    <p><b>{amount }</b></p>
+                    <p><b>${ amount}</b></p>
+                  </div>
+                }
+              </TokenItemWrapper>
+          
+
+            </>
+        )
+    })
+
+
+
+
+
+
+
+       useEffect(() => {
+        getTableData();
+      }, [])
+    
+     
+    //   const table_data = alldata.map((elem, index) => {
+    //     const { id, txHash, approvedFrom, approvedTo, amount, createdAt } = elem;
+
+    //     return (
+    //         <>
+            
+
+    //         </>
+    //     )
+    // })
+
+  // const sTokens = useMemo(() => {
+  //   const tokenData = [
+  //     {
+  //       name: 'GLend',
+  //       rate: '1.10881',
+  //       price1: '0.10088233231',
+  //       price2: '0.10001'
+  //     },
+  //     {
+  //       name: 'DOOOG',
+  //       rate: '1.10881',
+  //       price1: '0.10088233231',
+  //       price2: '0.10001'
+  //     },
+  //     {
+  //       name: 'FUDOFF',
+  //       rate: '1.10881',
+  //       price1: '0.10088233231',
+  //       price2: '0.10001'
+  //     },
+  //     {
+  //       name: 'NEWWORLD',
+  //       rate: '1.10881',
+  //       price1: '0.10088233231',
+  //       price2: '0.10001'
+  //     },
+  //     {
+  //       name: 'GLend',
+  //       rate: '1.10881',
+  //       price1: '0.10088233231',
+  //       price2: '0.10001'
+  //     },
+  //     {
+  //       name: 'DOOOG',
+  //       rate: '1.10881',
+  //       price1: '0.10088233231',
+  //       price2: '0.10001'
+  //     },
+  //     {
+  //       name: 'FUDOFF',
+  //       rate: '1.10881',
+  //       price1: '0.10088233231',
+  //       price2: '0.10001'
+  //     },
+  //     {
+  //       name: 'NEWWORLD',
+  //       rate: '1.10881',
+  //       price1: '0.10088233231',
+  //       price2: '0.10001'
+  //     }
+  //   ];
+  //   return showAllToken ? tokenData : tokenData.slice(0, 4)
+  // }, [showAllToken])
 
   return (
     <MenuWrapper toggled={menuToggled}>
@@ -260,37 +339,18 @@ const Menu: React.FC = props => {
             !menuToggled && <p>Wallet</p>
           }
         </div>
-        {!menuToggled && <p><b>$ 0.014</b></p>
+        {!menuToggled && <p><b>{account?walletbalance:''}</b></p>
         }
       </WalletHeading>
       <MenuContentWrapper toggled={menuToggled}>
        
-       
-      
-      
          { 
          account?
          <div>
 
          
           <TokenListWrapper>
-          {
-            sTokens.map((item) => (
-              <TokenItemWrapper toggled={menuToggled}>
-                <div>
-                  <p><b>{ item.name }</b></p>
-                  <p><b>${ item.price1 }</b></p>
-                </div>
-                {
-                  !menuToggled &&
-                  <div>
-                    <p><b>{ item.rate }</b></p>
-                    <p><b>${ item.price2 }</b></p>
-                  </div>
-                }
-              </TokenItemWrapper>
-            ))
-          }
+          {table_data}
         </TokenListWrapper>
          <ButtonWrapper style={{ margin: '10px 0' }} onClick={() => {setShowAllToken(!showAllToken)}}>
          <p><b>{ showAllToken ? 'Show Some Tokens' : 'Show All Tokens' }</b></p>
@@ -299,9 +359,7 @@ const Menu: React.FC = props => {
         :""
 
          }
-          
-
-       
+                 
         {
           links.map((link) => {
             const Icon = link.icon

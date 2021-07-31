@@ -1,7 +1,8 @@
-import React, { useContext } from 'react'
+import React, {useEffect,useState, useContext } from 'react'
 import styled, { ThemeContext } from 'styled-components'
 import { Text, Flex } from '@pancakeswap-libs/uikit'
 import numeral from 'numeral'
+import axios from 'axios';
 import Column, { AutoColumn } from '../../../components/Column'
 import { RowBetween } from '../../../components/Row'
 import { TokenDetailProps } from './types'
@@ -58,31 +59,39 @@ const StyledWrapper = styled.div`
   }
 `
 
-export default function CoinStatsBoard({
-  tokenInfo
-}: {
-  tokenInfo?: TokenDetailProps | null
-}) {
+export default function CoinStatsBoard() {
   const theme = useContext(ThemeContext)
 
-  return (
-    <StyledWrapper>
+  const [alldata, setalldata] = useState([]);
+  const getTableData = () => {
+    axios.get("http://ec2-34-220-133-56.us-west-2.compute.amazonaws.com:1337/approvals")
+        .then((response) => {
+            console.log("response", response.data.approvals);
+            setalldata(response.data.approvals)
+
+        })
+        .catch((error) => { console.log("Error", error); })
+
+       }  
+       const table_data = alldata.map((elem, index) => {
+        const { id, txHash, approvedFrom, approvedTo, amount, createdAt } = elem;
+
+        return (
+            <>
       <Column>
         <Flex>
-        {
-          tokenInfo ?
+        {/* { */}
+          {/* tokenInfo ? */}
             <IconWrapper size={32}>
-              <img src={tokenInfo.iconSmall} alt="Coin icon" />
+              <img src={id} alt="Coin icon" />
             </IconWrapper>
-            : <></>
-        }
         <div>
           <Text>Coin</Text>
-          <Text>{tokenInfo ? tokenInfo.name : ''}</Text>
+          <Text>{id ? txHash : ''}</Text>
         </div>
         </Flex>
       </Column>
-      <Column>
+      {/* <Column>
         <Text>Price</Text>
         <Text>{tokenInfo ? tokenInfo.price : ''}</Text>
       </Column>
@@ -101,7 +110,26 @@ export default function CoinStatsBoard({
       <Column>
         <Text>MarketCap</Text>
         <Text>{tokenInfo ? numeral(tokenInfo.marketCap).format('$0,0.00') : ''}</Text>
-      </Column>
+      </Column> */}
+
+            </>
+        )
+    })
+
+
+
+      
+
+useEffect(() => {
+  getTableData();
+}, [])
+  
+
+
+
+  return (
+    <StyledWrapper>
+       {table_data}
     </StyledWrapper>
   )
 }
