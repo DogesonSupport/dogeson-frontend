@@ -1,6 +1,5 @@
-import React from 'react';
-import Chart from 'react-apexcharts';
-import moment from 'moment';
+import React from 'react'
+import Chart from 'react-apexcharts'
 
 export interface LineChartProps {
   data?: Array<any>;
@@ -17,7 +16,7 @@ const LineChart: React.FC<LineChartProps> = ({
 
   const options = {
     chart: {
-      height: 350,
+      height,
       toolbar: {
         show: false
       }
@@ -40,7 +39,7 @@ const LineChart: React.FC<LineChartProps> = ({
       size: 1
     },
     xaxis: {
-      categories: Array.from({ length: 24 }).map((val, index) => (moment().subtract((24 - index), "hours")).format("hA")),
+      categories,
       axisBorder: {
         color: 'rgba(255, 255, 255, 0.1)'
       },
@@ -54,15 +53,8 @@ const LineChart: React.FC<LineChartProps> = ({
     },
   };
 
-  const series = [
-    {
-      name: "24 Hours Price",
-      data: [12, 11, 14, 18, 17, 13, 13, 13, 12, 25, 30, 22]
-    }
-  ];
-
   return (
-    <Chart options={options} type='line' series={series} />
+    <Chart options={options} type='line' series={data} width={width} height={height} />
   );
 };
 

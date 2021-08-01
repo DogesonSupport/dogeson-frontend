@@ -467,6 +467,14 @@ const Swap = () => {
   const countSeconds = useMemo(() => moment(countDownDeadline).diff(moment(timeNow), 'seconds')
   , [timeNow, countDownDeadline])
 
+  const priceCategories = Array.from({ length: 24 }).map((val, index) => (moment().subtract((24 - index), "hours")).format("hA"));
+  const priceData = [
+    {
+      name: "24 Hours Price",
+      data: [12, 11, 14, 18, 17, 13, 13, 13, 12, 25, 30, 22]
+    }
+  ]
+
   useEffect(() => {
     const init = async () => {
       // const tokens = await getHotTokens()
@@ -811,7 +819,7 @@ const Swap = () => {
             <CoinStatsBoard
               tokenInfo={currentToken}
             />
-            <LineChart />
+            <LineChart categories={priceCategories} data={priceData} width='100%' height={350} />
             {/* <TradingViewWidget
               symbol={currentToken?.symbol}
               theme={Themes.DARK}
