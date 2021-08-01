@@ -58,6 +58,7 @@ import ContractPanel from './components/ContractPanel'
 
 import { HotTokenType, TokenDetailProps, HistoricalDataProps } from './components/types'
 import LiquidityWidget from '../Pool/LiquidityWidget'
+import LineChart from './components/LineChart'
 
 
 
@@ -810,12 +811,13 @@ const Swap = () => {
             <CoinStatsBoard
               tokenInfo={currentToken}
             />
-            <TradingViewWidget
+            <LineChart />
+            {/* <TradingViewWidget
               symbol={currentToken?.symbol}
               theme={Themes.DARK}
               locale="en"
               autosize
-            />
+            /> */}
           </FullHeightColumn>
         </RightTopCard>
         <div>
