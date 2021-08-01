@@ -1,5 +1,6 @@
 import React from 'react';
 import Chart from 'react-apexcharts';
+import moment from 'moment';
 
 export interface LineChartProps {
   data?: Array<any>;
@@ -30,25 +31,24 @@ const LineChart: React.FC<LineChartProps> = ({
       curve: 'smooth' as any
     },
     grid: {
-      borderColor: '#e7e7e7',
+      borderColor: 'rgba(255, 255, 255, 0.1)',
       row: {
-        colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
-        opacity: 0.5
+        colors: ['rgba(0, 0, 0, 0.4)'],
       },
     },
     markers: {
       size: 1
     },
     xaxis: {
-      categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
-      title: {
-        text: 'Month'
+      categories: Array.from({ length: 24 }).map((val, index) => (moment().subtract((24 - index), "hours")).format("hA")),
+      axisBorder: {
+        color: 'rgba(255, 255, 255, 0.1)'
+      },
+      axisTicks: {
+        show: false
       }
     },
     yaxis: {
-      title: {
-        text: 'Temperature'
-      },
       min: 5,
       max: 40
     },
@@ -56,8 +56,8 @@ const LineChart: React.FC<LineChartProps> = ({
 
   const series = [
     {
-      name: "Low - 2013",
-      data: [12, 11, 14, 18, 17, 13, 13]
+      name: "24 Hours Price",
+      data: [12, 11, 14, 18, 17, 13, 13, 13, 12, 25, 30, 22]
     }
   ];
 
