@@ -1,5 +1,5 @@
 import { CurrencyAmount, JSBI, Token, Trade } from '@pancakeswap-libs/sdk'
-import React, { useCallback, useContext, useEffect, useMemo, useState, useRef } from 'react'
+import React, { useCallback, useContext, useEffect, useMemo, useState, useRef, createContext } from 'react'
 import { CardBody, ArrowDownIcon, Button, IconButton, Text, Flex } from '@pancakeswap-libs/uikit'
 import styled, { ThemeContext } from 'styled-components'
 import Page from 'components/Layout/Page'
@@ -51,8 +51,9 @@ import PageHeader from 'components/PageHeader'
 import ConnectWalletButton from 'components/ConnectWalletButton'
 import HotTokenBar from './components/HotTokenBar'
 import { Cards, LeftTopCard, RightTopCard } from './components/Layout'
-import CoinStatsBoard from './components/CoinStatsBoard'
 import TokenInfo from './components/TokenInfo'
+import CoinStatsBoard from './components/CoinStatsBoard'
+
 import TransactionCard from './components/TransactionCard'
 import ContractPanel from './components/ContractPanel'
 
@@ -190,7 +191,7 @@ const PoolWrapper = styled.div`
     }
   }
 `
-
+// export const GetInputData=createContext('');
 const Swap = () => {
 
   const getapi=()=>{
@@ -579,6 +580,9 @@ const Swap = () => {
   }, [])
 
   return (
+    // <GetInputData.Provider value="Hello Sufyan">
+
+   
     <Page>
       <TokenWarningModal
         isOpen={urlLoadedTokens.length > 0 && !dismissTokenWarning}
@@ -880,7 +884,8 @@ const Swap = () => {
         </InfoCard>
       </InfoCardWrapper>
     </Page>
+    // </GetInputData.Provider>
   )
 }
-
+ 
 export default Swap

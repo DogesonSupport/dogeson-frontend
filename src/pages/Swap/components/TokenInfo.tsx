@@ -1,10 +1,13 @@
-import React,{useState,useEffect} from 'react'
+import React,{useState,useEffect, useContext } from 'react'
 import styled from 'styled-components'
 import { Flex, Text } from '@pancakeswap-libs/uikit'
 import { ReactComponent as MoreIcon2 } from 'assets/svg/icon/MoreIcon2.svg' 
-import numeral from 'numeral'
+
 import axios from 'axios';
-import { idText } from 'typescript'
+// import { GetInputData } from '../redirects';
+// import { GetInputData } from '../index';
+import { InputContextApi } from './ContractPanel'
+
 // import { TokenDetailProps } from './types'
 
 const TextWrapper = styled.div`
@@ -52,32 +55,43 @@ const TokenInfoContainer = styled.div`
 // {tokenInfo}: {tokenInfo?: TokenDetailProps | null}
 export default function TokenInfo() {
 
-  const [alldata, setalldata] = useState([]);
-  const getTableData = () => {
-    axios.get("http://ec2-34-220-133-56.us-west-2.compute.amazonaws.com:1337/approvals")
-        .then((response) => {
-            console.log("response", response.data.approvals);
-            setalldata(response.data.approvals)
+  const inputaddress=useContext(InputContextApi);
+    console.log("inputaddress",inputaddress);
 
-        })
-        .catch((error) => { console.log("Error", error); })
+  const [alldata, setalldata] = useState({
+    holders : '',
+    txs : '',
+    marketCap : '',
+    symbol : '',
+    totalSupply : ''
+  });
+     
+
+useEffect(() => {
+  const getTableData = () => {
+    axios.post("http://192.168.18.65:8080/tokenStats",{address:inputaddress || "0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82"})
+        .then((response) => {
+            setalldata(response.data)
+
+        });
 
        }  
-       const table_data = alldata.map((elem, index) => {
-        const { id, txHash, approvedFrom, approvedTo, amount, createdAt } = elem;
-
-        return (
-            <>
-        <Flex alignItems="center" justifyContent='space-between'>
+  getTableData();
+  
+},[alldata,inputaddress])
+  
+  return (
+    <TokenInfoContainer>
+    <Flex alignItems="center" justifyContent='space-between'>
         <Flex alignItems='center'>
           {/* { */}
             {/* tokenInfo ? */}
               <IconWrapper size={32}>
-                <img src={id} alt="Coin icon" />
+                <Text>{alldata.symbol}</Text> 
               </IconWrapper>
               {/* :  */}
           {/* } */}
-          <Text color='white'>{id ? createdAt : ''}</Text>
+          {/* <Text color='white'>{id ? createdAt : ''}</Text> */}
         </Flex>
         <Flex style={{ width: 40 }}>
           <MoreIcon2 />
@@ -86,47 +100,34 @@ export default function TokenInfo() {
       <Flex flexDirection="column">
         <TextWrapper>
           <Text>Total Supply</Text>
-          <Text>{id ? numeral(amount).format('0,0') : ''}</Text>
+          <Text>{ alldata.totalSupply}</Text>
         </TextWrapper>
         <TextWrapper>
           <Text>Market Cap:<span style={{ fontSize: '70%' }}>(includes locked, excludes burned)</span></Text>
-          <Text>{id ? numeral(approvedFrom).format('$0,0.00') : ''}</Text>
+          <Text>{alldata.marketCap}</Text>
         </TextWrapper>
-        <TextWrapper>
+        {/* <TextWrapper>
           <Text>Pc v2| DOGESON/BNB LP Holdings:</Text>
-          <Text>{id ? `${numeral(idText).format('0,0')} BNB` : ''}({id ? `${numeral(id).format('0,0')}` : ''})|Chart|Holders
+          <Text>{alldata.txs})|Chart|Holders
           </Text>
+        </TextWrapper> */}
+          <TextWrapper>
+          <Text>Transactions</Text>
+          <Text>{alldata.txs}</Text>
         </TextWrapper>
-        <TextWrapper>
+        {/* <TextWrapper>
           <Text>Transactions</Text>
           <Text>{id ? numeral(id).format('0,0') : ''}</Text>
-        </TextWrapper>
+        </TextWrapper> */}
         <TextWrapper>
           <Text>Contract Address</Text>
-          <Text>{id ? approvedTo : ''}</Text>
+          <Text>{inputaddress}</Text>
         </TextWrapper>
         <TextWrapper>
           <Text>Holders</Text>
-          <Text>{amount ? numeral(amount).format('0,0') : ''}</Text>
+          <Text>{alldata.holders}</Text>
         </TextWrapper>
       </Flex>
-            
-
-            </>
-        )
-    })
-
-
-
-      
-
-useEffect(() => {
-  getTableData();
-}, [])
-  
-  return (
-    <TokenInfoContainer>
-     {table_data}
     </TokenInfoContainer>
   )
 }

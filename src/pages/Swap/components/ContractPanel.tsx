@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState,useEffect,createContext } from 'react'
 import styled from 'styled-components'
 import { Card, Flex, Text } from '@pancakeswap-libs/uikit'
 import { ReactComponent as TwitterIcon } from 'assets/svg/icon/TwitterIcon.svg'
@@ -84,12 +84,15 @@ const SocialIconsWrapper = styled.div`
     margin: 0 11px;
   }
 `
+ export const InputContextApi = createContext('');
 
 export default function ContractPanel({
   token
 } : ContractPanelProps) {
 
   const [ addressSearch, setAddressSearch ] = useState('');
+
+  console.log("addressSearch",addressSearch)
      
    
 
@@ -104,12 +107,14 @@ export default function ContractPanel({
     },[addressSearch]);
     
   return (
-    <ContractPanelWrapper>
+
+    <InputContextApi.Provider value={addressSearch}>
+        <ContractPanelWrapper>
       <ContractCard>
         <CopyHelper toCopy={token ? token.contractAddress : addressSearch}>
           &nbsp;
         </CopyHelper>
-        <input placeholder='0xB09FE1613fE03E7361319d2a43eDc17422f36B09' value={addressSearch} onChange={(e) => { setAddressSearch(e.target.value)}} />
+        <input placeholder='' value={addressSearch} onChange={(e) => { setAddressSearch(e.target.value)}} />
       </ContractCard>
       <SocialIconsWrapper>
         <TwitterIcon />
@@ -117,5 +122,8 @@ export default function ContractPanel({
         <TelegramIcon />
       </SocialIconsWrapper>
     </ContractPanelWrapper>
+
+    </InputContextApi.Provider>
+
   )
 }
