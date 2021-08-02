@@ -11,8 +11,8 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Roboto Regular', sans-serif;
   }
   body {
-    background-color: ${({ theme }) => theme.colors.background};
-
+    // background-color: ${({ theme }) => theme.colors.background};
+    background-color: #000 !important;
     img {
       height: auto;
       max-width: 100%;
