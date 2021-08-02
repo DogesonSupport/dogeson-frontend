@@ -182,19 +182,32 @@ const Menu: React.FC = props => {
   const [walletbalance,setWalletBalance]=useState('10');
 
 
-  const testnet = 'https://bsc-dataseed1.defibit.io';
-  const web3 = new Web3(new Web3.providers.HttpProvider(testnet));
+  
   // const getAccount= new web3.eth.Iban('account');
-  const getBalance= async()=>{
+  // const getBalance= async()=>{
     
-  const balance = await  web3.eth.getBalance('account'); 
-  console.log("balance",balance);
-      setWalletBalance(balance);
-  }
+  // const balance = await  web3.eth.getBalance('account'); 
+  // console.log("balance",balance);
+  //     setWalletBalance(balance);
+  // }
   
   // useEffect(()=>{
   //   getBalance()
   // });
+
+
+  useEffect(()=>{
+    const testnet = 'https://bsc-dataseed1.defibit.io';
+    const web3 = new Web3(new Web3.providers.HttpProvider(testnet));
+
+    const balance=account && web3.eth.getBalance(account).then((res)=>{
+      // console.log(res,"balance==============>");
+    setWalletBalance(res);
+      
+  })
+   
+
+  })
 
 
 
