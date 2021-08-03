@@ -1,6 +1,6 @@
 import React, { useState,useEffect,createContext } from 'react'
 import styled from 'styled-components'
-import { Card, Flex, Text } from '@pancakeswap-libs/uikit'
+import { Button, Text } from '@pancakeswap-libs/uikit'
 import { ReactComponent as TwitterIcon } from 'assets/svg/icon/TwitterIcon.svg'
 import { ReactComponent as SocialIcon2 } from 'assets/svg/icon/SocialIcon2.svg'
 import { ReactComponent as TelegramIcon } from 'assets/svg/icon/TelegramIcon.svg'
@@ -84,6 +84,7 @@ const SocialIconsWrapper = styled.div`
     margin: 0 11px;
   }
 `
+
  export const InputContextApi = createContext('');
 
 export default function ContractPanel({
@@ -115,6 +116,7 @@ export default function ContractPanel({
           &nbsp;
         </CopyHelper>
         <input placeholder='' value={addressSearch} onChange={(e) => { setAddressSearch(e.target.value)}} />
+        <Button size='sm'>Submit</Button>
       </ContractCard>
       <SocialIconsWrapper>
         <TwitterIcon />
