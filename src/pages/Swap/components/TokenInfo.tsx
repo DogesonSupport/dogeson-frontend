@@ -123,7 +123,7 @@ useEffect(() => {
         </TextWrapper> */}
         <TextWrapper>
           <Text>Contract Address</Text>
-          <Text>{inputaddress}</Text>
+          <Text>{input}</Text>
         </TextWrapper>
         <TextWrapper>
           <Text>Holders</Text>

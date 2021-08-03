@@ -1,7 +1,7 @@
 import React, { useState,useEffect,createContext } from 'react'
 import styled from 'styled-components'
 
-import { Card, Flex, Text } from '@pancakeswap-libs/uikit'
+import { Card, Flex,Text ,Button} from '@pancakeswap-libs/uikit'
 
 import { ReactComponent as TwitterIcon } from 'assets/svg/icon/TwitterIcon.svg'
 import { ReactComponent as SocialIcon2 } from 'assets/svg/icon/SocialIcon2.svg'
@@ -65,11 +65,7 @@ const ContractCard = styled(Text)`
     font-size: 16px;
     &::placeholder {
       color: red    }
-    & button{
-      background: transparent;
-      border-radius: 16px;
-      color:red;
-    }
+  
   }
   ${({ theme }) => theme.mediaQueries.sm} {
     & input {
@@ -98,10 +94,17 @@ export default function ContractPanel({value}: ContractPanelProps){
   const [ addressSearch, setAddressSearch ] = useState('');
   localStorage.setItem('InputAddress', addressSearch);
 
-  // console.log("addressSearch",addressSearch)
-  //    const handleChange=(e)=>{
-  //         e.target.value
-  //    }
+  console.log("addressSearch",addressSearch)
+     const handlerChange=(e)=>{
+      setAddressSearch(e.target.value)
+     }
+
+     const InputSubmit=(e)=>{
+       e.preventDefault();
+       console.log("click");
+     
+     }
+  
    
 
     useEffect(() => {
@@ -120,8 +123,8 @@ export default function ContractPanel({value}: ContractPanelProps){
         <CopyHelper toCopy={value ? value.contractAddress : addressSearch}>
           &nbsp;
         </CopyHelper>
-        <input placeholder='' value={addressSearch} />
- 
+        <input placeholder='' value={addressSearch} onChange={handlerChange} />
+        <Button size='sm' onClick={InputSubmit}>Submit</Button>
       </ContractCard>
       <SocialIconsWrapper>
         <TwitterIcon />
@@ -132,4 +135,6 @@ export default function ContractPanel({value}: ContractPanelProps){
 
   )
 }
+
+
 
