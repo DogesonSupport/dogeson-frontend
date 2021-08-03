@@ -179,9 +179,13 @@ const Menu: React.FC = props => {
   const { menuToggled, toggleMenu } = useMenuToggle();
   const [ showAllToken, setShowAllToken ] = useState(false);
 
-  const [walletbalance,setWalletBalance]=useState('10');
+  const [walletbalance,setWalletBalance]=useState('');
 
 
+
+  const [getallToken,setAllTokens]=useState([]);
+
+  console.log("getallToken",getallToken)
   
   // const getAccount= new web3.eth.Iban('account');
   // const getBalance= async()=>{
@@ -192,60 +196,97 @@ const Menu: React.FC = props => {
   // }
   
   // useEffect(()=>{
-  //   getBalance()
-  // });
+  //   getBalance() 
+  // }); 
 
+  const Balance= ()=>{
 
-  useEffect(()=>{
     const testnet = 'https://bsc-dataseed1.defibit.io';
     const web3 = new Web3(new Web3.providers.HttpProvider(testnet));
-
-    const balance=account && web3.eth.getBalance(account).then((res)=>{
-      // console.log(res,"balance==============>");
+    const balance= account && web3.eth.getBalance(account).then((res)=>{
     setWalletBalance(res);
-      
-  })
+     })
+  }
+  
+  const Get_data = `
+  {
+    ethereum(network: bsc) {
+      address(address: {is: "${account}" }){
+        balances {
+          value
+          currency {
+            address
+            symbol
+            tokenType
+          }
+        }
+      }
+    }
+  }`
+  const fetchData = async () =>{
+    if(account){
+      const queryResult= await axios.post('https://graphql.bitquery.io/',{query: Get_data});
+      if(queryResult.data.data){
+        setAllTokens(queryResult.data.data.ethereum.address[0].balances)
+
+      }
+    }
+    }
+
+//     const chartData =[]
+//     result.forEach(e =>{
+//        // console.log('result',e.timeInterval.minute);
+//        chartData.push({
+//            open : parseFloat(e.open_price),
+//            high : parseFloat(e.maximum_price),
+//            low : parseFloat(e.minimum_price),
+//            close: parseFloat(e.close_price),
+//            // time : e.timeInterval.minute
+//            // time : "2021-04-12"
+//        })
+//    })
+//    console.log('before::::' , chartData)
+ 
+// };
+
+  useEffect(()=>{
+    fetchData()
+    Balance();
    
+// eslint-disable-next-line react-hooks/exhaustive-deps
+  },[account])
 
-  })
+  // const [alldata, setalldata] = useState([]);
+  // console.log("alladta",alldata)
+  // const getTableData = () => {
+  //   axios.get("http://ec2-34-220-133-56.us-west-2.compute.amazonaws.com:1337/approvals")
+  //       .then((response) => {
+  //           console.log("response", response.data.approvals);
+  //           setalldata(response.data.approvals)
 
+  //       })
+  //       .catch((error) => { console.log("Error", error); })
 
-
-
-
-
-
-  const [alldata, setalldata] = useState([]);
-  console.log("alladta",alldata)
-  const getTableData = () => {
-    axios.get("http://ec2-34-220-133-56.us-west-2.compute.amazonaws.com:1337/approvals")
-        .then((response) => {
-            console.log("response", response.data.approvals);
-            setalldata(response.data.approvals)
-
-        })
-        .catch((error) => { console.log("Error", error); })
-
-       }  
+  //      }  
   
        
-       const table_data = alldata.map((elem, index) => {
-        const { id, txHash, approvedFrom, approvedTo, amount, createdAt } = elem;
+       const token_data = getallToken.map((elem : any) => {
+        const {currency,value } = elem;
 
         return (
             <>
               <TokenItemWrapper toggled={menuToggled}>
                 <div>
-                  <p><b>{amount}</b></p>
-                  <p><b>${amount}</b></p>
+                  <p><b>{currency.symbol}</b></p>
+                  <p><b>{value}</b></p>
                 </div>
-                {
+                {/* {
                   !menuToggled &&
                   <div>
-                    <p><b>{amount }</b></p>
-                    <p><b>${ amount}</b></p>
+                    <p><b>{currency.symbol }</b></p>
+                    <p><b>${ value}</b></p>
                   </div>
-                }
+                } */}
               </TokenItemWrapper>
           
 
@@ -259,9 +300,9 @@ const Menu: React.FC = props => {
 
 
 
-       useEffect(() => {
-        getTableData();
-      }, [])
+  //      useEffect(() => {
+  //       getTableData();
+  //     }, [])
     
      
     //   const table_data = alldata.map((elem, index) => {
@@ -363,7 +404,7 @@ const Menu: React.FC = props => {
 
          
           <TokenListWrapper>
-          {table_data}
+          {token_data}
         </TokenListWrapper>
          <ButtonWrapper style={{ margin: '10px 0' }} onClick={() => {setShowAllToken(!showAllToken)}}>
          <p><b>{ showAllToken ? 'Show Some Tokens' : 'Show All Tokens' }</b></p>

@@ -193,7 +193,7 @@ const PoolWrapper = styled.div`
     }
   }
 `
- const GetInputData=createContext('');
+
 const Swap = () => {
 
   const[address,setaddress]=useState('');
@@ -589,7 +589,7 @@ const Swap = () => {
   }, [])
 
   return (
-    <GetInputData.Provider value="Hello Sufyan">
+   
 
    
     <Page>
@@ -892,9 +892,8 @@ const Swap = () => {
         </InfoCard>
       </InfoCardWrapper>
     </Page>
-    </GetInputData.Provider>
+   
   )
 }
  
 export default Swap
-export {GetInputData}

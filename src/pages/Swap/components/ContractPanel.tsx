@@ -94,28 +94,25 @@ export default function ContractPanel({value}: ContractPanelProps){
   const [ addressSearch, setAddressSearch ] = useState('');
   localStorage.setItem('InputAddress', addressSearch);
 
-  console.log("addressSearch",addressSearch)
+  // console.log("addressSearch",addressSearch)
      const handlerChange=(e)=>{
       setAddressSearch(e.target.value)
      }
 
      const InputSubmit=(e)=>{
        e.preventDefault();
-       console.log("click");
+      //  console.log("click");
      
      }
-  
-   
+    // useEffect(() => {
+    //   const getalldata=()=>{
+    //     axios.get(`http://192.168.18.65:8080/v1.0/dogeson/info/contract/${addressSearch}`).then((response)=>{
+    //       console.log("get api",response)
+    //     })
+    // }
 
-    useEffect(() => {
-      const getalldata=()=>{
-        axios.get(`http://192.168.18.65:8080/v1.0/dogeson/info/contract/${addressSearch}`).then((response)=>{
-          console.log("get api",response)
-        })
-    }
-
-       getalldata();
-    },[addressSearch]);
+    //    getalldata();
+    // },[addressSearch]);
     
   return (
         <ContractPanelWrapper>

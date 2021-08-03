@@ -6,7 +6,7 @@ import { ReactComponent as MoreIcon2 } from 'assets/svg/icon/MoreIcon2.svg'
 import axios from 'axios';
 
 // eslint-disable-next-line import/no-cycle
-import { GetInputData } from '../index';
+
 
 // import { TokenDetailProps } from './types'
 
@@ -54,9 +54,7 @@ const TokenInfoContainer = styled.div`
 `
 // {tokenInfo}: {tokenInfo?: TokenDetailProps | null}
 export default function TokenInfo() {
-
-  const inputaddress=useContext(GetInputData);
-   
+  
    const input= localStorage.getItem('InputAddress');
     // console.log("inputaddress1",input);
 
@@ -67,20 +65,20 @@ export default function TokenInfo() {
     symbol : '',
     totalSupply : ''
   });
-     
 
-useEffect(() => {
-  const getTableData = () => {
+  const getTableData =   () => {
     axios.post("http://192.168.18.65:8080/tokenStats",{address:input || "0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82"})
         .then((response) => {
             setalldata(response.data)
-
         });
-
        }  
+     
+
+useEffect(() => {
+
   getTableData();
-  
-},[alldata,input])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+},[input])
   
   return (
     <TokenInfoContainer>
