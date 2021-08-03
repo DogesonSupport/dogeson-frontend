@@ -4,9 +4,9 @@ import { Flex, Text } from '@pancakeswap-libs/uikit'
 import { ReactComponent as MoreIcon2 } from 'assets/svg/icon/MoreIcon2.svg' 
 
 import axios from 'axios';
-// import { GetInputData } from '../redirects';
-// import { GetInputData } from '../index';
-import { InputContextApi } from './ContractPanel'
+
+// eslint-disable-next-line import/no-cycle
+import { GetInputData } from '../index';
 
 // import { TokenDetailProps } from './types'
 
@@ -55,8 +55,10 @@ const TokenInfoContainer = styled.div`
 // {tokenInfo}: {tokenInfo?: TokenDetailProps | null}
 export default function TokenInfo() {
 
-  const inputaddress=useContext(InputContextApi);
-    console.log("inputaddress",inputaddress);
+  const inputaddress=useContext(GetInputData);
+   
+   const input= localStorage.getItem('InputAddress');
+    // console.log("inputaddress1",input);
 
   const [alldata, setalldata] = useState({
     holders : '',
@@ -69,7 +71,7 @@ export default function TokenInfo() {
 
 useEffect(() => {
   const getTableData = () => {
-    axios.post("http://192.168.18.65:8080/tokenStats",{address:inputaddress || "0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82"})
+    axios.post("http://192.168.18.65:8080/tokenStats",{address:input || "0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82"})
         .then((response) => {
             setalldata(response.data)
 
@@ -78,7 +80,7 @@ useEffect(() => {
        }  
   getTableData();
   
-},[alldata,inputaddress])
+},[alldata,input])
   
   return (
     <TokenInfoContainer>

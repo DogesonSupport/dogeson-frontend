@@ -15,7 +15,7 @@ import Web3ReactManager from '../components/Web3ReactManager'
 import AddLiquidity from './AddLiquidity'
 import {
   RedirectDuplicateTokenIds,
-  RedirectOldAddLiquidityPathStructure,
+  RedirectOldAddLiquidityPathStructure, 
   RedirectToAddLiquidity
 } from './AddLiquidity/redirects'
 import MigrateV1 from './MigrateV1'

@@ -1,16 +1,20 @@
 import React, { useState,useEffect,createContext } from 'react'
 import styled from 'styled-components'
+
 import { Card, Flex, Text } from '@pancakeswap-libs/uikit'
+
 import { ReactComponent as TwitterIcon } from 'assets/svg/icon/TwitterIcon.svg'
 import { ReactComponent as SocialIcon2 } from 'assets/svg/icon/SocialIcon2.svg'
 import { ReactComponent as TelegramIcon } from 'assets/svg/icon/TelegramIcon.svg'
+
 import CopyHelper from 'components/AccountDetails/Copy'
-import axios from 'axios'
+import axios from 'axios';
+// import { GetInputData } from '../index';
 import { TokenDetailProps } from './types'
 
 
 export interface ContractPanelProps {
-  token?: TokenDetailProps | null
+  value: any
 }
 
 const ContractPanelWrapper = styled.div`
@@ -60,7 +64,11 @@ const ContractCard = styled(Text)`
     color: #F7931A;
     font-size: 16px;
     &::placeholder {
-      color: #F7931A;
+      color: red    }
+    & button{
+      background: transparent;
+      border-radius: 16px;
+      color:red;
     }
   }
   ${({ theme }) => theme.mediaQueries.sm} {
@@ -84,16 +92,16 @@ const SocialIconsWrapper = styled.div`
     margin: 0 11px;
   }
 `
- export const InputContextApi = createContext('');
-
-export default function ContractPanel({
-  token
-} : ContractPanelProps) {
+// {token} : ContractPanelProps) 
+export default function ContractPanel({value}: ContractPanelProps){
 
   const [ addressSearch, setAddressSearch ] = useState('');
+  localStorage.setItem('InputAddress', addressSearch);
 
   console.log("addressSearch",addressSearch)
-     
+     const handleChange=(e)=>{
+      setAddressSearch(e.target.value)
+     }
    
 
     useEffect(() => {
@@ -107,14 +115,13 @@ export default function ContractPanel({
     },[addressSearch]);
     
   return (
-
-    <InputContextApi.Provider value={addressSearch}>
         <ContractPanelWrapper>
       <ContractCard>
-        <CopyHelper toCopy={token ? token.contractAddress : addressSearch}>
+        <CopyHelper toCopy={value ? value.contractAddress : addressSearch}>
           &nbsp;
         </CopyHelper>
-        <input placeholder='' value={addressSearch} onChange={(e) => { setAddressSearch(e.target.value)}} />
+        <input placeholder='' value={addressSearch}  onChange={handleChange} />
+           <button type="submit" >Search</button>
       </ContractCard>
       <SocialIconsWrapper>
         <TwitterIcon />
@@ -123,7 +130,6 @@ export default function ContractPanel({
       </SocialIconsWrapper>
     </ContractPanelWrapper>
 
-    </InputContextApi.Provider>
-
   )
 }
+

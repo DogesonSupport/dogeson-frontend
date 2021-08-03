@@ -47,11 +47,13 @@ import { ReactComponent as HelpIcon1 } from 'assets/svg/icon/HelpIcon1.svg'
 import BinanceLogo from 'assets/images/binance-logo.png'
 
 import { getHotTokens, getTokenInfo } from 'utils/request'
-import PageHeader from 'components/PageHeader'
 import ConnectWalletButton from 'components/ConnectWalletButton'
+import PageHeader from 'components/PageHeader'
 import HotTokenBar from './components/HotTokenBar'
-import { Cards, LeftTopCard, RightTopCard } from './components/Layout'
+// eslint-disable-next-line import/no-cycle
 import TokenInfo from './components/TokenInfo'
+import { Cards, LeftTopCard, RightTopCard } from './components/Layout'
+
 import CoinStatsBoard from './components/CoinStatsBoard'
 
 import TransactionCard from './components/TransactionCard'
@@ -191,8 +193,15 @@ const PoolWrapper = styled.div`
     }
   }
 `
-// export const GetInputData=createContext('');
+ const GetInputData=createContext('');
 const Swap = () => {
+
+  const[address,setaddress]=useState('');
+  function handleChange(value){
+      console.log("console parent::::" , address)
+      setaddress(value);
+    }
+
 
   const getapi=()=>{
     axios.get('http://192.168.18.65:8080/v1.0/dogeson/historical?dexId=0x3b9dd0ac3fa49988a177b7c020f680295fb21996&span=month').then((response)=>{
@@ -580,7 +589,7 @@ const Swap = () => {
   }, [])
 
   return (
-    // <GetInputData.Provider value="Hello Sufyan">
+    <GetInputData.Provider value="Hello Sufyan">
 
    
     <Page>
@@ -817,8 +826,7 @@ const Swap = () => {
         </LeftTopCard>
         <RightTopCard>
           <FullHeightColumn>
-            <ContractPanel
-              token={currentToken}
+            <ContractPanel  value={handleChange}
             />
              {/* tokenInfo={currentToken} */}
             <CoinStatsBoard
@@ -884,8 +892,9 @@ const Swap = () => {
         </InfoCard>
       </InfoCardWrapper>
     </Page>
-    // </GetInputData.Provider>
+    </GetInputData.Provider>
   )
 }
  
 export default Swap
+export {GetInputData}
