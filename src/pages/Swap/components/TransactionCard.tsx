@@ -51,7 +51,6 @@ const TableWrapper = styled.div`
 		width: 100%;
 		& tr {
 			background: transparent;
-			border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 		}
 		& td {
 			padding: 8px;
@@ -60,7 +59,8 @@ const TableWrapper = styled.div`
 			& td {
 				color: white;
 				font-size: 16px;
-				padding: 12px 8px;
+				border-bottom: 1px solid white;
+				padding: 16px 8px;
 				& > div > div {
 					font-size: 16px;
 					font-weight: 500;
@@ -68,16 +68,19 @@ const TableWrapper = styled.div`
 			}
 		}
 		& tbody {
-			h2 {
-				font-size: 14px;
-				line-height: 16px;
-				font-weight: bold;
-				&.success {
-					color: #00AC1C;
-				}
-				&.error {
-					color: #EA3943;
-				}
+			& tr {
+				border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+				& h2 {
+					font-size: 14px;
+					line-height: 16px;
+					font-weight: bold;
+					&.success {
+						color: #00AC1C;
+					}
+					&.error {
+						color: #EA3943;
+					}
+				}	
 			}
 		}
 	}
