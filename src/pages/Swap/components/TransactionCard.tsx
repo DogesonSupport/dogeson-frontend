@@ -1,10 +1,12 @@
-import React,{useEffect} from 'react'
+import React,{useState,useEffect} from 'react'
 import styled from 'styled-components'
 import { Flex } from '@pancakeswap-libs/uikit'
+import { useWeb3React } from '@web3-react/core'
 import moment from 'moment'
 import axios from 'axios';
 import DataTable, { createTheme } from 'react-data-table-component';
-
+  
+  
 
 createTheme('solarized', {
   text: {
@@ -27,6 +29,8 @@ createTheme('solarized', {
     disabled: 'rgba(0,0,0,.12)',
   },
 });
+
+
 
 const data = [
 	{
@@ -129,6 +133,100 @@ const ArrowUp = styled.div`
 // }
 
 const TransactionCard = () => {
+
+
+	const { account, activate, deactivate } = useWeb3React()
+	const [tableData,setTableData]=useState([]);
+	// const [data, setData] =useState ([]);
+
+
+      
+
+   const Get_data = `
+    {
+        ethereum(network: bsc){
+            dexTrades(options:{desc: ["block.height","tradeIndex"], limit: 10, offset: 0},
+              date: {since: "2021-08-03" till: null }
+              baseCurrency: {is: "0x016c285d5b918b92aa85ef1e147498badfe30d69"}
+              ) {
+                block {
+                  timestamp {
+                    time (format: "%Y-%m-%d %H:%M:%S")
+                  }
+                  height
+                }
+                tradeIndex
+                protocol
+                exchange {
+                  fullName
+                }
+                smartContract {
+                  address {
+                    address
+                    annotation
+                  }
+                }
+                baseAmount
+                baseCurrency {
+                  address
+                  symbol
+                }
+                quoteAmount
+                quoteCurrency {
+                  address
+                  symbol
+                }
+                transaction {
+                  hash
+                }
+            }
+          }
+    }`
+
+    const fetchData = async () =>{
+        const queryResult= await axios.post(
+            'https://graphql.bitquery.io/',{
+                query: Get_data
+            }
+        );
+        setTableData(queryResult.data.data.ethereum.dexTrades)
+    }
+    useEffect(()=>{
+        fetchData();
+		  // eslint-disable-next-line react-hooks/exhaustive-deps 
+    },[account])
+    const table_data = tableData.map((elem : any) =>{
+        const {block,baseAmount,quoteAmount,transaction}=elem
+        return(
+            <>
+            
+			{/* <h1>{block.timestamp.time}</h1>
+			<h1>{transaction.hash}</h1> */}
+			{/* <h1>{transaction.hash}</h1> */}
+             {/* <tr>
+            <td className="green">
+             Just Now
+             <h6 className="grey yoyo">{block.timestamp.time}</h6>
+            </td>
+           <td >{baseAmount} {elem.baseCurrency.symbol}<h6 >{quoteAmount} BNB</h6></td>
+          <td>0.9538 USD<h6 >0.2356 BNB</h6></td>
+        <td >$1.9538 USD <h6 className="grey yoyo">0.2356 BNB</h6></td>
+        <td >{elem.exchange.fullNmae}</td>
+        </tr> */}
+            </>
+        )
+    })
+    console.log("trades::::" , tableData)
+  
+       
+    
+
+
+
+
+
+
+
   const [hideDirector, setHideDirector] = React.useState(false);
     
 //   const [alldata, setalldata] = useState([]);
@@ -165,6 +263,9 @@ const TransactionCard = () => {
 		}
   ]
 
+ 
+
+
 
   
 
@@ -186,7 +287,19 @@ const TransactionCard = () => {
 
   return (
 		<TableWrapper>
-			<DataTable columns={columns} data={data} fixedHeader={fixedHeader} fixedHeaderScrollHeight="350px"/>
+			<DataTable columns={columns} data={table_data} fixedHeader={fixedHeader} fixedHeaderScrollHeight="350px"/>
+			{/* <table>
+				<tr>
+					<th>Time</th>
+					<th>Traded</th>
+					<th>Token Price</th>
+					<th>Value</th>
+					<th>DEX</th>
+				</tr>
+				<tbody>
+					{table_data}
+				</tbody>
+			</table> */}
 		</TableWrapper>
   )
 }
