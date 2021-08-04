@@ -59,6 +59,8 @@ const TableWrapper = styled.div`
 		& thead {
 			& td {
 				color: white;
+				font-size: 16px;
+				padding: 12px 8px;
 				& > div > div {
 					font-size: 16px;
 					font-weight: 500;
