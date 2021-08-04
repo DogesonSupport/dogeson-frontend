@@ -3,12 +3,10 @@ import Chart from 'react-apexcharts'
 
 export interface LineChartProps {
   data?: Array<any>;
-  categories?: Array<string>;
   width?: number | string;
   height?: number | string;
 }
 const LineChart: React.FC<LineChartProps> = ({
-  categories = [],
   data = [],
   width = 500,
   height = 200,
@@ -39,7 +37,6 @@ const LineChart: React.FC<LineChartProps> = ({
       size: 1
     },
     xaxis: {
-      categories,
       axisBorder: {
         color: 'rgba(255, 255, 255, 0.1)'
       },
@@ -48,13 +45,11 @@ const LineChart: React.FC<LineChartProps> = ({
       }
     },
     yaxis: {
-      min: 5,
-      max: 40
     },
   };
 
   return (
-    <Chart options={options} type='line' series={data} width={width} height={height} />
+    <Chart options={options} type='candlestick' series={data} width={width} height={height} />
   );
 };
 
