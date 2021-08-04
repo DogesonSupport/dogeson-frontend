@@ -177,7 +177,7 @@ const Menu: React.FC = props => {
   const { isDark, toggleTheme } = useTheme()
   const cakePriceUsd = useGetPriceData()
   const { menuToggled, toggleMenu } = useMenuToggle();
-  const [ showAllToken, setShowAllToken ] = useState(false);
+  const [ showAllToken, setShowAllToken ] = useState(true);
 
   const [walletbalance,setWalletBalance]=useState('');
 
@@ -217,7 +217,7 @@ const Menu: React.FC = props => {
           currency {
             address
             symbol
-            tokenType
+            tokenType 
           }
         }
       }
@@ -272,6 +272,8 @@ const Menu: React.FC = props => {
        
        const token_data = getallToken.map((elem : any) => {
         const {currency,value } = elem;
+       
+        
 
         return (
             <>
@@ -286,11 +288,14 @@ const Menu: React.FC = props => {
                     <p><b>{currency.symbol }</b></p>
                     <p><b>${ value}</b></p>
                   </div>
+
                 } */}
+               
               </TokenItemWrapper>
-          
+               
 
             </>
+            
         )
     })
 

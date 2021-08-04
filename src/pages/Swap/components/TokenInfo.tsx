@@ -78,7 +78,7 @@ useEffect(() => {
 
   getTableData();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-},[input])
+},[])
   
   return (
     <TokenInfoContainer>
