@@ -67,7 +67,7 @@ export default function TokenInfo() {
   });
 
   const getTableData =   () => {
-    axios.post("http://192.168.18.65:8080/tokenStats",{address:input || "0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82"})
+    axios.post("http://ec2-34-222-238-25.us-west-2.compute.amazonaws.com:9000/tokenStats",{address:input || "0x016c285d5b918b92aa85ef1e147498badfe30d69"})
         .then((response) => {
             setalldata(response.data)
         });
@@ -78,7 +78,7 @@ useEffect(() => {
 
   getTableData();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-},[])
+},[input])
   
   return (
     <TokenInfoContainer>
