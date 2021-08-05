@@ -13,7 +13,11 @@ export interface HotTokenBarProps {
 
 const StyledBar = styled.div`
   width: 100%;
-  border
+  display: flex;
+  margin-bottom: 30px;
+  & span {
+    font-family: 'Roboto Regular'
+  }
 `
 
 const FlowBar = styled.div`
@@ -108,7 +112,7 @@ export default function HotTokenBar({
   tokens
 }: HotTokenBarProps) {
   return (
-    <Flex mb="30px">
+    <StyledBar>
       <BarIntro><span>Top Pairs</span> <HelpIcon /></BarIntro>
       <FlowBar>
         <Marquee gradient={false}>
@@ -132,6 +136,6 @@ export default function HotTokenBar({
         </Marquee>
       </FlowBar>
       <div className="paddingRight: 30px" />
-    </Flex>
+    </StyledBar>
   )
 }

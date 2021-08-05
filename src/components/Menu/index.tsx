@@ -9,6 +9,7 @@ import useGetPriceData from 'hooks/useGetPriceData'
 import { injected, bsc, walletconnect } from 'connectors'
 import { useMenuToggle } from 'state/application/hooks'
 import MainLogo from 'assets/images/MainLogo.png'
+import Illustration from 'assets/images/Illustration.svg'
 import { ReactComponent as MenuOpenIcon } from 'assets/svg/icon/MenuOpenIcon.svg'
 import { ReactComponent as WalletIcon } from 'assets/svg/icon/WalletIcon.svg'
 import { ReactComponent as TwitterIcon } from 'assets/svg/icon/TwitterIcon.svg'
@@ -80,14 +81,14 @@ const MenuContentWrapper = styled.div<{ toggled: boolean }>`
   }
 `
 
-const WalletHeading = styled.div`
+const WalletHeading = styled.div<{ toggled: boolean }>`
   display: flex;
-  justify-content: space-between;
+  justify-content: ${(props) => props.toggled ? 'center' : 'space-between'};
   align-items: center;
-  background: #F9AC61;
+  background: #8B2A9B;
   width: 100%;
   height: 56px;
-  padding: 0 48px;
+  padding: ${(props) => props.toggled ? '0' : '0 48px'};
   & div {
     display: flex;
     align-items: center;
@@ -118,7 +119,7 @@ const TokenItemWrapper = styled.div<{ toggled: boolean }>`
 `
 
 const ButtonWrapper = styled.div`
-  background: #F9AC61;
+  background: #8B2A9B;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -139,7 +140,7 @@ const MenuItem = styled.a`
     margin-left: 12px;
   }
   &:hover {
-    background: #F9AC61;
+    background: #8B2A9B;
   }
 `
 const SocialWrapper = styled.div`
@@ -168,6 +169,14 @@ const SocialIconsWrapper = styled.div<{toggled: boolean}>`
     & svg {
       margin: ${(props) => props.toggled ? '11px 0' : '0 11px'};
     }
+  }
+`
+
+const IllustrationWrapper = styled.div`
+  width: 100%;
+  margin-left: -24px;
+  & img {
+    width: 100%;
   }
 `
 
@@ -391,7 +400,7 @@ const Menu: React.FC = props => {
           }
         </Button>
       </MenuIconWrapper>
-      <WalletHeading>
+      <WalletHeading toggled={menuToggled}>
         <div>
           <WalletIcon />
           {
@@ -441,6 +450,11 @@ const Menu: React.FC = props => {
             </div>
           </SocialIconsWrapper>
         </SocialWrapper>
+        {!menuToggled && 
+          <IllustrationWrapper>
+            <img src={Illustration} alt='Illustration' />
+          </IllustrationWrapper>      
+        }
       </MenuContentWrapper>
       {/* <UikitMenu
         links={links}

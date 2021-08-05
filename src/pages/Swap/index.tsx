@@ -68,21 +68,25 @@ import LineChart from './components/LineChart'
 const { main: Main } = TYPE
 
 const ArrowContainer = styled.div`
-  width: 20px;
-  height: 20px;
+  width: 28px;
+  height: 28px;
   display: flex;
   align-items: center;
   justify-content: center;
   border: 3px solid rgba(255, 255, 255, 0.4);
   border-radius: 8px;
   margin: 0;
+  & svg {
+    width: 10px;
+    height: 12px;
+  }
 `
 
 const ArrowContent = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: -4px 0;
+  margin: -8px 0;
   z-index: 3;
   position: relative;
 `
@@ -167,7 +171,11 @@ const CountDownItem = styled.div`
   & > div {
     width: 94px;
     height: 94px;
-    background: #F9AC61;
+<<<<<<< HEAD
+    background:#8b2a9b ;
+=======
+    background: #8B2A9B;
+>>>>>>> 0f22c7a78179e077c1b105739d68a8799d779b78
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1042,7 +1050,7 @@ const Swap = () => {
         </div>
       </Cards>
       <InfoCard>
-        <h1>Dogeson Charity Starts in</h1>
+        <h1>Sphynx Charity Starts in</h1>
         <CountDownContainer>
           <CountDownItem>
             <div>{ Math.floor(countSeconds / (3600 * 24)) }</div>
@@ -1064,7 +1072,7 @@ const Swap = () => {
       </InfoCard>
       <InfoCardWrapper>
         <InfoCard>
-          <h1>Dogeson Stats</h1>
+          <h1>Sphynx Stats</h1>
           <Flex justifyContent='space-between' style={{ margin: '24px 0' }}>
             <p><b>Total AstraCoins Supply</b></p>
             <p><b>184,502,810</b></p>

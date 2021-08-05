@@ -8,6 +8,7 @@ import { ReactComponent as SearchIcon } from 'assets/svg/icon/SearchIcon.svg'
 import { ReactComponent as EmptyAvatar } from 'assets/svg/icon/EmptyAvatar.svg'
 import { ReactComponent as ChevronDown } from 'assets/svg/icon/ChevronDown.svg'
 import { useMenuToggle } from 'state/application/hooks'
+import PyramidImage from 'assets/images/pyramid.png'
 
 // import { Credentials, StringTranslations } from '@crowdin/crowdin-api-client'
 import Popups from '../components/Popups'
@@ -50,6 +51,7 @@ const BodyWrapper = styled.div<{ toggled: boolean }>`
   overflow-x: hidden;
   z-index: 1;
   background: #1A1A27;
+  position: relative;
   ${({ theme }) => theme.mediaQueries.xl} {
     width: ${(props) => props.toggled ? 'calc(100% - 100px)' : 'calc(100% - 320px)'};
     margin-left: ${(props) => props.toggled ? '100px' : '320px'};
@@ -156,6 +158,26 @@ const AccountWrapper = styled.div`
   }
 `
 
+const BannerWrapper = styled.div`
+  width: 516px;
+  height: 516px;
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
+  overflow: hidden;
+  & img {
+    position: absolute;
+    right: -40px;
+    bottom: -60px;
+  }
+`
+
+const PageContent = styled.div`
+  width: 100%;
+  z-index: 2;
+  position: relative;
+`
+
 export default function App() {
   const [selectedLanguage, setSelectedLanguage] = useState<any>(undefined)
   const [translatedLanguage, setTranslatedLanguage] = useState<any>(undefined)
@@ -258,25 +280,30 @@ export default function App() {
                       <Button onClick={onPresentConnectModal}>Connect</Button>
                   }
                 </TopBar>
-                <Web3ReactManager>
-                  <Switch>
-                    <Route exact strict path='/swap' component={Swap} />
-                    <Route exact strict path='/swap/:outputCurrency' component={RedirectToSwap} />
-                    <Route exact strict path='/send' component={RedirectPathToSwapOnly} />
-                    <Route exact strict path='/find' component={PoolFinder} />
-                    <Route exact strict path='/pool' component={Pool} />
-                    <Route exact strict path='/create' component={RedirectToAddLiquidity} />
-                    <Route exact path='/add' component={AddLiquidity} />
-                    <Route exact path='/add/:currencyIdA' component={RedirectOldAddLiquidityPathStructure} />
-                    <Route exact path='/add/:currencyIdA/:currencyIdB' component={RedirectDuplicateTokenIds} />
-                    <Route exact strict path='/remove/v1/:address' component={RemoveV1Exchange} />
-                    <Route exact strict path='/remove/:tokens' component={RedirectOldRemoveLiquidityPathStructure} />
-                    <Route exact strict path='/remove/:currencyIdA/:currencyIdB' component={RemoveLiquidity} />
-                    <Route exact strict path='/migrate/v1' component={MigrateV1} />
-                    <Route exact strict path='/migrate/v1/:address' component={MigrateV1Exchange} />
-                    <Route component={RedirectPathToSwapOnly} />
-                  </Switch>
-                </Web3ReactManager>
+                <BannerWrapper>
+                  <img src={PyramidImage} alt='Pyramid' />
+                </BannerWrapper>
+                <PageContent>
+                  <Web3ReactManager>
+                    <Switch>
+                      <Route exact strict path='/swap' component={Swap} />
+                      <Route exact strict path='/swap/:outputCurrency' component={RedirectToSwap} />
+                      <Route exact strict path='/send' component={RedirectPathToSwapOnly} />
+                      <Route exact strict path='/find' component={PoolFinder} />
+                      <Route exact strict path='/pool' component={Pool} />
+                      <Route exact strict path='/create' component={RedirectToAddLiquidity} />
+                      <Route exact path='/add' component={AddLiquidity} />
+                      <Route exact path='/add/:currencyIdA' component={RedirectOldAddLiquidityPathStructure} />
+                      <Route exact path='/add/:currencyIdA/:currencyIdB' component={RedirectDuplicateTokenIds} />
+                      <Route exact strict path='/remove/v1/:address' component={RemoveV1Exchange} />
+                      <Route exact strict path='/remove/:tokens' component={RedirectOldRemoveLiquidityPathStructure} />
+                      <Route exact strict path='/remove/:currencyIdA/:currencyIdB' component={RemoveLiquidity} />
+                      <Route exact strict path='/migrate/v1' component={MigrateV1} />
+                      <Route exact strict path='/migrate/v1/:address' component={MigrateV1Exchange} />
+                      <Route component={RedirectPathToSwapOnly} />
+                    </Switch>
+                  </Web3ReactManager>
+                </PageContent>
                 <Marginer />
               </BodyWrapper>
             </TranslationsContext.Provider>

@@ -7,18 +7,18 @@ import TranslatedText from '../TranslatedText'
 const StyledNav = styled.div`
   text-align: center;
   display: flex;
-  height: 32px;
+  height: 28px;
   background: white;
   border-radius: 16px;
   & button {
     color: black;
-    height: 32px;
+    height: 28px;
     background: transparent;
     border: none;
     box-shadow: none !important;
     outline: none;
     &:hover, &.active {
-      background: #F9AC61 !important;
+      background: #8b2a9b !important;
       color: white;  
     }
   }

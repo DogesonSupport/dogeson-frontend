@@ -37,6 +37,7 @@ const StyledPageHeader = styled.div`
   padding: 10px;
   & h2 {
     margin: 0;
+    font-size: 16px;
   }
   & button {
     color: white;
