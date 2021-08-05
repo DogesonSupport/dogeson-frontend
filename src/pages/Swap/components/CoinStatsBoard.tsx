@@ -62,74 +62,114 @@ const StyledWrapper = styled.div`
 export default function CoinStatsBoard() {
   const theme = useContext(ThemeContext)
 
-  const [alldata, setalldata] = useState([]);
-  const getTableData = () => {
-    axios.get("http://ec2-34-220-133-56.us-west-2.compute.amazonaws.com:1337/approvals")
-        .then((response) => {
-            console.log("response", response.data.approvals);
-            setalldata(response.data.approvals)
+  // const [alldata, setalldata] = useState([]);
+  // const getTableData = () => {
+  //   axios.get("http://ec2-34-220-133-56.us-west-2.compute.amazonaws.com:1337/approvals")
+  //       .then((response) => {
+  //           console.log("response", response.data.approvals);
+  //           setalldata(response.data.approvals)
 
-        })
-        .catch((error) => { console.log("Error", error); })
+  //       })
+  //       .catch((error) => { console.log("Error", error); })
 
-       }  
-       const table_data = alldata.map((elem, index) => {
-        const { id, txHash, approvedFrom, approvedTo, amount, createdAt } = elem;
+  //      }  
+      //  const table_data = alldata.map((elem, index) => {
+      //   const { id, txHash, approvedFrom, approvedTo, amount, createdAt } = elem;
 
-        return (
-            <>
-      <Column>
-        <Flex>
-        {/* { */}
-          {/* tokenInfo ? */}
-            <IconWrapper size={32}>
-              <img src={id} alt="Coin icon" />
-            </IconWrapper>
-        <div>
-          <Text>Coin</Text>
-          <Text>{id ? txHash : ''}</Text>
-        </div>
-        </Flex>
-      </Column>
-      {/* <Column>
-        <Text>Price</Text>
-        <Text>{tokenInfo ? tokenInfo.price : ''}</Text>
-      </Column>
-      <Column>
-        <Text>24h Change</Text>
-        <Text>{tokenInfo ? `${tokenInfo.priceChange24H.toFixed(2)}%` : ''}</Text>
-      </Column>
-      <Column>
-        <Text>24h Volume</Text>
-        <Text>{tokenInfo ? numeral(tokenInfo.volumne24H).format('0,0.00') : ''}</Text>
-      </Column>
-      <Column>
-        <Text>Liquidity</Text>
-        <Text>{tokenInfo ? numeral(tokenInfo.liquidity).format('$0,0.00') : ''}</Text>
-      </Column>
-      <Column>
-        <Text>MarketCap</Text>
-        <Text>{tokenInfo ? numeral(tokenInfo.marketCap).format('$0,0.00') : ''}</Text>
-      </Column> */}
+        // return (
+      //       <>
+      // <Column>
+      //   <Flex>
+      //   {/* { */}
+      //     {/* tokenInfo ? */}
+      //       <IconWrapper size={32}>
+      //         <img src={id} alt="Coin icon" />
+      //       </IconWrapper>
+      //   <div>
+      //     <Text>Coin</Text>
+      //     <Text>{id ? txHash : ''}</Text>
+      //   </div>
+      //   </Flex>
+      // </Column>
+      // <Column>
+      //   <Text>Price</Text>
+      //   <Text>{tokenInfo ? tokenInfo.price : ''}</Text>
+      // </Column>
+      // <Column>
+      //   <Text>24h Change</Text>
+      //   <Text>{tokenInfo ? `${tokenInfo.priceChange24H.toFixed(2)}%` : ''}</Text>
+      // </Column>
+      // <Column>
+      //   <Text>24h Volume</Text>
+      //   <Text>{tokenInfo ? numeral(tokenInfo.volumne24H).format('0,0.00') : ''}</Text>
+      // </Column>
+      // <Column>
+      //   <Text>Liquidity</Text>
+      //   <Text>{tokenInfo ? numeral(tokenInfo.liquidity).format('$0,0.00') : ''}</Text>
+      // </Column>
+      // <Column>
+      //   <Text>MarketCap</Text>
+      //   <Text>{tokenInfo ? numeral(tokenInfo.marketCap).format('$0,0.00') : ''}</Text>
+      // </Column>
 
-            </>
-        )
-    })
+      //       </>
+        // )
+    // })
 
 
 
       
 
-useEffect(() => {
-  getTableData();
-}, [])
+// useEffect(() => {
+//   getTableData();
+// }, [])
   
 
 
 
   return (
     <StyledWrapper>
-       {table_data}
+  
+      <Column>
+        <Flex>
+        {/* { */}
+          {/* tokenInfo ? */}
+            <IconWrapper size={32}>
+              <img src="" alt="Coin icon" />
+            </IconWrapper>
+        <div>
+          <Text>Coin</Text>
+          <Text>0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c</Text>
+        </div>
+        </Flex>
+      </Column>
+      <Column>
+        <Text>Price</Text>
+        <Text>2000</Text>
+      </Column>
+      <Column>
+        <Text>24h Change</Text>
+        {/* {tokenInfo ? `${tokenInfo.priceChange24H.toFixed(2)}%` : ''} */}
+        <Text>24%</Text>
+      </Column>
+      <Column>
+        <Text>24h Volume</Text>
+        {/* {tokenInfo ? numeral(tokenInfo.volumne24H).format('0,0.00') : ''} */}
+        <Text>100</Text>
+      </Column>
+      <Column>
+        <Text>Liquidity</Text>
+        {/* {tokenInfo ? numeral(tokenInfo.liquidity).format('$0,0.00') : ''} */}
+        <Text>0.02</Text>
+      </Column>
+      <Column>
+        <Text>MarketCap</Text>
+        {/* {tokenInfo ? numeral(tokenInfo.marketCap).format('$0,0.00') : ''} */}
+        <Text>200</Text>
+      </Column>
+
+          
+    
     </StyledWrapper>
   )
 }

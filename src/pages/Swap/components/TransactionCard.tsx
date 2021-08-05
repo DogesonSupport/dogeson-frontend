@@ -4,6 +4,7 @@ import { Flex } from '@pancakeswap-libs/uikit'
 import { useWeb3React } from '@web3-react/core'
 import moment from 'moment'
 import axios from 'axios';
+import { Link } from 'react-router-dom'
 
 
 
@@ -128,43 +129,51 @@ const TransactionCard = () => {
 
    const Get_data = `
     {
-        ethereum(network: bsc){
-            dexTrades(options:{desc: ["block.height","tradeIndex"], limit: 10, offset: 0},
-              date: {since: "2021-08-03" till: null }
-              baseCurrency: {is: "${input}"}
-              ) {
-                block {
-                  timestamp {
-                    time (format: "%Y-%m-%d %H:%M:%S")
-                  }
-                  height
-                }
-                tradeIndex
-                protocol
-                exchange {
-                  fullName
-                }
-                smartContract {
-                  address {
-                    address
-                    annotation
-                  }
-                }
-                baseAmount
-                baseCurrency {
-                  address
-                  symbol
-                }
-                quoteAmount
-                quoteCurrency {
-                  address
-                  symbol
-                }
-                transaction {
-                  hash
-                }
-            }
-          }
+		ethereum(network: bsc) {
+			  dexTrades(
+				options: {desc: ["block.height", "tradeIndex"], limit: 10, offset: 0}
+				date: {since: "2021-08-05", till: null}
+				baseCurrency: {is: "${input}"}
+			  ) {
+				block {
+				  timestamp {
+					time(format: "%Y-%m-%d %H:%M:%S")
+				  }
+				  height
+				}
+				tradeIndex
+				protocol
+				exchange {
+				  fullName
+				}
+				smartContract {
+				  address {
+					address
+					annotation
+				  }
+				}
+				baseAmount
+				baseCurrency {
+				  address
+				  symbol
+				}
+				quoteAmount
+				quoteCurrency {
+				  address
+				  symbol
+				}
+				transaction {
+				  hash
+				}
+				buyCurrency {
+				  symbol
+				  address
+				  name
+				}
+				quotePrice
+			  }
+			}
+		  
     }`
 
     const fetchData = async () =>{
@@ -182,19 +191,25 @@ const TransactionCard = () => {
     },[input])
  
   
-  
-       
+ 
+   
+        
       const table_data=tableData.map((val:any) => {
+		  
 				return(
-					<tr>
-			<td>
-				<Flex alignItems='center'>{ moment().diff(moment(val.time), 'minute') >= 1 ? <ArrowDown /> : <ArrowUp /> }<h2 className={moment().diff(moment(val.time), 'minute') >= 1 ? 'error' : 'success'}>{ moment().diff(moment(val.time), 'minute') >= 1 ? moment(val.time).utc().fromNow() : 'just now' }</h2></Flex>
-			</td>
-			<td><h2 className={moment().diff(moment(val.time), 'minute') >= 1 ? 'error' : 'success'}>{ val.baseAmount }</h2></td>
-			<td><h2 className={moment().diff(moment(val.time), 'minute') >= 1 ? 'error' : 'success'}>{ val.baseAmount}</h2></td>
-			<td><h2 className={moment().diff(moment(val.time), 'minute') >= 1 ? 'error' : 'success'}>{ val.quoteAmount }</h2></td>
-			<td><h2 className={moment().diff(moment(val.time), 'minute') >= 1 ? 'error' : 'success'}>{ val.exchange.fullName }</h2></td>
+				
+							<tr>
+			<td>	
+			<Link to="/"><Flex alignItems='center'><h2 className={val.baseCurrency.symbol===val.buyCurrency.symbol ?'success':'error'}>{ new Date(val.block.timestamp.time).toLocaleTimeString()}</h2></Flex></Link>
+			</td>	
+			<td><Link to="/"><h2 className={val.baseCurrency.symbol===val.buyCurrency.symbol ?'success':'error'}> {val.baseAmount }</h2></Link></td>
+			<td><Link to="/"><h2 className={val.baseCurrency.symbol===val.buyCurrency.symbol ?'success':'error'}>{ val.quotePrice}</h2></Link></td>
+			<td><Link to="/"><h2 className={val.baseCurrency.symbol===val.buyCurrency.symbol ?'success':'error'}>{ val.quoteAmount }</h2></Link></td>
+			<td><Link to="/"><h2 className={val.baseCurrency.symbol===val.buyCurrency.symbol ?'success':'error'}>{ val.exchange.fullName }</h2></Link></td>
+		
 		</tr>
+	
+				
 
 				)			
 		
@@ -242,3 +257,4 @@ const TransactionCard = () => {
 }
 
 export default TransactionCard
+
