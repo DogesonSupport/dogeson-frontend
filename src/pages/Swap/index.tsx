@@ -335,6 +335,7 @@ const Swap = () => {
   }
 
   const route = trade?.route
+  console.log('bbb', trade, ' ', showWrap, ' ', v1Trade, ' ', v2Trade)
   const userHasSpecifiedInputOutput = Boolean(
     currencies[Field.INPUT] && currencies[Field.OUTPUT] && parsedAmounts[independentField]?.greaterThan(JSBI.BigInt(0))
   )
