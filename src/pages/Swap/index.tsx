@@ -171,11 +171,7 @@ const CountDownItem = styled.div`
   & > div {
     width: 94px;
     height: 94px;
-<<<<<<< HEAD
     background:#8b2a9b ;
-=======
-    background: #8B2A9B;
->>>>>>> 0f22c7a78179e077c1b105739d68a8799d779b78
     display: flex;
     align-items: center;
     justify-content: center;

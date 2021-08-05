@@ -192,20 +192,20 @@ const TransactionCard = () => {
  
   
  
-   
+
         
       const table_data=tableData.map((val:any) => {
-		  
+		  const link = `https://bscscan.com/tx/${val.transaction.hash}`
 				return(
 				
 							<tr>
 			<td>	
-			<Link to="/"><Flex alignItems='center'><h2 className={val.baseCurrency.symbol===val.buyCurrency.symbol ?'success':'error'}>{ new Date(val.block.timestamp.time).toLocaleTimeString()}</h2></Flex></Link>
+			<a href={link} target="blank"><Flex alignItems='center'><h2 className={val.baseCurrency.symbol===val.buyCurrency.symbol ?'success':'error'}>{ new Date(val.block.timestamp.time).toLocaleTimeString()}</h2></Flex></a>
 			</td>	
-			<td><Link to="/"><h2 className={val.baseCurrency.symbol===val.buyCurrency.symbol ?'success':'error'}> {val.baseAmount }</h2></Link></td>
-			<td><Link to="/"><h2 className={val.baseCurrency.symbol===val.buyCurrency.symbol ?'success':'error'}>{ val.quotePrice}</h2></Link></td>
-			<td><Link to="/"><h2 className={val.baseCurrency.symbol===val.buyCurrency.symbol ?'success':'error'}>{ val.quoteAmount }</h2></Link></td>
-			<td><Link to="/"><h2 className={val.baseCurrency.symbol===val.buyCurrency.symbol ?'success':'error'}>{ val.exchange.fullName }</h2></Link></td>
+			<td><a href={link} target="blank"><h2 className={val.baseCurrency.symbol===val.buyCurrency.symbol ?'success':'error'}> {val.baseAmount }</h2></a></td>
+			<td><a href={link} target="blank"><h2 className={val.baseCurrency.symbol===val.buyCurrency.symbol ?'success':'error'}>{ val.quotePrice * 335}</h2></a></td>
+			<td><a href={link} target="blank"><h2 className={val.baseCurrency.symbol===val.buyCurrency.symbol ?'success':'error'}>${ val.quoteAmount * 335 }</h2></a></td>
+			<td><a href={link} target="blank"><h2 className={val.baseCurrency.symbol===val.buyCurrency.symbol ?'success':'error'}>{ val.exchange.fullName }</h2></a></td>
 		
 		</tr>
 	
@@ -244,7 +244,7 @@ const TransactionCard = () => {
 						<td>Time</td>
 						<td>Traded Tokens</td>
 						<td>Token Price</td>
-						<td>BNB Value</td>
+						<td>$Value</td>
 						<td>DEX</td>
 					</tr>
 				</thead>
