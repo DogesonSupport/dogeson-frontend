@@ -81,14 +81,14 @@ const MenuContentWrapper = styled.div<{ toggled: boolean }>`
   }
 `
 
-const WalletHeading = styled.div`
+const WalletHeading = styled.div<{ toggled: boolean }>`
   display: flex;
-  justify-content: space-between;
+  justify-content: ${(props) => props.toggled ? 'center' : 'space-between'};
   align-items: center;
   background: #F9AC61;
   width: 100%;
   height: 56px;
-  padding: 0 48px;
+  padding: ${(props) => props.toggled ? '0' : '0 48px'};
   & div {
     display: flex;
     align-items: center;
@@ -395,7 +395,7 @@ const Menu: React.FC = props => {
           }
         </Button>
       </MenuIconWrapper>
-      <WalletHeading>
+      <WalletHeading toggled={menuToggled}>
         <div>
           <WalletIcon />
           {

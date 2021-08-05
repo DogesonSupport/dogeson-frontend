@@ -68,21 +68,25 @@ import LineChart from './components/LineChart'
 const { main: Main } = TYPE
 
 const ArrowContainer = styled.div`
-  width: 20px;
-  height: 20px;
+  width: 28px;
+  height: 28px;
   display: flex;
   align-items: center;
   justify-content: center;
   border: 3px solid rgba(255, 255, 255, 0.4);
   border-radius: 8px;
   margin: 0;
+  & svg {
+    width: 10px;
+    height: 12px;
+  }
 `
 
 const ArrowContent = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: -4px 0;
+  margin: -8px 0;
   z-index: 3;
   position: relative;
 `
