@@ -8,7 +8,8 @@ import useTheme from 'hooks/useTheme'
 import useGetPriceData from 'hooks/useGetPriceData'
 import { injected, bsc, walletconnect } from 'connectors'
 import { useMenuToggle } from 'state/application/hooks'
-import MainLogo from 'assets/images/MainLogo.png'
+import MainLogo from 'assets/images/mainLogo.png'
+import Illustration from 'assets/images/Illustration.svg'
 import { ReactComponent as MenuOpenIcon } from 'assets/svg/icon/MenuOpenIcon.svg'
 import { ReactComponent as WalletIcon } from 'assets/svg/icon/WalletIcon.svg'
 import { ReactComponent as TwitterIcon } from 'assets/svg/icon/TwitterIcon.svg'
@@ -168,6 +169,14 @@ const SocialIconsWrapper = styled.div<{toggled: boolean}>`
     & svg {
       margin: ${(props) => props.toggled ? '11px 0' : '0 11px'};
     }
+  }
+`
+
+const IllustrationWrapper = styled.div`
+  width: 100%;
+  margin-left: -24px;
+  & img {
+    width: 100%;
   }
 `
 
@@ -436,6 +445,11 @@ const Menu: React.FC = props => {
             </div>
           </SocialIconsWrapper>
         </SocialWrapper>
+        {!menuToggled && 
+          <IllustrationWrapper>
+            <img src={Illustration} alt='Illustration' />
+          </IllustrationWrapper>      
+        }
       </MenuContentWrapper>
       {/* <UikitMenu
         links={links}

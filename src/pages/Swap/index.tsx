@@ -167,7 +167,7 @@ const CountDownItem = styled.div`
   & > div {
     width: 94px;
     height: 94px;
-    background: #F9AC61;
+    background: #8B2A9B;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1042,7 +1042,7 @@ const Swap = () => {
         </div>
       </Cards>
       <InfoCard>
-        <h1>Dogeson Charity Starts in</h1>
+        <h1>Sphynx Charity Starts in</h1>
         <CountDownContainer>
           <CountDownItem>
             <div>{ Math.floor(countSeconds / (3600 * 24)) }</div>
@@ -1064,7 +1064,7 @@ const Swap = () => {
       </InfoCard>
       <InfoCardWrapper>
         <InfoCard>
-          <h1>Dogeson Stats</h1>
+          <h1>Sphynx Stats</h1>
           <Flex justifyContent='space-between' style={{ margin: '24px 0' }}>
             <p><b>Total AstraCoins Supply</b></p>
             <p><b>184,502,810</b></p>

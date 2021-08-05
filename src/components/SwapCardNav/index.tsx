@@ -18,7 +18,7 @@ const StyledNav = styled.div`
     box-shadow: none !important;
     outline: none;
     &:hover, &.active {
-      background: #F9AC61 !important;
+      background: #882A9B !important;
       color: white;  
     }
   }
