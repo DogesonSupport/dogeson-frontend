@@ -84,7 +84,7 @@ const WalletHeading = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #F9AC61;
+  background: #8B2A9B;
   width: 100%;
   height: 56px;
   padding: 0 48px;
@@ -118,7 +118,7 @@ const TokenItemWrapper = styled.div<{ toggled: boolean }>`
 `
 
 const ButtonWrapper = styled.div`
-  background: #F9AC61;
+  background: #8B2A9B;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -139,7 +139,7 @@ const MenuItem = styled.a`
     margin-left: 12px;
   }
   &:hover {
-    background: #F9AC61;
+    background: #8B2A9B;
   }
 `
 const SocialWrapper = styled.div`

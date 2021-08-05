@@ -10,7 +10,7 @@ const StyledNav = styled.div`
     color: black;
   }
   & .active {
-    background: #F9AC61;
+    background: #8B2A9B;
     color: white;
   }
 `

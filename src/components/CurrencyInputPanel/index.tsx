@@ -34,7 +34,7 @@ const CurrencySelect = styled.button<{ selected: boolean }>`
   align-items: center;
   font-size: 16px;
   font-weight: 500;
-  background-color: #996A33;
+  background-color: #8b2a9b;
   color: ${({ selected, theme }) => (selected ? theme.colors.text : '#FFFFFF')};
   border-radius: 12px;
   outline: none;

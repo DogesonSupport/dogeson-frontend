@@ -32,7 +32,7 @@ export const SectionBreak = styled.div`
 export const BottomGrouping = styled.div`
   margin-top: 1rem;
   & button {
-    background: #F9AC61;
+    background: #8b2a9b;
   }
 `
 
