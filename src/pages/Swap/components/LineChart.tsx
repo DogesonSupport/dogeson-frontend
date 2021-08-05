@@ -1,5 +1,7 @@
-import React from 'react'
+import React,{useEffect , useState} from 'react'
 import Chart from 'react-apexcharts'
+import moment from 'moment';
+import axios from 'axios'
 
 export interface LineChartProps {
   data?: Array<any>;
@@ -11,15 +13,14 @@ const LineChart: React.FC<LineChartProps> = ({
   width = 500,
   height = 200,
 }) => {
-
+  const input= localStorage.getItem('InputAddress');
+  console.log("inputin table",input)
   const options = {
     chart: {
       height,
       toolbar: {
-        show: false
-      }
-    },
-    colors: ['#77B6EA', '#545454'],
+        show: true
+      },
     dataLabels: {
       enabled: false,
     },
@@ -46,10 +47,105 @@ const LineChart: React.FC<LineChartProps> = ({
     },
     yaxis: {
     },
-  };
+  }
+};
 
+  const [priceData, setPriceData] = useState([
+    {
+      data: [{
+          x: moment(new Date(1538778600000)).format('YYYY:mm:DD'),
+          y: [6629.81, 6650.5, 6623.04, 6633.33]
+        },
+        {
+          x: moment(new Date(1538780400000)).format('YYYY:mm:DD'),
+          y: [6632.01, 6643.59, 6620, 6630.11]
+        },
+        {
+          x: moment(new Date(1538782200000)).format('YYYY:mm:DD'),
+          y: [6630.71, 6648.95, 6623.34, 6635.65]
+        },
+        {
+          x: moment(new Date(1538784000000)).format('YYYY:mm:DD'),
+          y: [6635.65, 6651, 6629.67, 6638.24]
+        },
+    
+    
+      ]
+    }
+  ])
+  
+  const Get_data = `
+  {
+    ethereum(network: bsc) {
+      dexTrades(
+        options: {limit: 300, desc: "timeInterval.minute"}
+        date: {since: "2021-05-01"}
+        exchangeName: {in: ["Pancake", "Pancake v2"]}
+        baseCurrency: {is: "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c"}
+        quoteCurrency: {is: "${input}"}
+      ) {
+        timeInterval {
+            minute(count: 5)
+          }
+          baseCurrency {
+            symbol
+            address
+          }
+          baseAmount
+          quoteCurrency {
+            symbol
+            address
+          }
+          quoteAmount
+          trades: count
+          quotePrice
+          maximum_price: quotePrice(calculate: maximum)
+          minimum_price: quotePrice(calculate: minimum)
+          median_price: quotePrice(calculate: median)
+          open_price: minimum(of: block, get: quote_price)
+          close_price: maximum(of: block, get: quote_price)
+      }
+    }
+  }`  
+
+  const fetchData = async () =>{
+    if(input){
+      const queryResult= await axios.post('https://graphql.bitquery.io/',{query: Get_data});
+
+      const values :any = [
+        {
+          data : []
+        }
+      ];
+  
+      if(queryResult.data.data){
+        queryResult.data.data.ethereum.dexTrades.map(e =>{
+          values[0].data.push({
+            x : e.timeInterval.minute,
+            y : [parseFloat(e.open_price),parseFloat(e.maximum_price), parseFloat(e.minimum_price) , parseFloat(e.close_price) ]
+          });
+          return {}
+        })
+  
+        setPriceData(values);
+      }
+
+    }
+   
+   
+    }
+  
+
+    useEffect(()=>{
+      fetchData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps 
+  },[input])
+  
   return (
-    <Chart options={options} type='candlestick' series={data} width={width} height={height} />
+    <>
+     {priceData[0] ? <Chart options={options} type='candlestick' series={priceData} width={width} height={height} /> :""}
+    </>
+  
   );
 };
 
