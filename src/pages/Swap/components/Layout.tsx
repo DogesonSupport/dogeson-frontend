@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export const Cards = styled.div`
   margin-bottom: 48px;
-  ${({ theme }) => theme.mediaQueries.sm} {
+  ${({ theme }) => theme.mediaQueries.md} {
     display: grid;
     grid-gap: 24px;
     grid-template-columns: auto 1fr;
@@ -13,7 +13,7 @@ export const Cards = styled.div`
 
 export const LeftTopCard = styled.div`
   width: 100%;
-  ${({ theme }) => theme.mediaQueries.sm} {
+  ${({ theme }) => theme.mediaQueries.md} {
     width: auto;
     grid-column: 1;
     grid-row: 1;
@@ -22,7 +22,7 @@ export const LeftTopCard = styled.div`
 
 export const RightTopCard = styled.div`
   width: 100%;
-  ${({ theme }) => theme.mediaQueries.sm} {
+  ${({ theme }) => theme.mediaQueries.md} {
     width: auto;
     grid-column: 2;
     grid-row: 1;

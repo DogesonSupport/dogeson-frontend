@@ -46,8 +46,8 @@ const IconWrapper = styled.div<{ size?: number }>`
 `
 
 const ContractCard = styled(Text)`
-  padding: 0 12px;
-  height: 48px;
+  padding: 0 4px;
+  height: 40px;
   text-overflow: ellipsis;
   background: rgba(0, 0, 0, 0.4);
   border-radius: 16px;
@@ -64,12 +64,15 @@ const ContractCard = styled(Text)`
     color: #F7931A;
     font-size: 16px;
     &::placeholder {
-      color: red    }
-  
+      color: red
+    }
+  }
+  & button:last-child {
+    background: #8B2A9B;
   }
   ${({ theme }) => theme.mediaQueries.sm} {
     & input {
-      min-width: 300px;
+      min-width: 360px;
     }
   }
   ${({ theme }) => theme.mediaQueries.md} {
@@ -81,7 +84,7 @@ const SocialIconsWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 48px;
+  height: 40px;
   background: rgba(0, 0, 0, 0.4);
   border-radius: 20px;
   & svg {
@@ -115,7 +118,7 @@ export default function ContractPanel({value}: ContractPanelProps){
     // },[addressSearch]);
     
   return (
-        <ContractPanelWrapper>
+    <ContractPanelWrapper>
       <ContractCard>
         <CopyHelper toCopy={value ? value.contractAddress : addressSearch}>
           &nbsp;

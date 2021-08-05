@@ -74,6 +74,14 @@ const LabelRow = styled.div`
   }
 `
 
+const MaxButtonWrapper = styled.div`
+  & button {
+    background-color: #8B2A9B;
+    color: white;
+    margin-left: 4px;
+  }
+`
+
 const Aligner = styled.span`
   display: flex;
   align-items: center;
@@ -201,9 +209,11 @@ export default function CurrencyInputPanel({
                 }}
               />
               {account && currency && showMaxButton && label !== 'To' && (
-                <Button onClick={onMax} size="sm" variant="text">
-                  MAX
-                </Button>
+                <MaxButtonWrapper>
+                  <Button onClick={onMax} size="sm" variant="text">
+                    MAX
+                  </Button>
+                </MaxButtonWrapper>
               )}
             </>
           )}
