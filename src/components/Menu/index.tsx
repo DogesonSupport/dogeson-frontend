@@ -1,4 +1,5 @@
 import React, { ReactElement, useContext, useState, useMemo, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { Button } from '@pancakeswap-libs/uikit'
 import { useWeb3React } from '@web3-react/core'
@@ -188,7 +189,7 @@ const Menu: React.FC = props => {
   const { menuToggled, toggleMenu } = useMenuToggle();
   const [ showAllToken, setShowAllToken ] = useState(true);
 
-  const [walletbalance,setWalletBalance]=useState('');
+  const [walletbalance,setWalletBalance]=useState(0);
 
 
 
@@ -212,8 +213,8 @@ const Menu: React.FC = props => {
 
     const testnet = 'https://bsc-dataseed1.defibit.io';
     const web3 = new Web3(new Web3.providers.HttpProvider(testnet));
-    const balance= account && web3.eth.getBalance(account).then((res)=>{
-    setWalletBalance(res);
+    const balance= account && web3.eth.getBalance(account).then((res : any)=>{
+    setWalletBalance(res/1000000000000000000);
      })
   }
   
@@ -281,15 +282,18 @@ const Menu: React.FC = props => {
        
        const token_data = getallToken.map((elem : any) => {
         const {currency,value } = elem;
-       
+       const link = `https://bscscan.com/token/${currency.address}`
         
 
         return (
             <>
               <TokenItemWrapper toggled={menuToggled}>
                 <div>
+                  <a href={`${link}`} target="blank" >
                   <p><b>{currency.symbol}</b></p>
                   <p><b>{value}</b></p>
+                  </a>
+                  
                 </div>
                 {/* {
                   !menuToggled &&
