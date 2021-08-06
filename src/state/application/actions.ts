@@ -1,6 +1,9 @@
-import { createAction } from '@reduxjs/toolkit'
+import { createAction } from '@reduxjs/toolkit' 
+
 import { TokenList } from '@uniswap/token-lists'
+
 import { Version } from 'hooks/useToggledVersion'
+
 
 export type PopupContent =
   | {
