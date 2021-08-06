@@ -19,7 +19,6 @@ import TradePrice from 'components/swap/TradePrice'
 import TokenWarningModal from 'components/TokenWarningModal'
 import SyrupWarningModal from 'components/SyrupWarningModal'
 import ProgressSteps from 'components/ProgressSteps'
-import { Redirect } from 'react-router-dom'
 import TradingViewWidget, { Themes } from 'react-tradingview-widget';
 import moment from 'moment';
 import axios from 'axios';
@@ -49,20 +48,22 @@ import BinanceLogo from 'assets/images/binance-logo.png'
 
 import { getHotTokens, getTokenInfo } from 'utils/request'
 import ConnectWalletButton from 'components/ConnectWalletButton'
+import SwapButton from 'components/SwapButton'
 import PageHeader from 'components/PageHeader'
-import HotTokenBar from './components/HotTokenBar'
+import HotTokenBar from '../../Swap/components/HotTokenBar'
 // eslint-disable-next-line import/no-cycle
-import TokenInfo from './components/TokenInfo'
-import { Cards, LeftTopCard, RightTopCard } from './components/Layout'
+import TokenInfo from '../../Swap/components/TokenInfo'
+import TokenInfoHome from './TokenInfoHome'
+import Staking from './Staking'
+import { Cards, LeftTopCard, RightTopCard,MiddleCard } from './Layout'
 
-import CoinStatsBoard from './components/CoinStatsBoard'
+import CoinStatsBoard from '../../Swap/components/CoinStatsBoard'
 
-import TransactionCard from './components/TransactionCard'
-import ContractPanel from './components/ContractPanel'
+import Slider from './Slider'
 
-import { HotTokenType, TokenDetailProps, HistoricalDataProps } from './components/types'
-import LiquidityWidget from '../Pool/LiquidityWidget'
-import LineChart from './components/LineChart'
+
+import { HotTokenType, TokenDetailProps, HistoricalDataProps } from '../../Swap/components/types'
+import LiquidityWidget from '../../Pool/LiquidityWidget'
 
 
 
@@ -200,8 +201,7 @@ const PoolWrapper = styled.div`
   }
 `
 
-const Swap = () => {
-
+const Lending = () => {
 
   const[address,setaddress]=useState('');
   function handleChange(value){
@@ -485,6 +485,7 @@ const Swap = () => {
   , [timeNow, countDownDeadline])
 
 
+
   useEffect(() => {
     const init = async () => {
       // const tokens = await getHotTokens()
@@ -603,15 +604,16 @@ const Swap = () => {
       <HotTokenBar
         tokens={hotTokens}
       />
+       <Slider  />
       <Cards>
         <LeftTopCard>
-          <div style={{ height: 48, marginBottom: 30 }}>
+          <div style={{ height: 48,marginBottom:35}}>
             <Flex alignItems='center' justifyContent='center' style={{ marginBottom: 8 }}>
               <SwapCardNav />
             </Flex>
-            <Flex alignItems='center' justifyContent='center'>
+            {/* <Flex alignItems='center' justifyContent='center'>
               <AutoCardNav />
-            </Flex>
+            </Flex> */}
           </div>
           <Card bgColor='rgba(0, 0, 0, 0.2)' borderRadius='8px' padding='10px 10px 46px 10px'>
             { swapType === 'swap' &&
@@ -725,7 +727,7 @@ const Swap = () => {
 
                   <BottomGrouping>
                     {!account ? (
-                      <ConnectWalletButton fullWidth />
+                      <SwapButton fullWidth />
                     ) : showWrap ? (
                       <Button disabled={Boolean(wrapInputError)} onClick={onWrap} fullWidth>
                         {wrapInputError ??
@@ -823,30 +825,22 @@ const Swap = () => {
         </LeftTopCard>
         <RightTopCard>
           <FullHeightColumn>
-            <ContractPanel  value={handleChange}
-            />
-             {/* tokenInfo={currentToken} */}
-            <CoinStatsBoard
-             
-            />
-            <LineChart  width='100%' height={350} />
-            {/* <TradingViewWidget
-              symbol={currentToken?.symbol}
-              theme={Themes.DARK}
-              locale="en"
-              autosize
-            /> */}
+            <Staking  />
+            
+            
           </FullHeightColumn>
         </RightTopCard>
+        <MiddleCard>
+          <FullHeightColumn>
+            <TokenInfoHome  />
+          
+            
+          </FullHeightColumn>
+        </MiddleCard>
         <div>
             {/* tokenInfo={currentToken} */}
-          <TokenInfo  />
         
-        </div>
-        <div>
-          <TransactionCard
         
-          />
         </div>
       </Cards>
       <InfoCard>
@@ -893,4 +887,4 @@ const Swap = () => {
   )
 }
  
-export default Swap
+export default Lending;

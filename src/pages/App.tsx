@@ -1,5 +1,5 @@
 import React, { Suspense, useEffect, useState } from 'react'
-import { HashRouter, Route, Switch } from 'react-router-dom'
+import { HashRouter, Route, Switch,Redirect,useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 import { useWeb3React } from '@web3-react/core'
 import { Button, useWalletModal, ConnectorId, useMatchBreakpoints } from '@pancakeswap-libs/uikit'
@@ -9,7 +9,7 @@ import { ReactComponent as EmptyAvatar } from 'assets/svg/icon/EmptyAvatar.svg'
 import { ReactComponent as ChevronDown } from 'assets/svg/icon/ChevronDown.svg'
 import { useMenuToggle } from 'state/application/hooks'
 import PyramidImage from 'assets/images/pyramid.png'
-
+import Lending from './Lending/components'
 // import { Credentials, StringTranslations } from '@crowdin/crowdin-api-client'
 import Popups from '../components/Popups'
 import Web3ReactManager from '../components/Web3ReactManager'
@@ -185,12 +185,21 @@ export default function App() {
   const { account, activate, deactivate } = useWeb3React();
   const { menuToggled, toggleMenu } = useMenuToggle();
   const { isXl } = useMatchBreakpoints();
-
+  const history=useHistory();
+  // history.push('/swap')
   const handleLogin = (connectorId: ConnectorId) => {
+
+
     if (connectorId === 'walletconnect') {
-      return activate(walletconnect)
+      console.log("handlelogin");
+      
+      return activate(walletconnect);
+     
     }
     return activate(injected)
+    
+    
+
   }
   const { onPresentConnectModal } = useWalletModal(handleLogin, deactivate, account as string)
 
@@ -277,14 +286,14 @@ export default function App() {
                         </div>
                       </AccountWrapper>
                     :
-                      <Button onClick={onPresentConnectModal}>Connect</Button>
+                      <Button onClick={onPresentConnectModal }>Connect</Button>
                   }
                 </TopBar>
                 <BannerWrapper>
                   <img src={PyramidImage} alt='Pyramid' />
                 </BannerWrapper>
                 <PageContent>
-                  <Web3ReactManager>
+                  {/* <Web3ReactManager> */}
                     <Switch>
                       <Route exact strict path='/swap' component={Swap} />
                       <Route exact strict path='/swap/:outputCurrency' component={RedirectToSwap} />
@@ -301,8 +310,15 @@ export default function App() {
                       <Route exact strict path='/migrate/v1' component={MigrateV1} />
                       <Route exact strict path='/migrate/v1/:address' component={MigrateV1Exchange} />
                       <Route component={RedirectPathToSwapOnly} />
+                      <Redirect to="/lending"/>
                     </Switch>
-                  </Web3ReactManager>
+                  {/* </Web3ReactManager> */}
+                  {/* <Web3ReactManager> */}
+                  <Switch>
+                  <Route exact strict path='/lending' component={Lending} />
+                      </Switch>
+                  {/* </Web3ReactManager> */}
+                  
                 </PageContent>
                 <Marginer />
               </BodyWrapper>

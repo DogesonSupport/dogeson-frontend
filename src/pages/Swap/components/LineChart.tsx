@@ -1,6 +1,7 @@
 import React,{useEffect , useState} from 'react'
 import Chart from 'react-apexcharts'
 import moment from 'moment';
+import { BoxesLoader } from "react-awesome-loaders";
 import axios from 'axios'
 
 export interface LineChartProps {
@@ -13,6 +14,8 @@ const LineChart: React.FC<LineChartProps> = ({
   width = 500,
   height = 200,
 }) => {
+
+  const [loader,setLoader]=useState(false)
   const input= localStorage.getItem('InputAddress');
   console.log("inputin table",input)
   const options = {
@@ -126,7 +129,6 @@ const LineChart: React.FC<LineChartProps> = ({
           });
           return {}
         })
-  
         setPriceData(values);
       }
 

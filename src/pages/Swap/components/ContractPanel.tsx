@@ -6,9 +6,11 @@ import { Card, Flex,Text ,Button} from '@pancakeswap-libs/uikit'
 import { ReactComponent as TwitterIcon } from 'assets/svg/icon/TwitterIcon.svg'
 import { ReactComponent as SocialIcon2 } from 'assets/svg/icon/SocialIcon2.svg'
 import { ReactComponent as TelegramIcon } from 'assets/svg/icon/TelegramIcon.svg'
+import { BoxesLoader } from "react-awesome-loaders";
 
 import CopyHelper from 'components/AccountDetails/Copy'
 import axios from 'axios';
+
 // import { GetInputData } from '../index';
 import { TokenDetailProps } from './types'
 
@@ -97,6 +99,8 @@ export default function ContractPanel({value}: ContractPanelProps){
   const [ addressSearch, setAddressSearch ] = useState('');
   localStorage.setItem('InputAddress', addressSearch);
 
+    const [loader,setLoader]=useState(false)
+
   // console.log("addressSearch",addressSearch)
      const handlerChange=(e)=>{
       setAddressSearch(e.target.value)
@@ -104,6 +108,7 @@ export default function ContractPanel({value}: ContractPanelProps){
 
      const InputSubmit=(e)=>{
        e.preventDefault();
+       setLoader(true);
       //  console.log("click");
      
      }
@@ -118,7 +123,18 @@ export default function ContractPanel({value}: ContractPanelProps){
     // },[addressSearch]);
     
   return (
-    <ContractPanelWrapper>
+    <> 
+    {loader?<BoxesLoader
+    
+        boxColor="#8b2a9b"
+        shadowColor="#aa8929"
+        style={{ marginBottom: "20px" }}
+        desktopSize="30px"
+        mobileSize="15px"
+      />:""}
+ 
+      
+      <ContractPanelWrapper>
       <ContractCard>
         <CopyHelper toCopy={value ? value.contractAddress : addressSearch}>
           &nbsp;
@@ -132,6 +148,10 @@ export default function ContractPanel({value}: ContractPanelProps){
         <TelegramIcon />
       </SocialIconsWrapper>
     </ContractPanelWrapper>
+
+  
+    
+    </>
 
   )
 }
