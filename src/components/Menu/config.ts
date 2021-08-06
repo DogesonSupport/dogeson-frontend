@@ -29,12 +29,12 @@ const config = [
   {
     label: 'Farms',
     icon: FarmIcon,
-    href: 'http://ec2-34-222-238-25.us-west-2.compute.amazonaws.com:32861/farms'
+    href: 'https://farm.sphynxswap.finance/farms'
   },
   {
     label: 'Pools ',
     icon: PoolIcon,
-    href: 'http://ec2-34-222-238-25.us-west-2.compute.amazonaws.com:32861/pools'
+    href: 'https://farm.sphynxswap.finance/pools'
   },
   {
     label: 'Prediction (coming soon)',

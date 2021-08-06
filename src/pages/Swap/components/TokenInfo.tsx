@@ -67,7 +67,7 @@ export default function TokenInfo() {
   });
 
   const getTableData =   () => {
-    axios.post("http://ec2-34-222-238-25.us-west-2.compute.amazonaws.com:9000/tokenStats",{address:input || "0x016c285d5b918b92aa85ef1e147498badfe30d69"})
+    axios.post("https://api.sphynxswap.finance/tokenStats",{address:input || "0x016c285d5b918b92aa85ef1e147498badfe30d69"})
         .then((response) => {
             setalldata(response.data)
         });
