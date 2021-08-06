@@ -29,17 +29,17 @@ const config = [
   {
     label: 'Farms',
     icon: FarmIcon,
-    href: 'https://www.goosedefi.com/farms'
+    href: 'http://ec2-34-222-238-25.us-west-2.compute.amazonaws.com:32861/farms'
   },
   {
-    label: 'Pools',
+    label: 'Pools ',
     icon: PoolIcon,
-    href: 'https://www.goosedefi.com/nests'
+    href: 'http://ec2-34-222-238-25.us-west-2.compute.amazonaws.com:32861/pools'
   },
   {
-    label: 'Prediction',
+    label: 'Prediction (coming soon)',
     icon: PredictionIcon,
-    href: 'https://www.goosedefi.com/nests'
+    href: ''
   },
   // {
   //   label: 'Lottery',
@@ -47,7 +47,7 @@ const config = [
   //   href: 'https://www.goosedefi.com/lottery'
   // },
   {
-    label: 'IFO',
+    label: 'IFO (coming soon)',
     icon: IFOIcon,
     items: [
       {

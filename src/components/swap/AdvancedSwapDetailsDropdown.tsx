@@ -12,9 +12,11 @@ const AdvancedDetailsFooter = styled.div<{ show: boolean }>`
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
   color: ${({ theme }) => theme.colors.textSubtle};
-  z-index: 1;
+  z-index: ${({ show }) => (show ? 1 : -1)};
+  position: relative;
 
   transform: ${({ show }) => (show ? 'translateY(0%)' : 'translateY(-100%)')};
+  opacity: ${({ show }) => (show ? 1 : 0)};
   transition: transform 300ms ease-in-out;
 `
 
