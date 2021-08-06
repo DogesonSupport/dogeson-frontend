@@ -34,10 +34,10 @@ const config = [
   {
     label: 'Pools ',
     icon: PoolIcon,
-    href: 'http://ec2-34-222-238-25.us-west-2.compute.amazonaws.com:32861/nests'
+    href: 'http://ec2-34-222-238-25.us-west-2.compute.amazonaws.com:32861/pools'
   },
   {
-    label: 'Prediction(coming soon)',
+    label: 'Prediction (coming soon)',
     icon: PredictionIcon,
     href: ''
   },
@@ -47,7 +47,7 @@ const config = [
   //   href: 'https://www.goosedefi.com/lottery'
   // },
   {
-    label: 'IFO(coming soon)',
+    label: 'IFO (coming soon)',
     icon: IFOIcon,
     items: [
       {
