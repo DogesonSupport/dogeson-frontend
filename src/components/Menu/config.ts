@@ -4,6 +4,7 @@ import { ReactComponent as PoolIcon } from 'assets/svg/icon/PoolIcon.svg'
 import { ReactComponent as PredictionIcon } from 'assets/svg/icon/PredictionIcon.svg'
 import { ReactComponent as IFOIcon } from 'assets/svg/icon/IFOIcon.svg'
 import { ReactComponent as MoreIcon } from 'assets/svg/icon/MoreIcon.svg'
+import {ReactComponent as ChartIcon}  from 'assets/svg/icon/chart-swap.svg'
 
 const config = [
   // {
@@ -27,6 +28,12 @@ const config = [
   //   ]
   // },
   {
+    label: 'Swap & charts',
+    icon: ChartIcon,
+    href: 'https://farm.sphynxswap.finance/farms'
+
+  },
+  {
     label: 'Farms',
     icon: FarmIcon,
     href: 'https://farm.sphynxswap.finance/farms'
@@ -41,6 +48,8 @@ const config = [
     icon: PredictionIcon,
     href: ''
   },
+  
+
   // {
   //   label: 'Lottery',
   //   icon: 'TicketIcon',

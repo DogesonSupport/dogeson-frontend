@@ -137,6 +137,7 @@ const MenuItem = styled.a`
   align-items: center;
   padding: 0 24px;
   border-radius: 10px;
+  text-decoration: none !important;
   & p {
     margin-left: 12px;
   }
@@ -390,7 +391,7 @@ const Menu: React.FC = props => {
 
   return (
     <MenuWrapper toggled={menuToggled}>
-      <img src={MainLogo} alt='Main Logo' />
+      <Link  to="/swap"><img src={MainLogo} alt='Main Logo' /></Link>
       <MenuIconWrapper>
         {!menuToggled && <span>Main Menu</span>
         }
@@ -436,7 +437,7 @@ const Menu: React.FC = props => {
           links.map((link) => {
             const Icon = link.icon
             return (
-              <MenuItem href={link.href} target='_blank'>
+              <MenuItem href={link.href}>
                 <Icon />
                 {
                   !menuToggled && <p><b>{ link.label }</b></p>

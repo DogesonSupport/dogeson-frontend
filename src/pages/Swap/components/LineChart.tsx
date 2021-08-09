@@ -112,6 +112,7 @@ const LineChart: React.FC<LineChartProps> = ({
   }`  
 
   const fetchData = async () =>{
+   
     if(input){
       const queryResult= await axios.post('https://graphql.bitquery.io/',{query: Get_data});
 
@@ -130,6 +131,7 @@ const LineChart: React.FC<LineChartProps> = ({
           return {}
         })
         setPriceData(values);
+        setLoader(false);
       }
 
     }
@@ -145,6 +147,14 @@ const LineChart: React.FC<LineChartProps> = ({
   
   return (
     <>
+     {loader?<BoxesLoader
+    
+    boxColor="#8b2a9b"
+    shadowColor="#aa8929"
+    style={{ marginBottom: "20px" }}
+    desktopSize="30px"
+    mobileSize="15px"
+  />:""}
      {priceData[0] ? <Chart options={options} type='candlestick' series={priceData} width={width} height={height} /> :""}
     </>
   

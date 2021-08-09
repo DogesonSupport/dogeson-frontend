@@ -9,7 +9,7 @@ import { ReactComponent as EmptyAvatar } from 'assets/svg/icon/EmptyAvatar.svg'
 import { ReactComponent as ChevronDown } from 'assets/svg/icon/ChevronDown.svg'
 import { useMenuToggle } from 'state/application/hooks'
 import PyramidImage from 'assets/images/pyramid.png'
-import Lending from './Lending/components'
+import Landing from './Lending/components'
 // import { Credentials, StringTranslations } from '@crowdin/crowdin-api-client'
 import Popups from '../components/Popups'
 import Web3ReactManager from '../components/Web3ReactManager'
@@ -189,18 +189,13 @@ export default function App() {
   // history.push('/swap')
   const handleLogin = (connectorId: ConnectorId) => {
 
-
-    if (connectorId === 'walletconnect') {
-      console.log("handlelogin");
+      if (connectorId === 'walletconnect') {
       
       return activate(walletconnect);
      
     }
-    return activate(injected)
-    
-    
-
-  }
+      return activate(injected)
+}
   const { onPresentConnectModal } = useWalletModal(handleLogin, deactivate, account as string)
 
   // const apiKey = `${process.env.REACT_APP_CROWDIN_APIKEY}`
@@ -315,7 +310,7 @@ export default function App() {
                   {/* </Web3ReactManager> */}
                   {/* <Web3ReactManager> */}
                   <Switch>
-                  <Route exact strict path='/lending' component={Lending} />
+                  <Route exact strict path='/landing' component={Landing} />
                       </Switch>
                   {/* </Web3ReactManager> */}
                   

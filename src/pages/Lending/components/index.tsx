@@ -201,7 +201,7 @@ const PoolWrapper = styled.div`
   }
 `
 
-const Lending = () => {
+const Landing = () => {
 
   const[address,setaddress]=useState('');
   function handleChange(value){
@@ -887,4 +887,4 @@ const Lending = () => {
   )
 }
  
-export default Lending;
+export default Landing;
