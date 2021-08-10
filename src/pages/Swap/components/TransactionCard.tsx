@@ -129,7 +129,7 @@ const TransactionCard = () => {
 
 
 
-	console.log("inputin table",input)
+	// console.log("inputin table",input)
 
       
 
@@ -223,7 +223,7 @@ const TransactionCard = () => {
 				})
 
 
-				console.log("trades::::" , tableData)
+				// console.log("trades::::" , tableData)
 
 
 

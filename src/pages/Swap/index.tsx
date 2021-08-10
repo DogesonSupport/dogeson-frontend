@@ -20,7 +20,6 @@ import TokenWarningModal from 'components/TokenWarningModal'
 import SyrupWarningModal from 'components/SyrupWarningModal'
 import ProgressSteps from 'components/ProgressSteps'
 import { Redirect } from 'react-router-dom'
-import TradingViewWidget, { Themes } from 'react-tradingview-widget';
 import moment from 'moment';
 import axios from 'axios';
 
@@ -46,6 +45,9 @@ import { ReactComponent as DownArrow } from 'assets/svg/icon/DownArrow.svg'
 import { ReactComponent as HelpIcon } from 'assets/svg/icon/HelpIcon.svg'
 import { ReactComponent as HelpIcon1 } from 'assets/svg/icon/HelpIcon1.svg'
 import BinanceLogo from 'assets/images/binance-logo.png'
+import SwapBanner from 'assets/images/DogeBanner1.png'
+import FarmBanner from 'assets/images/SphynxFarmbanner.jpg'
+import StakingBanner from 'assets/images/SphynxStakebanner.jpg'
 
 import { getHotTokens, getTokenInfo } from 'utils/request'
 import ConnectWalletButton from 'components/ConnectWalletButton'
@@ -63,24 +65,24 @@ import ContractPanel from './components/ContractPanel'
 import { HotTokenType, TokenDetailProps, HistoricalDataProps } from './components/types'
 import LiquidityWidget from '../Pool/LiquidityWidget'
 import LineChart from './components/LineChart'
-
+import datafeed from "./components/main";
 
 
 
 const { main: Main } = TYPE
 
 const ArrowContainer = styled.div`
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 3px solid rgba(255, 255, 255, 0.4);
-  border-radius: 8px;
+  border: 3px solid rgb(255, 255, 255);
+  border-radius: 12px;
   margin: 0;
   & svg {
-    width: 10px;
-    height: 12px;
+    width: 14px;
+    height: 16px;
   }
 `
 
@@ -88,7 +90,7 @@ const ArrowContent = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: -8px 0;
+  margin: -4px 0;
   z-index: 3;
   position: relative;
 `
@@ -200,6 +202,66 @@ const PoolWrapper = styled.div`
   }
 `
 
+const SwapRightBanner = styled.div`
+  position: absolute;
+  max-width: 350px;
+  right: 0;
+  top: 10px;
+  opacity: 0.6;
+  z-index: -1;
+  & img {
+    width: 100%;
+  }
+`
+
+const BottomCard = styled.div`
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-color: rgba(0, 0, 0, 0.4);
+  height: 480px;
+  filter: drop-shadow(0 2px 12px rgba(37, 51, 66, 0.15));
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  margin-bottom: -60px !important;
+  ${({ theme }) => theme.mediaQueries.md} {
+    width: calc(30% - 12px) !important;
+  }
+  & div {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 1;
+  }
+  & h1, & button {
+    position: absolute;
+    z-index: 2;
+  }
+  & h1 {
+    top: 0;
+    width: 100%;
+    color: white;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 68px;
+    text-align: center;
+    border-bottom: 1px solid #C4C4C4;
+  }
+  & button {
+    bottom: 40px;
+    left: 5%;
+    width: 90%;
+    background: #8B2A9B;
+    outline: none;
+    box-shadow: none;
+    border: none;
+  }
+`
+
 const Swap = () => {
 
 
@@ -210,17 +272,17 @@ const Swap = () => {
     }
 
 
-  const getapi=()=>{
-    axios.get('http://192.168.18.65:8080/v1.0/dogeson/historical?dexId=0x3b9dd0ac3fa49988a177b7c020f680295fb21996&span=month').then((response)=>{
-      console.log("getapi",response);
+  // const getapi=()=>{
+  //   axios.get('http://192.168.18.65:8080/v1.0/dogeson/historical?dexId=0x3b9dd0ac3fa49988a177b7c020f680295fb21996&span=month').then((response)=>{
+  //     console.log("getapi",response);
       
-    })
-    .catch((error) => { console.log("Error", error); })
-  }
+  //   })
+  //   .catch((error) => { console.log("Error", error); })
+  // }
 
-  useEffect(()=>{
-    getapi();
-  },[])
+  // useEffect(()=>{
+  //   getapi();
+  // },[])
   const loadedUrlParams = useDefaultsFromURLSearch()
   
   // token warning stuff
@@ -604,9 +666,12 @@ const Swap = () => {
       <HotTokenBar
         tokens={hotTokens}
       />
+      <SwapRightBanner>
+        <img src={SwapBanner} alt='Swap Banner' />
+      </SwapRightBanner>
       <Cards>
         <LeftTopCard>
-          <div style={{ height: 48, marginBottom: 30 }}>
+          <div style={{ height: 48, marginBottom: 20 }}>
             <Flex alignItems='center' justifyContent='center' style={{ marginBottom: 8 }}>
               <SwapCardNav />
             </Flex>
@@ -614,7 +679,7 @@ const Swap = () => {
               <AutoCardNav />
             </Flex>
           </div>
-          <Card bgColor='rgba(0, 0, 0, 0.2)' borderRadius='8px' padding='10px 10px 46px 10px'>
+          <Card bgColor='rgba(0, 0, 0, 0.2)' borderRadius='8px' padding='0 10px 20px 10px'>
             { swapType === 'swap' &&
               <Wrapper id="swap-page">
                 <ConfirmSwapModal
@@ -631,7 +696,7 @@ const Swap = () => {
                   onDismiss={handleConfirmDismiss}
                 />
                 <PageHeader title="Swap" description="" showAuto />
-                <CardBody style={{ padding: 0 }}>
+                <CardBody style={{ padding: '0 10px' }}>
                   <CurrencyInputPanel
                     label={
                       independentField === Field.OUTPUT && !showWrap && trade
@@ -830,6 +895,11 @@ const Swap = () => {
             <CoinStatsBoard
              
             />
+
+           {/* <div id="tv_chart_container">
+             {datafeed}
+              </div>  */}
+       
             <LineChart  width='100%' height={350} />
             {/* <TradingViewWidget
               symbol={currentToken?.symbol}
@@ -849,8 +919,18 @@ const Swap = () => {
         
           />
         </div>
+        <BottomCard style={{ backgroundImage: `url(${FarmBanner})` }}>
+          <h1>Farms</h1>
+          <div />
+          <a href='https://farm.sphynxswap.finance/farms' target='_blank' rel='noreferrer'><Button>Start Farming</Button></a>
+        </BottomCard>
+        <BottomCard style={{ backgroundImage: `url(${StakingBanner})` }}>
+          <h1>Staking</h1>
+          <div />
+          <a href='https://farm.sphynxswap.finance/pools' target='_blank' rel='noreferrer'><Button>Start Staking</Button></a>
+        </BottomCard>
       </Cards>
-      <InfoCard>
+      {/* <InfoCard>
         <h1>Sphynx Charity Starts in</h1>
         <CountDownContainer>
           <CountDownItem>
@@ -888,7 +968,7 @@ const Swap = () => {
           <h2 style={{ margin: '24px 0' }}>$8,799,370,991</h2>
           <p>Across all LPs</p>
         </InfoCard>
-      </InfoCardWrapper>
+      </InfoCardWrapper> */}
     </Page>
    
   )

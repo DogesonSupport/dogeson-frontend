@@ -4,6 +4,7 @@ import moment from 'moment';
 import { BoxesLoader } from "react-awesome-loaders";
 import axios from 'axios'
 import { useSelector } from 'react-redux';
+import styled from 'styled-components'
 import { AppDispatch, AppState } from '../../../state'
 
 
@@ -13,6 +14,11 @@ export interface LineChartProps {
   width?: number | string;
   height?: number | string;
 }
+
+const ChartWrapper = styled.div`
+  background: black;
+`
+
 const LineChart: React.FC<LineChartProps> = ({
   data = [],
   width = 500,
@@ -23,7 +29,7 @@ const LineChart: React.FC<LineChartProps> = ({
   // const input= localStorage.getItem('InputAddress');
   const input = useSelector<AppState, AppState['inputReducer']>((state) => state.inputReducer.input)
 
-  console.log("input in chart", input);
+  // console.log("input in chart", input);
   const options = {
     chart: {
       height,
@@ -193,7 +199,7 @@ const LineChart: React.FC<LineChartProps> = ({
 
   return (
     <>
-      <div>
+      <ChartWrapper>
         {loader ?
           <div style={{ position: 'absolute', left: 567, top: 150 }}>
             <BoxesLoader
@@ -211,7 +217,7 @@ const LineChart: React.FC<LineChartProps> = ({
         {priceData[0] ? <Chart options={options} type='candlestick' series={priceData} width={width} height={height} /> : ""}
 
 
-      </div>
+      </ChartWrapper>
 
     </>
 

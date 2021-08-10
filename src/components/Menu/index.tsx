@@ -196,7 +196,7 @@ const Menu: React.FC = props => {
 
   const [getallToken,setAllTokens]=useState([]);
 
-  console.log("getallToken",getallToken)
+  // console.log("getallToken",getallToken)
   
   // const getAccount= new web3.eth.Iban('account');
   // const getBalance= async()=>{
@@ -412,7 +412,7 @@ const Menu: React.FC = props => {
             !menuToggled && <p>Wallet</p>
           }
         </div>
-        {!menuToggled && <p><b>{account?walletbalance:''}</b></p>
+        {!menuToggled && <p><b>{account?walletbalance.toLocaleString():''}</b></p>
         }
       </WalletHeading>
       <MenuContentWrapper toggled={menuToggled}>

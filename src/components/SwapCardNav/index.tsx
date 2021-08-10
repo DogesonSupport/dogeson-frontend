@@ -7,12 +7,12 @@ import TranslatedText from '../TranslatedText'
 const StyledNav = styled.div`
   text-align: center;
   display: flex;
-  height: 28px;
+  height: 24px;
   background: white;
   border-radius: 16px;
   & button {
     color: black;
-    height: 28px;
+    height: 24px;
     background: transparent;
     border: none;
     box-shadow: none !important;

@@ -77,7 +77,7 @@ const ContractCard = styled(Text)`
   }
   ${({ theme }) => theme.mediaQueries.sm} {
     & input {
-      min-width: 360px;
+      min-width: 420px;
     }
   }
   ${({ theme }) => theme.mediaQueries.md} {
@@ -100,7 +100,7 @@ const SocialIconsWrapper = styled.div`
 export default function ContractPanel({value}: ContractPanelProps){
 
   const [ addressSearch, setAddressSearch ] = useState('');
-  localStorage.setItem('InputAddress', addressSearch);
+  // localStorage.setItem('InputAddress', addressSearch);
   
     const dispatch=useDispatch();
     // const [loader,setLoader]=useState(false)
@@ -110,12 +110,12 @@ export default function ContractPanel({value}: ContractPanelProps){
       setAddressSearch(e.target.value)
      }
 
-     const InputSubmit=(e)=>{
-       e.preventDefault();
-      //  setLoader(true);
-      //  console.log("click");
+    //  const InputSubmit=(e)=>{
+    //    e.preventDefault();
+    //   //  setLoader(true);
+    //   //  console.log("click");
      
-     }
+    //  }
     // useEffect(() => {
     //   const getalldata=()=>{
     //     axios.get(`http://192.168.18.65:8080/v1.0/dogeson/info/contract/${addressSearch}`).then((response)=>{

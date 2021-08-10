@@ -62,7 +62,7 @@ export default function TokenInfo() {
   //   console.log("inputaddress1",input);
     const input = useSelector<AppState, AppState['inputReducer']>((state) => state.inputReducer.input)
 
-    console.log("input in chart",input);
+    // console.log("input in chart",input);
 
   const [alldata, setalldata] = useState({
     holders : '',

@@ -44,6 +44,11 @@ const config = [
     href: 'https://farm.sphynxswap.finance/pools'
   },
   {
+    label: 'NTF Marketplace (coming soon)',
+    icon: PredictionIcon,
+    href: ''
+  },
+  {
     label: 'Prediction (coming soon)',
     icon: PredictionIcon,
     href: ''
