@@ -1,13 +1,20 @@
 import styled from 'styled-components'
 
 export const Cards = styled.div`
-  margin-bottom: 48px;
-  ${({ theme }) => theme.mediaQueries.md} {
-    display: grid;
-    grid-gap: 32px;
-    grid-template-columns: auto 1fr;
-    align-items: stretch;
-    justify-content: stretch;
+  display: flex;
+  flex-wrap: wrap;
+  & > div {
+    width: 100%;
+    margin-bottom: 24px;
+    ${({ theme }) => theme.mediaQueries.md} {
+      &:nth-child(2n + 1) {
+        width: calc(30% - 12px);
+      }
+      &:nth-child(2n) {
+        margin-left: 24px;
+        width: calc(70% - 12px);
+      }
+    }
   }
 `
 export const LeftTopCard = styled.div`

@@ -8,12 +8,12 @@ import TranslatedText from '../TranslatedText'
 const StyledNav = styled.div`
   text-align: center;
   display: flex;
-  height: 28px;
+  height: 24px;
   background: white;
   border-radius: 16px;
   & button {
     color: black;
-    height: 28px;
+    height: 24px;
     background: transparent;
     border: none;
     box-shadow: none !important;
@@ -34,7 +34,7 @@ const AutoNav = () => {
       <TranslatedText translationId={8}>AUTO</TranslatedText>
     </Button>
     <Button className={activeIndex === 1 ? 'active' : ''} id="dgsn-nav-link" onClick={() => { setVersion(Version.v1); setActiveIndex(1) }}>
-      <TranslatedText translationId={74}>DGSNLP</TranslatedText>
+      <TranslatedText translationId={74}>SPXLP</TranslatedText>
     </Button>
     <Button className={activeIndex === 2 ? 'active' : ''} id="pcv-nav-link" onClick={() => { setVersion(Version.v2); setActiveIndex(2) }}>
       <TranslatedText translationId={74}>PCV2</TranslatedText>

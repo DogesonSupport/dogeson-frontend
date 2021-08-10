@@ -1,4 +1,5 @@
 import React,{useEffect , useState} from 'react'
+import styled from 'styled-components'
 import Chart from 'react-apexcharts'
 import moment from 'moment';
 import { BoxesLoader } from "react-awesome-loaders";
@@ -9,6 +10,11 @@ export interface LineChartProps {
   width?: number | string;
   height?: number | string;
 }
+
+const ChartWrapper = styled.div`
+  background: black;
+`
+
 const LineChart: React.FC<LineChartProps> = ({
   data = [],
   width = 500,
@@ -146,7 +152,7 @@ const LineChart: React.FC<LineChartProps> = ({
   },[input])
   
   return (
-    <>
+    <ChartWrapper>
      {loader?<BoxesLoader
     
     boxColor="#8b2a9b"
@@ -156,7 +162,7 @@ const LineChart: React.FC<LineChartProps> = ({
     mobileSize="15px"
   />:""}
      {priceData[0] ? <Chart options={options} type='candlestick' series={priceData} width={width} height={height} /> :""}
-    </>
+    </ChartWrapper>
   
   );
 };

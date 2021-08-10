@@ -412,7 +412,7 @@ const Menu: React.FC = props => {
             !menuToggled && <p>Wallet</p>
           }
         </div>
-        {!menuToggled && <p><b>{account?walletbalance:''}</b></p>
+        {!menuToggled && <p><b>{account?walletbalance.toLocaleString():''}</b></p>
         }
       </WalletHeading>
       <MenuContentWrapper toggled={menuToggled}>
