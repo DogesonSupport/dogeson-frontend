@@ -5,7 +5,9 @@ import { useWeb3React } from '@web3-react/core'
 import moment from 'moment'
 import axios from 'axios';
 import { Link } from 'react-router-dom'
-
+import { useSelector } from 'react-redux';
+import { BoxesLoader } from "react-awesome-loaders";
+import { AppDispatch, AppState } from '../../../state'
 
 
 const data = [
@@ -118,10 +120,14 @@ const TransactionCard = () => {
 
 
 	const { account, activate, deactivate } = useWeb3React()
+	const [loader,setLoader]=useState(false)
 	
 	const [tableData,setTableData]=useState([]);
 	// const [data, setData] =useState ([]);
-	const input= localStorage.getItem('InputAddress');
+	// const input= localStorage.getItem('InputAddress');
+	const input = useSelector<AppState, AppState['inputReducer']>((state) => state.inputReducer.input)
+
+
 
 	console.log("inputin table",input)
 
@@ -178,10 +184,11 @@ const TransactionCard = () => {
 
     const fetchData = async () =>{
 		if(input){
+			setLoader(true);
 			const queryResult= await axios.post('https://graphql.bitquery.io/',{query: Get_data});
 			if(queryResult.data.data)
 			setTableData(queryResult.data.data.ethereum.dexTrades)
-
+			setLoader(false);
 		}
        
     }
@@ -237,6 +244,8 @@ const TransactionCard = () => {
   const fixedHeader = true
 
   return (
+
+	<>
 		<TableWrapper>
 			<table>
 				<thead>
@@ -252,7 +261,26 @@ const TransactionCard = () => {
 					{table_data}
 				</tbody>
 			</table>
+
 		</TableWrapper>
+		{loader?
+
+     
+<div style={{display:'flex',justifyContent:'center'}}>
+<BoxesLoader
+
+boxColor="#8b2a9b"
+shadowColor="#aa8929"
+style={{ marginBottom: "20px",position: 'absolute',left: 567,top: 455 }}
+desktopSize="30px"
+mobileSize="15px"
+/>
+</div>
+:""
+
+
+}
+		</>
   )
 }
 

@@ -40,7 +40,7 @@ const ThemeContextProvider: React.FC = ({ children }) => {
     if(event && event.data && typeof event.data === "string" && event.data.startsWith("[iFrameSizer]message:")){
       const dataStr = event.data.substring("[iFrameSizer]message:".length);
       const data = JSON.parse(dataStr);
-      console.log("data.isDark", data.isDark);
+     
       setIsDark(()=>data.isDark);
     }
   }, []);

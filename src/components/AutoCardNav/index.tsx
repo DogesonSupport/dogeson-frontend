@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useSetVersion } from 'state/application/hooks'
 import { Version } from 'hooks/useToggledVersion'
-import { ButtonMenu, ButtonMenuItem, Button } from '@pancakeswap-libs/uikit'
+import {  Button } from '@pancakeswap-libs/uikit'
 import TranslatedText from '../TranslatedText'
 
 const StyledNav = styled.div`

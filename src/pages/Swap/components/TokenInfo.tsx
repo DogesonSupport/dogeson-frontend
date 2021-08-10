@@ -2,8 +2,11 @@ import React,{useState,useEffect, useContext } from 'react'
 import styled from 'styled-components'
 import { Flex, Text } from '@pancakeswap-libs/uikit'
 import { ReactComponent as MoreIcon2 } from 'assets/svg/icon/MoreIcon2.svg' 
-
 import axios from 'axios';
+import { useSelector } from 'react-redux';
+import { AppDispatch, AppState } from '../../../state'
+
+
 
 // eslint-disable-next-line import/no-cycle
 
@@ -55,8 +58,11 @@ const TokenInfoContainer = styled.div`
 // {tokenInfo}: {tokenInfo?: TokenDetailProps | null}
 export default function TokenInfo() {
   
-   const input= localStorage.getItem('InputAddress');
-    // console.log("inputaddress1",input);
+  //  const input= localStorage.getItem('InputAddress');
+  //   console.log("inputaddress1",input);
+    const input = useSelector<AppState, AppState['inputReducer']>((state) => state.inputReducer.input)
+
+    console.log("input in chart",input);
 
   const [alldata, setalldata] = useState({
     holders : '',
@@ -121,7 +127,7 @@ useEffect(() => {
         </TextWrapper> */}
         <TextWrapper>
           <Text>Contract Address</Text>
-          <Text>{input}</Text>
+          <Text>{!input?"0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82":input}</Text>
         </TextWrapper>
         <TextWrapper>
           <Text>Holders</Text>

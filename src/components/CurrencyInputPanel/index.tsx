@@ -60,19 +60,19 @@ const CurrencySelect = styled.button<{ selected: boolean }>`
   }
 `
 
-const LabelRow = styled.div`
-  display: flex;
-  flex-flow: row nowrap;
-  align-items: center;
-  color: ${({ theme }) => theme.colors.text};
-  font-size: 0.75rem;
-  line-height: 1rem;
-  padding: 0.75rem 1rem 0 1rem;
-  span:hover {
-    cursor: pointer;
-    color: ${({ theme }) => darken(0.2, theme.colors.textSubtle)};
-  }
-`
+// const LabelRow = styled.div`
+//   display: flex;
+//   flex-flow: row nowrap;
+//   align-items: center;
+//   color: ${({ theme }) => theme.colors.text};
+//   font-size: 0.75rem;
+//   line-height: 1rem;
+//   padding: 0.75rem 1rem 0 1rem;
+//   span:hover {
+//     cursor: pointer;
+//     color: ${({ theme }) => darken(0.2, theme.colors.textSubtle)};
+//   }
+// `
 
 const MaxButtonWrapper = styled.div`
   & button {
@@ -101,13 +101,13 @@ const Container = styled.div<{ hideInput: boolean }>`
   background-color: rgba(0, 0, 0, 0.4);
 `
 
-const USDAmount = styled.p`
-  color: white;
-  text-align: right;
-  padding: 0 16px 12px 0;
-  font-size: 12px;
-  font-weight: bold;
-`
+// const USDAmount = styled.p`
+//   color: white;
+//   text-align: right;
+//   padding: 0 16px 12px 0;
+//   font-size: 12px;
+//   font-weight: bold;
+// `
 
 interface CurrencyInputPanelProps {
   value: string

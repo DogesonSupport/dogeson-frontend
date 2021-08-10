@@ -1,18 +1,21 @@
-import React, { useState,useEffect,createContext } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 
-import { Card, Flex,Text ,Button} from '@pancakeswap-libs/uikit'
+import { Text ,Button} from '@pancakeswap-libs/uikit'
 
 import { ReactComponent as TwitterIcon } from 'assets/svg/icon/TwitterIcon.svg'
+// eslint-disable-next-line import/no-cycle
 import { ReactComponent as SocialIcon2 } from 'assets/svg/icon/SocialIcon2.svg'
 import { ReactComponent as TelegramIcon } from 'assets/svg/icon/TelegramIcon.svg'
 // import { BoxesLoader } from "react-awesome-loaders";
 
 import CopyHelper from 'components/AccountDetails/Copy'
 import axios from 'axios';
-
+import { useDispatch } from 'react-redux'
+import {typeInput} from '../../../state/input/actions'
 // import { GetInputData } from '../index';
 import { TokenDetailProps } from './types'
+
 
 
 export interface ContractPanelProps {
@@ -98,7 +101,8 @@ export default function ContractPanel({value}: ContractPanelProps){
 
   const [ addressSearch, setAddressSearch ] = useState('');
   localStorage.setItem('InputAddress', addressSearch);
-
+  
+    const dispatch=useDispatch();
     // const [loader,setLoader]=useState(false)
 
   // console.log("addressSearch",addressSearch)
@@ -139,8 +143,8 @@ export default function ContractPanel({value}: ContractPanelProps){
         <CopyHelper toCopy={value ? value.contractAddress : addressSearch}>
           &nbsp;
         </CopyHelper>
-        <input placeholder='' value={addressSearch} onChange={handlerChange} />
-        <Button size='sm' onClick={InputSubmit}>Submit</Button>
+        <input placeholder='' value={addressSearch} onChange={handlerChange}  />
+        <Button size='sm' onClick={()=>dispatch(typeInput({input :addressSearch }))}>Submit</Button>
       </ContractCard>
       <SocialIconsWrapper>
         <TwitterIcon />
