@@ -38,7 +38,7 @@ const store = configureStore({
     lists,
   },
   middleware: [...getDefaultMiddleware({ thunk: false }), save({ states: PERSISTED_KEYS })],
-  preloadedState: loadedState,
+  preloadedState: (loadedState as any),
 })
 
 store.dispatch(updateVersion())

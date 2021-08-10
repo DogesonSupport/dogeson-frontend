@@ -20,7 +20,6 @@ import TokenWarningModal from 'components/TokenWarningModal'
 import SyrupWarningModal from 'components/SyrupWarningModal'
 import ProgressSteps from 'components/ProgressSteps'
 import { Redirect } from 'react-router-dom'
-import TradingViewWidget, { Themes } from 'react-tradingview-widget';
 import moment from 'moment';
 import axios from 'axios';
 
@@ -46,6 +45,7 @@ import { ReactComponent as DownArrow } from 'assets/svg/icon/DownArrow.svg'
 import { ReactComponent as HelpIcon } from 'assets/svg/icon/HelpIcon.svg'
 import { ReactComponent as HelpIcon1 } from 'assets/svg/icon/HelpIcon1.svg'
 import BinanceLogo from 'assets/images/binance-logo.png'
+import SwapBanner from 'assets/images/DogeBanner1.png'
 
 import { getHotTokens, getTokenInfo } from 'utils/request'
 import ConnectWalletButton from 'components/ConnectWalletButton'
@@ -70,17 +70,17 @@ import LineChart from './components/LineChart'
 const { main: Main } = TYPE
 
 const ArrowContainer = styled.div`
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 3px solid rgba(255, 255, 255, 0.4);
-  border-radius: 8px;
+  border: 3px solid rgb(255, 255, 255);
+  border-radius: 12px;
   margin: 0;
   & svg {
-    width: 10px;
-    height: 12px;
+    width: 14px;
+    height: 16px;
   }
 `
 
@@ -88,7 +88,7 @@ const ArrowContent = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: -8px 0;
+  margin: -4px 0;
   z-index: 3;
   position: relative;
 `
@@ -197,6 +197,15 @@ const PoolWrapper = styled.div`
     & div {
       color: white;
     }
+  }
+`
+
+const SwapRightBanner = styled.div`
+  position: absolute;
+  max-width: 350px;
+  right: 0;
+  & img {
+    width: 100%;
   }
 `
 
@@ -604,6 +613,9 @@ const Swap = () => {
       <HotTokenBar
         tokens={hotTokens}
       />
+      <SwapRightBanner>
+        <img src={SwapBanner} alt='Swap Banner' />
+      </SwapRightBanner>
       <Cards>
         <LeftTopCard>
           <div style={{ height: 48, marginBottom: 30 }}>
@@ -614,7 +626,7 @@ const Swap = () => {
               <AutoCardNav />
             </Flex>
           </div>
-          <Card bgColor='rgba(0, 0, 0, 0.2)' borderRadius='8px' padding='10px 10px 46px 10px'>
+          <Card bgColor='rgba(0, 0, 0, 0.2)' borderRadius='8px' padding='0 10px 20px 10px'>
             { swapType === 'swap' &&
               <Wrapper id="swap-page">
                 <ConfirmSwapModal

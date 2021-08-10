@@ -74,7 +74,7 @@ const ContractCard = styled(Text)`
   }
   ${({ theme }) => theme.mediaQueries.sm} {
     & input {
-      min-width: 360px;
+      min-width: 420px;
     }
   }
   ${({ theme }) => theme.mediaQueries.md} {

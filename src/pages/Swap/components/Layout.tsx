@@ -4,7 +4,7 @@ export const Cards = styled.div`
   margin-bottom: 48px;
   ${({ theme }) => theme.mediaQueries.md} {
     display: grid;
-    grid-gap: 24px;
+    grid-gap: 32px;
     grid-template-columns: auto 1fr;
     align-items: stretch;
     justify-content: stretch;

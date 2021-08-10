@@ -8,7 +8,7 @@ const GlobalStyle = createGlobalStyle`
     src: local('/fonts/Roboto Regular'), url('/fonts/Roboto-Regular.woff') format('woff');
   }
   * {
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Montserrat', sans-serif;
   }
   body {
     // background-color: ${({ theme }) => theme.colors.background};
