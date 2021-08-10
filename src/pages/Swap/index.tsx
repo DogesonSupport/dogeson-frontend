@@ -922,7 +922,7 @@ const Swap = () => {
         <BottomCard style={{ backgroundImage: `url(${StakingBanner})` }}>
           <h1>Staking</h1>
           <div />
-          <a href='https://farm.sphynxswap.finance/farms' target='_blank' rel='noreferrer'><Button>Start Staking</Button></a>
+          <a href='https://farm.sphynxswap.finance/pools' target='_blank' rel='noreferrer'><Button>Start Staking</Button></a>
         </BottomCard>
       </Cards>
       {/* <InfoCard>
