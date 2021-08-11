@@ -14,6 +14,7 @@ const StyledNav = styled.div`
   & button {
     color: black;
     height: 24px;
+    padding: 0 16px;
     background: transparent;
     border: none;
     box-shadow: none !important;
