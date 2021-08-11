@@ -29,6 +29,8 @@ const LineChart: React.FC<LineChartProps> = ({
   // const input= localStorage.getItem('InputAddress');
   const input = useSelector<AppState, AppState['inputReducer']>((state) => state.inputReducer.input)
 
+
+
   // console.log("input in chart", input);
   const options = {
     chart: {

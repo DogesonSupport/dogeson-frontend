@@ -202,7 +202,10 @@ const TransactionCard = () => {
 
         
       const table_data=tableData.map((val:any) => {
-		  const link = `https://bscscan.com/tx/${val.transaction.hash}`
+		  const link = `https://bscscan.com/tx/${val.transaction.hash}`;
+		//   const today = new Date(val.block.timestamp.time).toLocaleTimeString();
+		//   const onlytime=`${today.getHours()} + ':' + today.getMinutes() + ':' + today.getSeconds()`;
+		//   console.log("time",onlytime)
 				return(
 				
 							<tr>

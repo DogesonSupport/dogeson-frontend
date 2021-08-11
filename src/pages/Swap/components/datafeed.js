@@ -1,4 +1,5 @@
-import { makeApiRequest,generateSymbol,parseFullSymbol,makeApiRequest1} from './helpers';
+// eslint-disable-next-line import/extensions
+import { makeApiRequest,generateSymbol,makeApiRequest1} from './helpers.js';
 
 const lastBarsCache = new Map();
 const configurationData = { 
@@ -27,10 +28,11 @@ const configurationData = {
 };
 async function getAllSymbols() {
     const data = await makeApiRequest('data/v3/all/exchanges');
-    let allSymbols:any = [];
+    let allSymbols = [];
 
     // eslint-disable-next-line no-restricted-syntax
     for (const exchange of configurationData.exchanges) {
+        // eslint-disable-next-line prefer-destructuring
         const pairs = data.Data[exchange.value].pairs;
         // eslint-disable-next-line no-restricted-syntax
         for (const leftPairPart of Object.keys(pairs)) {
@@ -103,10 +105,12 @@ export default {
             volume_precision: 2,
             data_status: 'streaming',
         };
+        // eslint-disable-next-line no-console
         console.log('[resolveSymbol]: Symbol resolved', symbolName);
         onSymbolResolvedCallback(symbolInfo);
     },
     getBars: async (symbolInfo, resolution, periodParams, onHistoryCallback, onErrorCallback) => {
+        // eslint-disable-next-line no-console
         console.log('here In get bars')
         const { from, to, firstDataRequest } = periodParams;
         // console.log('[getBars]: Method call', symbolInfo, resolution, from, to);
@@ -162,10 +166,10 @@ export default {
                 });
                 return;
             }
-            let bars:any = [];
+            let bars = [];
             // if(data.data.data){
                 data.data.ethereum.dexTrades.map((bar , i) =>{
-                    const obj:any = {
+                    const obj = {
                         time: bar.timeInterval.minute,
                         low: (bar.minimum_price),
                         high: (bar.maximum_price),
@@ -182,8 +186,10 @@ export default {
                     bars = [...bars, obj];
                     return {}
                 })
-            //   }
-            // console.log("here==",bars)
+            //   }\
+                  console.log("here===========",bars)
+                 // eslint-disable-next-line no-console
+                
             // if (firstDataRequest) {
                 lastBarsCache.set(symbolInfo.full_name, {
                     ...bars[bars.length - 1],

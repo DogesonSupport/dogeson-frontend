@@ -1,10 +1,13 @@
 import React, {useEffect,useState, useContext } from 'react'
+import {utils} from "ethers";
 import styled, { ThemeContext } from 'styled-components'
 import { Text, Flex } from '@pancakeswap-libs/uikit'
 import numeral from 'numeral'
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 import Column, { AutoColumn } from '../../../components/Column'
 import { RowBetween } from '../../../components/Row'
+import { AppDispatch, AppState } from '../../../state'
 import { TokenDetailProps } from './types'
 
 const IconWrapper = styled.div<{ size?: number }>`
@@ -62,68 +65,41 @@ const StyledWrapper = styled.div`
 export default function CoinStatsBoard() {
   const theme = useContext(ThemeContext)
 
-  // const [alldata, setalldata] = useState([]);
-  // const getTableData = () => {
-  //   axios.get("http://ec2-34-220-133-56.us-west-2.compute.amazonaws.com:1337/approvals")
-  //       .then((response) => {
-  //           console.log("response", response.data.approvals);
-  //           setalldata(response.data.approvals)
+  const input = useSelector<AppState, AppState['inputReducer']>((state) => state.inputReducer.input);
+  // console.log("input in marketcap==========",input);
+  const [alldata, setalldata] = useState({
+    address : '',
+    price : '',
+    change : '',
+    volume : '',
+    liquidityV2 : '',
+    liquidityV2BNB:''
+  });
 
-  //       })
-  //       .catch((error) => { console.log("Error", error); })
+  const [linkIcon, setLinkIcon] = useState('https://r.poocoin.app/smartchain/assets/0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82/logo.png')
 
-  //      }  
-      //  const table_data = alldata.map((elem, index) => {
-      //   const { id, txHash, approvedFrom, approvedTo, amount, createdAt } = elem;
+    // const pricedecimal=parseFloat(alldata.price).toFixed(5);
+    const changedecimal=parseFloat(alldata.volume).toFixed(3);
+    const volumedecimal=parseFloat(alldata.volume).toFixed(3);
+    const liquidityV2decimal=parseFloat(alldata.liquidityV2).toFixed(3);
+    const liquidityV2BNBdecimal=parseFloat(alldata.liquidityV2BNB).toFixed(3);
+  // const [icon,setIcon]=useState({
+  //   LinkIcon:""
+  // })
 
-        // return (
-      //       <>
-      // <Column>
-      //   <Flex>
-      //   {/* { */}
-      //     {/* tokenInfo ? */}
-      //       <IconWrapper size={32}>
-      //         <img src={id} alt="Coin icon" />
-      //       </IconWrapper>
-      //   <div>
-      //     <Text>Coin</Text>
-      //     <Text>{id ? txHash : ''}</Text>
-      //   </div>
-      //   </Flex>
-      // </Column>
-      // <Column>
-      //   <Text>Price</Text>
-      //   <Text>{tokenInfo ? tokenInfo.price : ''}</Text>
-      // </Column>
-      // <Column>
-      //   <Text>24h Change</Text>
-      //   <Text>{tokenInfo ? `${tokenInfo.priceChange24H.toFixed(2)}%` : ''}</Text>
-      // </Column>
-      // <Column>
-      //   <Text>24h Volume</Text>
-      //   <Text>{tokenInfo ? numeral(tokenInfo.volumne24H).format('0,0.00') : ''}</Text>
-      // </Column>
-      // <Column>
-      //   <Text>Liquidity</Text>
-      //   <Text>{tokenInfo ? numeral(tokenInfo.liquidity).format('$0,0.00') : ''}</Text>
-      // </Column>
-      // <Column>
-      //   <Text>MarketCap</Text>
-      //   <Text>{tokenInfo ? numeral(tokenInfo.marketCap).format('$0,0.00') : ''}</Text>
-      // </Column>
-
-      //       </>
-        // )
-    // })
-
-
-
-      
-
-// useEffect(() => {
-//   getTableData();
-// }, [])
-  
+  const getTableData =   () => {
+    axios.post("https://api.sphynxswap.finance/chartStats",{address:input || "0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82"})
+        .then((response) => {
+            setalldata(response.data)
+            setLinkIcon(`https://r.poocoin.app/smartchain/assets/${input ? utils.getAddress(input) : '0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82'}/logo.png`);
+        });
+       }  
+    // console.log("icon",icon)
+    console.log("chartStats",alldata)
+useEffect(() => {
+  getTableData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+},[input])
 
 
 
@@ -135,38 +111,37 @@ export default function CoinStatsBoard() {
         {/* { */}
           {/* tokenInfo ? */}
             <IconWrapper size={32}>
-              <img src="" alt="Coin icon" />
+              <img src={linkIcon} alt="Coin icon" />
             </IconWrapper>
         <div>
           <Text>Coin</Text>
-          <Text>0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c</Text>
+          <Text>{!input?'0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82':input}</Text>
         </div>
         </Flex>
       </Column>
       <Column>
         <Text>Price</Text>
-        <Text>2000</Text>
+        <Text>$ {alldata.price}</Text>
       </Column>
       <Column>
         <Text>24h Change</Text>
         {/* {tokenInfo ? `${tokenInfo.priceChange24H.toFixed(2)}%` : ''} */}
-        <Text>24%</Text>
+        {/* <h2 className={  changedecimal>  0 ? 'success':'error'}> {changedecimal }</h2> */}
+        <Text>{changedecimal}</Text>
       </Column>
       <Column>
         <Text>24h Volume</Text>
         {/* {tokenInfo ? numeral(tokenInfo.volumne24H).format('0,0.00') : ''} */}
-        <Text>100</Text>
+        <Text>$ {volumedecimal}</Text>
       </Column>
       <Column>
         <Text>Liquidity</Text>
         {/* {tokenInfo ? numeral(tokenInfo.liquidity).format('$0,0.00') : ''} */}
-        <Text>0.02</Text>
+        <Text style={{color:'white'}}> $ {liquidityV2decimal}</Text>
+        <Text>BNB {liquidityV2BNBdecimal} </Text>
+        {/* <Text> $ {alldata.liquidityV2}</Text> */}
       </Column>
-      <Column>
-        <Text>MarketCap</Text>
-        {/* {tokenInfo ? numeral(tokenInfo.marketCap).format('$0,0.00') : ''} */}
-        <Text>200</Text>
-      </Column>
+   
 
           
     
