@@ -55,7 +55,7 @@ import PageHeader from 'components/PageHeader'
 import HotTokenBar from './components/HotTokenBar'
 // eslint-disable-next-line import/no-cycle
 import TokenInfo from './components/TokenInfo'
-import { Cards, LeftTopCard, RightTopCard } from './components/Layout'
+import Cards from './components/Layout'
 
 import CoinStatsBoard from './components/CoinStatsBoard'
 
@@ -227,7 +227,7 @@ const BottomCard = styled.div`
   position: relative;
   margin-bottom: -60px !important;
   ${({ theme }) => theme.mediaQueries.md} {
-    width: calc(30% - 12px) !important;
+    width: 320px !important;
   }
   & div {
     position: absolute;
@@ -671,7 +671,7 @@ const Swap = () => {
         <img src={SwapBanner} alt='Swap Banner' />
       </SwapRightBanner>
       <Cards>
-        <LeftTopCard>
+        <div>
           <div style={{ height: 48, marginBottom: 20 }}>
             <Flex alignItems='center' justifyContent='center' style={{ marginBottom: 8 }}>
               <SwapCardNav />
@@ -887,8 +887,8 @@ const Swap = () => {
             }
           </Card>
           <AdvancedSwapDetailsDropdown trade={trade} />
-        </LeftTopCard>
-        <RightTopCard>
+        </div>
+        <div>
           <FullHeightColumn>
             <ContractPanel  value={handleChange}
             />
@@ -909,7 +909,7 @@ const Swap = () => {
               autosize
             /> */}
           </FullHeightColumn>
-        </RightTopCard>
+        </div>
         <div>
             {/* tokenInfo={currentToken} */}
           <TokenInfo  />
