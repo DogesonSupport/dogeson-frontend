@@ -30,7 +30,7 @@ const config = [
   {
     label: 'Swap & charts',
     icon: ChartIcon,
-    href: 'https://farm.sphynxswap.finance/farms'
+    href: 'https://sphynxswap.finance/#/swap'
 
   },
   {

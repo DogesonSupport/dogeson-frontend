@@ -79,7 +79,7 @@ export default function CoinStatsBoard() {
   const [linkIcon, setLinkIcon] = useState('https://r.poocoin.app/smartchain/assets/0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82/logo.png')
 
     // const pricedecimal=parseFloat(alldata.price).toFixed(5);
-    const changedecimal=parseFloat(alldata.volume).toFixed(3);
+    const changedecimal=parseFloat(alldata.change).toFixed(3);
     const volumedecimal=parseFloat(alldata.volume).toFixed(3);
     const liquidityV2decimal=parseFloat(alldata.liquidityV2).toFixed(3);
     const liquidityV2BNBdecimal=parseFloat(alldata.liquidityV2BNB).toFixed(3);
@@ -95,7 +95,7 @@ export default function CoinStatsBoard() {
         });
        }  
     // console.log("icon",icon)
-    console.log("chartStats",alldata)
+    // console.log("chartStats",alldata)
 useEffect(() => {
   getTableData();
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -126,15 +126,15 @@ useEffect(() => {
       <Column>
         <Text>24h Change</Text>
         {/* {tokenInfo ? `${tokenInfo.priceChange24H.toFixed(2)}%` : ''} */}
-        {/* <h2 className={  changedecimal>  0 ? 'success':'error'}> {changedecimal }</h2> */}
-        <Text>{changedecimal}</Text>
+       {/* <Text><h2 className={Math.sign(changedecimal)? 'success':'error'}> {changedecimal }%</h2></Text> */}
+        <Text>{changedecimal}%</Text>
       </Column>
       <Column>
         <Text>24h Volume</Text>
         {/* {tokenInfo ? numeral(tokenInfo.volumne24H).format('0,0.00') : ''} */}
         <Text>$ {volumedecimal}</Text>
       </Column>
-      <Column>
+      <Column style={{marginRight: 40}}>
         <Text>Liquidity</Text>
         {/* {tokenInfo ? numeral(tokenInfo.liquidity).format('$0,0.00') : ''} */}
         <Text style={{color:'white'}}> $ {liquidityV2decimal}</Text>

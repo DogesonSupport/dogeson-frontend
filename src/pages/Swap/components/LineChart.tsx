@@ -29,7 +29,11 @@ const LineChart: React.FC<LineChartProps> = ({
   // const input= localStorage.getItem('InputAddress');
   const input = useSelector<AppState, AppState['inputReducer']>((state) => state.inputReducer.input)
 
-
+  //  if(input===''){
+  //    input(0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82);
+  //  }else{
+  //    input(input)
+  //  }
 
   // console.log("input in chart", input);
   const options = {
@@ -85,6 +89,86 @@ const LineChart: React.FC<LineChartProps> = ({
         x: moment(new Date(1538784000000)).format('YYYY:mm:DD'),
         y: [6635.65, 6651, 6629.67, 6638.24]
       },
+      {
+        x: moment(new Date(1538778600000)).format('YYYY:mm:DD'),
+        y: [6629.81, 6650.5, 6623.04, 6633.33]
+      },
+      {
+        x: moment(new Date(1538780400000)).format('YYYY:mm:DD'),
+        y: [6632.01, 6643.59, 6620, 6630.11]
+      },
+      {
+        x: moment(new Date(1538782200000)).format('YYYY:mm:DD'),
+        y: [6630.71, 6648.95, 6623.34, 6635.65]
+      },
+      {
+        x: moment(new Date(1538784000000)).format('YYYY:mm:DD'),
+        y: [6635.65, 6651, 6629.67, 6638.24]
+      },
+      {
+        x: moment(new Date(1538778600000)).format('YYYY:mm:DD'),
+        y: [6629.81, 6650.5, 6623.04, 6633.33]
+      },
+      {
+        x: moment(new Date(1538780400000)).format('YYYY:mm:DD'),
+        y: [6632.01, 6643.59, 6620, 6630.11]
+      },
+      {
+        x: moment(new Date(1538782200000)).format('YYYY:mm:DD'),
+        y: [6630.71, 6648.95, 6623.34, 6635.65]
+      },
+      {
+        x: moment(new Date(1538784000000)).format('YYYY:mm:DD'),
+        y: [6635.65, 6651, 6629.67, 6638.24]
+      },
+      {
+        x: moment(new Date(1538778600000)).format('YYYY:mm:DD'),
+        y: [6629.81, 6650.5, 6623.04, 6633.33]
+      },
+      {
+        x: moment(new Date(1538780400000)).format('YYYY:mm:DD'),
+        y: [6632.01, 6643.59, 6620, 6630.11]
+      },
+      {
+        x: moment(new Date(1538782200000)).format('YYYY:mm:DD'),
+        y: [6630.71, 6648.95, 6623.34, 6635.65]
+      },
+      {
+        x: moment(new Date(1538784000000)).format('YYYY:mm:DD'),
+        y: [6635.65, 6651, 6629.67, 6638.24]
+      },
+      {
+        x: moment(new Date(1538778600000)).format('YYYY:mm:DD'),
+        y: [6629.81, 6650.5, 6623.04, 6633.33]
+      },
+      {
+        x: moment(new Date(1538780400000)).format('YYYY:mm:DD'),
+        y: [6632.01, 6643.59, 6620, 6630.11]
+      },
+      {
+        x: moment(new Date(1538782200000)).format('YYYY:mm:DD'),
+        y: [6630.71, 6648.95, 6623.34, 6635.65]
+      },
+      {
+        x: moment(new Date(1538784000000)).format('YYYY:mm:DD'),
+        y: [6635.65, 6651, 6629.67, 6638.24]
+      },
+      {
+        x: moment(new Date(1538778600000)).format('YYYY:mm:DD'),
+        y: [6629.81, 6650.5, 6623.04, 6633.33]
+      },
+      {
+        x: moment(new Date(1538780400000)).format('YYYY:mm:DD'),
+        y: [6632.01, 6643.59, 6620, 6630.11]
+      },
+      {
+        x: moment(new Date(1538782200000)).format('YYYY:mm:DD'),
+        y: [6630.71, 6648.95, 6623.34, 6635.65]
+      },
+      {
+        x: moment(new Date(1538784000000)).format('YYYY:mm:DD'),
+        y: [6635.65, 6651, 6629.67, 6638.24]
+      },
 
 
       ]
@@ -99,7 +183,7 @@ const LineChart: React.FC<LineChartProps> = ({
         date: {since: "2021-05-01"}
         exchangeName: {in: ["Pancake", "Pancake v2"]}
         baseCurrency: {is: "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c"}
-        quoteCurrency: {is: "${input}"}
+        quoteCurrency: {is: "${input}"" }
       ) {
         timeInterval {
             minute(count: 5)
