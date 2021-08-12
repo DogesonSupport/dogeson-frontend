@@ -32,9 +32,6 @@ const ChartContainerProps = {
     studiesOverrides: {},
   };
 
-
-
-
 export interface ChartContainerProps {
   symbol: ChartingLibraryWidgetOptions['symbol'];
   interval: ChartingLibraryWidgetOptions['interval'];
@@ -306,8 +303,6 @@ async function getAllSymbols() {
 React.useEffect(()=>{
     getWidget();
 },[input])
-
-
 
   return  (
     <div
