@@ -816,7 +816,7 @@ export interface IChartWidgetApi {
 	onVisibleRangeChanged(): ISubscription<(range: VisibleTimeRange) => void>;
 	onChartTypeChanged(): ISubscription<(chartType: SeriesStyle) => void>;
 	dataReady(callback: () => void): boolean;
-	crossHairMoved(): ISubscription<(params: CrossHairMovedEventParams) => void>;
+	crossHairMoved(callback: (params: CrossHairMovedEventParams) => void): void;
 	setVisibleRange(range: VisibleTimeRange, options?: SetVisibleRangeOptions): Promise<void>;
 	setSymbol(symbol: string, callback: () => void): void;
 	setResolution(resolution: ResolutionString, callback: () => void): void;
