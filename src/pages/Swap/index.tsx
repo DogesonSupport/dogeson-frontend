@@ -64,7 +64,7 @@ import ContractPanel from './components/ContractPanel'
 
 import { HotTokenType, TokenDetailProps, HistoricalDataProps } from './components/types'
 import LiquidityWidget from '../Pool/LiquidityWidget'
-import LineChart from './components/LineChart'
+import {TVChartContainer} from './TVChartContainer'
 // eslint-disable-next-line import/extensions
 import datafeed from "./components/main.js";
 
@@ -901,7 +901,7 @@ const Swap = () => {
              {datafeed}
               </div> 
         */}
-            <LineChart  width='100%' height={350} />
+            <TVChartContainer/>
             {/* <TradingViewWidget
               symbol={currentToken?.symbol}
               theme={Themes.DARK}
