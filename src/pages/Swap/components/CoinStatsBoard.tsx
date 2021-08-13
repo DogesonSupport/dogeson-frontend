@@ -2,13 +2,11 @@ import React, {useEffect,useState, useContext } from 'react'
 import {utils} from "ethers";
 import styled, { ThemeContext } from 'styled-components'
 import { Text, Flex } from '@pancakeswap-libs/uikit'
-import numeral from 'numeral'
+
 import axios from 'axios';
 import { useSelector } from 'react-redux';
-import Column, { AutoColumn } from '../../../components/Column'
-import { RowBetween } from '../../../components/Row'
-import { AppDispatch, AppState } from '../../../state'
-import { TokenDetailProps } from './types'
+import Column from '../../../components/Column'
+import {  AppState } from '../../../state'
 
 const IconWrapper = styled.div<{ size?: number }>`
   display: flex;
@@ -52,7 +50,20 @@ const StyledWrapper = styled.div`
         line-height: 16px;
       }
     }
+    & h2 {
+      font-size: 14px;
+      line-height: 16px;
+      font-weight: bold;
+      &.success {
+        color: #00AC1C;
+      }
+      &.error {
+        color: #EA3943;
+      }
+    }
+  
   }
+
 
   ${({ theme }) => theme.mediaQueries.md} {
     flex-direction: row;
@@ -63,7 +74,7 @@ const StyledWrapper = styled.div`
 `
 
 export default function CoinStatsBoard() {
-  const theme = useContext(ThemeContext)
+  // const theme = useContext(ThemeContext)
 
   const input = useSelector<AppState, AppState['inputReducer']>((state) => state.inputReducer.input);
   // console.log("input in marketcap==========",input);
@@ -79,29 +90,34 @@ export default function CoinStatsBoard() {
   const [linkIcon, setLinkIcon] = useState('https://r.poocoin.app/smartchain/assets/0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82/logo.png')
 
     // const pricedecimal=parseFloat(alldata.price).toFixed(5);
-    const changedecimal=parseFloat(alldata.change).toFixed(3);
+    const changedecimal:any=parseFloat(alldata.change).toFixed(3);
+    
+      
+    // const set=Math.sign(changedecimal);
+     
     const volumedecimal=parseFloat(alldata.volume).toFixed(3);
     const liquidityV2decimal=parseFloat(alldata.liquidityV2).toFixed(3);
     const liquidityV2BNBdecimal=parseFloat(alldata.liquidityV2BNB).toFixed(3);
-  // const [icon,setIcon]=useState({
-  //   LinkIcon:""
-  // })
-
+ 
   const getTableData =   () => {
-    axios.post("https://api.sphynxswap.finance/chartStats",{address:input || "0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82"})
-        .then((response) => {
-            setalldata(response.data)
-            setLinkIcon(`https://r.poocoin.app/smartchain/assets/${input ? utils.getAddress(input) : '0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82'}/logo.png`);
-        });
-       }  
-    // console.log("icon",icon)
-    // console.log("chartStats",alldata)
+    try{
+      axios.post("https://api.sphynxswap.finance/chartStats",{address:input})
+      .then((response) => {
+          setalldata(response.data)
+          setLinkIcon(`https://r.poocoin.app/smartchain/assets/${input ? utils.getAddress(input) : '0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82'}/logo.png`);
+      });
+
+    }
+    catch(err){
+      // eslint-disable-next-line no-console
+      console.log(err)
+      
+    }
+   }  
 useEffect(() => {
   getTableData();
   // eslint-disable-next-line react-hooks/exhaustive-deps
 },[input])
-
-
 
   return (
     <StyledWrapper>
@@ -115,7 +131,7 @@ useEffect(() => {
             </IconWrapper>
         <div>
           <Text>Coin</Text>
-          <Text>{!input?'0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82':input}</Text>
+          <Text>{input}</Text>
         </div>
         </Flex>
       </Column>
@@ -125,26 +141,18 @@ useEffect(() => {
       </Column>
       <Column>
         <Text>24h Change</Text>
-        {/* {tokenInfo ? `${tokenInfo.priceChange24H.toFixed(2)}%` : ''} */}
-       {/* <Text><h2 className={Math.sign(changedecimal)? 'success':'error'}> {changedecimal }%</h2></Text> */}
-        <Text>{changedecimal}%</Text>
+       <Text><h2 className={Math.sign(changedecimal)===-1 ? 'error':'success'}> {changedecimal }%</h2></Text>
+        {/* <Text>{changedecimal}%</Text> */}
       </Column>
       <Column>
         <Text>24h Volume</Text>
-        {/* {tokenInfo ? numeral(tokenInfo.volumne24H).format('0,0.00') : ''} */}
         <Text>$ {volumedecimal}</Text>
       </Column>
-      <Column style={{marginRight: 40}}>
+      <Column >
         <Text>Liquidity</Text>
-        {/* {tokenInfo ? numeral(tokenInfo.liquidity).format('$0,0.00') : ''} */}
         <Text style={{color:'white'}}> $ {liquidityV2decimal}</Text>
         <Text>BNB {liquidityV2BNBdecimal} </Text>
-        {/* <Text> $ {alldata.liquidityV2}</Text> */}
       </Column>
-   
-
-          
-    
     </StyledWrapper>
   )
 }

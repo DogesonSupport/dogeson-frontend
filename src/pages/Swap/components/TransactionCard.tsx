@@ -1,52 +1,11 @@
-import React,{useState,useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { Flex } from '@pancakeswap-libs/uikit'
-import { useWeb3React } from '@web3-react/core'
-import moment from 'moment'
 import axios from 'axios';
-import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux';
-import { BoxesLoader } from "react-awesome-loaders";
-import { AppDispatch, AppState } from '../../../state'
+// import { BoxesLoader } from "react-awesome-loaders";
+import { AppState } from '../../../state'
 
-
-const data = [
-	{
-		time: moment.utc(),
-		traded: 0.9538,
-		price: 0.9538,
-		value: 1.9538,
-		dex: 'PCSv2',
-	},
-	{
-		time: moment.utc().subtract(1, 'hour'),
-		traded: 0.9538,
-		price: 0.9538,
-		value: 1.9538,
-		dex: 'PCSv2',
-	},
-	{
-		time: new Date(),
-		traded: 0.9538,
-		price: 0.9538,
-		value: 1.9538,
-		dex: 'PCSv2',
-	},
-	{
-		time: moment.utc().subtract(1, 'hour'),
-		traded: 0.9538,
-		price: 0.9538,
-		value: 1.9538,
-		dex: 'PCSv2',
-	},
-	{
-		time: new Date(),
-		traded: 0.9538,
-		price: 0.9538,
-		value: 1.9538,
-		dex: 'PCSv2',
-	}
-];
 
 const TableWrapper = styled.div`
 	background: rgba(0, 0, 0, 0.4);
@@ -92,54 +51,31 @@ const TableWrapper = styled.div`
 	}
 `
 
-const ArrowDown = styled.div`
-	width: 0;
-	height: 0;
-	border-left: 6px solid transparent;
-	border-right: 6px solid transparent;
-	border-top: 10px solid #EA3943;
-	margin-right: 4px;
-`
-
-const ArrowUp = styled.div`
-	width: 0;
-	height: 0;
-	border-left: 6px solid transparent;
-	border-right: 6px solid transparent;
-	border-bottom: 10px solid #00AC1C;
-	margin-right: 4px;
-`
-
-// export interface TransactionCardProps {
-//   tokenName: string,
-//   contract: string
-// }
-// 0x016c285d5b918b92aa85ef1e147498badfe30d69
-
 const TransactionCard = () => {
 
 
-	const { account, activate, deactivate } = useWeb3React()
-	const [loader,setLoader]=useState(false)
-	
-	const [tableData,setTableData]=useState([]);
+	// const { account, activate, deactivate } = useWeb3React()
+	// const [loader, setLoader] = useState(false)
+
+	const [tableData, setTableData] = useState([]);
 	// const [data, setData] =useState ([]);
-	// const input= localStorage.getItem('InputAddress');
+	// const iinput= localStorage.getItem('InputAddress');
 	const input = useSelector<AppState, AppState['inputReducer']>((state) => state.inputReducer.input)
 
 
-
+    //   const some=!input?'0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82':input;
 	// console.log("inputin table",input)
 
-      
 
-   const Get_data = `
+// baseCurrency: {is: "${input}"}
+	const Get_data = `
     {
 		ethereum(network: bsc) {
 			  dexTrades(
 				options: {desc: ["block.height", "tradeIndex"], limit: 10, offset: 0}
 				date: {since: "2021-08-05", till: null}
 				baseCurrency: {is: "${input}"}
+				
 			  ) {
 				block {
 				  timestamp {
@@ -182,109 +118,98 @@ const TransactionCard = () => {
 		  
     }`
 
-    const fetchData = async () =>{
-		if(input){
-			setLoader(true);
-			const queryResult= await axios.post('https://graphql.bitquery.io/',{query: Get_data});
-			if(queryResult.data.data)
-			setTableData(queryResult.data.data.ethereum.dexTrades)
-			setLoader(false);
+	const fetchData = async () => {
+		try {
+			if (input) {
+				// setLoader(true);
+				const queryResult = await axios.post('https://graphql.bitquery.io/', { query: Get_data });
+				if (queryResult.data.data)
+					setTableData(queryResult.data.data.ethereum.dexTrades)
+				// setLoader(false);
+			}
+
 		}
-       
-    }
-    useEffect(()=>{
-        fetchData();
-		  // eslint-disable-next-line react-hooks/exhaustive-deps 
-    },[input])
- 
-  
- 
+		catch (err) {
+			// eslint-disable-next-line no-console
+			// console.log(err);
+			alert("Invalid Address")
 
-        
-      const table_data=tableData.map((val:any) => {
-		  const link = `https://bscscan.com/tx/${val.transaction.hash}`;
-		//   const today = new Date(val.block.timestamp.time).toLocaleTimeString();
-		//   const onlytime=`${today.getHours()} + ':' + today.getMinutes() + ':' + today.getSeconds()`;
-		//   console.log("time",onlytime)
-				return(
-				
-							<tr>
-			<td>	
-			<a href={link} target="blank"><Flex alignItems='center'><h2 className={val.baseCurrency.symbol===val.buyCurrency.symbol ?'success':'error'}>{ new Date(val.block.timestamp.time).toLocaleTimeString()}</h2></Flex></a>
-			</td>	
-			<td><a href={link} target="blank"><h2 className={val.baseCurrency.symbol===val.buyCurrency.symbol ?'success':'error'}> {val.baseAmount }</h2></a></td>
-			<td><a href={link} target="blank"><h2 className={val.baseCurrency.symbol===val.buyCurrency.symbol ?'success':'error'}>{ val.quotePrice * 335}</h2></a></td>
-			<td><a href={link} target="blank"><h2 className={val.baseCurrency.symbol===val.buyCurrency.symbol ?'success':'error'}>${ val.quoteAmount * 335 }</h2></a></td>
-			<td><a href={link} target="blank"><h2 className={val.baseCurrency.symbol===val.buyCurrency.symbol ?'success':'error'}>{ val.exchange.fullName }</h2></a></td>
-		
-		</tr>
-	
-				
+		}
+	}
 
-				)			
-		
-				})
+	useEffect(() => {
+		fetchData();
+		// eslint-disable-next-line react-hooks/exhaustive-deps 
+	}, [input])
 
+   const table_data = tableData.map((val: any) => {
+		const link = `https://bscscan.com/tx/${val.transaction.hash}`;
+		  const today:Date = new Date(val.block.timestamp.time);
+		  today.setHours(today.getHours() + 5);
+		//   const  time=new Date(val.block.timestamp.time)
+		//   console.log(time)
+		//   const  addhour=today.getHours()+5;
+             
+		  
+		//   const onlytime=today.getHours(5)
+		      // eslint-disable-next-line no-console
+		//   console.log("onlytime",onlytime)
+		return (
 
-				// console.log("trades::::" , tableData)
+			<tr>
+				<td>
+					<a href={link} target="blank"><Flex alignItems='center'><h2 className={val.baseCurrency.symbol === val.buyCurrency.symbol ? 'success' : 'error'}>{today.toLocaleTimeString()}</h2></Flex></a>
+				</td>
+				<td><a href={link} target="blank"><h2 className={val.baseCurrency.symbol === val.buyCurrency.symbol ? 'success' : 'error'}> {val.baseAmount}</h2></a></td>
+				<td><a href={link} target="blank"><h2 className={val.baseCurrency.symbol === val.buyCurrency.symbol ? 'success' : 'error'}>{val.quotePrice * 335}</h2></a></td>
+				<td><a href={link} target="blank"><h2 className={val.baseCurrency.symbol === val.buyCurrency.symbol ? 'success' : 'error'}>${val.quoteAmount * 335}</h2></a></td>
+				<td><a href={link} target="blank"><h2 className={val.baseCurrency.symbol === val.buyCurrency.symbol ? 'success' : 'error'}>{val.exchange.fullName}</h2></a></td>
 
-
+			</tr>
 
 
-  const [hideDirector, setHideDirector] = React.useState(false);
-    
-//   const [alldata, setalldata] = useState([]);  
 
-// useEffect(() => {
-//     axios.fetch('https://jsonplaceholder.typicode.com/users')
-// 	.then(res=>res.json()
-// 	.then()
+		)
 
-// 	})
-// }, [])
-  
+	})
+	// eslint-disable-next-line no-console
 
-  const fixedHeader = true
+	// console.log("trades::::" , tableData)
 
-  return (
+	return (
 
-	<>
-		<TableWrapper>
-			<table>
-				<thead>
-					<tr>
-						<td>Time</td>
-						<td>Traded Tokens</td>
-						<td>Token Price</td>
-						<td>$Value</td>
-						<td>DEX</td>
-					</tr>
-				</thead>
-				<tbody>
-					{table_data}
-				</tbody>
-			</table>
+		<>
+			<TableWrapper>
+				<table>
+					<thead>
+						<tr>
+							<td>Time</td>
+							<td>Traded Tokens</td>
+							<td>Token Price</td>
+							<td>$Value</td>
+							<td>DEX</td>
+						</tr>
+					</thead>
+					<tbody>
+						{table_data}
+					</tbody>
+				</table>
 
-		</TableWrapper>
-		{loader?
-
-     
-<div style={{display:'flex',justifyContent:'center'}}>
-<BoxesLoader
-
-boxColor="#8b2a9b"
-shadowColor="#aa8929"
-style={{ marginBottom: "20px",position: 'absolute',left: 567,top: 455 }}
-desktopSize="30px"
-mobileSize="15px"
-/>
-</div>
-:""
-
-
-}
+			</TableWrapper>
+			{/* {loader ?
+				<div style={{ display: 'flex', justifyContent: 'center' }}>
+					<BoxesLoader
+						boxColor="#8b2a9b"
+						shadowColor="#aa8929"
+						style={{ marginBottom: "20px", position: 'absolute', left: 567, top: 455 }}
+						desktopSize="30px"
+						mobileSize="15px"
+					/>
+				</div>
+				: ""
+			} */}
 		</>
-  )
+	)
 }
 
 export default TransactionCard

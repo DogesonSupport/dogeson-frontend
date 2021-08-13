@@ -1,9 +1,9 @@
 // Make requests to CryptoCompare API
 
-// https://min-api.cryptocompare.com/${path}
+
 export async function makeApiRequest(path:any) {
     try {
-        const response = await fetch(`https://min-api.cryptocompare.com/${path}`);
+        const response = await fetch(`https://api.sphynxswap.finance/tokenDetails/${path}`);
         return response.json();
     } catch (error) {
         throw new Error(`CryptoCompare request error: ${error.status}`);
@@ -11,7 +11,7 @@ export async function makeApiRequest(path:any) {
 }
 export async function makeApiRequest1(path:any) {
     try {
-        console.log("here in api reuest",path)
+        // console.log("here in api reuest",path)
         const response = await fetch(`https://api.sphynxswap.finance/chart/${path}`, {
             method : "GET",
             headers: {

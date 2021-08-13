@@ -1,27 +1,17 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-
-import { Text ,Button} from '@pancakeswap-libs/uikit'
-
+import { Text, Button } from '@pancakeswap-libs/uikit'
 import { ReactComponent as TwitterIcon } from 'assets/svg/icon/TwitterIcon.svg'
 // eslint-disable-next-line import/no-cycle
 import { ReactComponent as SocialIcon2 } from 'assets/svg/icon/SocialIcon2.svg'
 import { ReactComponent as TelegramIcon } from 'assets/svg/icon/TelegramIcon.svg'
-// import { BoxesLoader } from "react-awesome-loaders";
-
 import CopyHelper from 'components/AccountDetails/Copy'
-import axios from 'axios';
 import { useDispatch } from 'react-redux'
-import {typeInput} from '../../../state/input/actions'
-// import { GetInputData } from '../index';
-import { TokenDetailProps } from './types'
-
-
+import { typeInput } from '../../../state/input/actions'
 
 export interface ContractPanelProps {
   value: any
 }
-
 const ContractPanelWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -30,23 +20,6 @@ const ContractPanelWrapper = styled.div`
     flex-direction: row;
     justify-content: space-between;
     align-items: center;   
-  }
-`
-
-const IconWrapper = styled.div<{ size?: number }>`
-  display: flex;
-  flex-flow: column nowrap;
-  align-items: center;
-  justify-content: center;
-  margin-left: 36px;
-  height: ${({ size }) => (size ? `${size}px` : '32px')};
-  width: ${({ size }) => (size ? `${size}px` : '32px')};
-  & > img, span {
-    height: ${({ size }) => (size ? `${size}px` : '32px')};
-    width: ${({ size }) => (size ? `${size}px` : '32px')};
-  }
-  ${({ theme }) => theme.mediaQueries.lg} {
-    align-items: flex-end;
   }
 `
 
@@ -84,7 +57,6 @@ const ContractCard = styled(Text)`
     margin: 0;
   }
 `
-
 const SocialIconsWrapper = styled.div`
   display: flex;
   justify-content: center;
@@ -96,65 +68,30 @@ const SocialIconsWrapper = styled.div`
     margin: 0 11px;
   }
 `
-// {token} : ContractPanelProps) 
-export default function ContractPanel({value}: ContractPanelProps){
+export default function ContractPanel({ value }: ContractPanelProps) {
 
-  const [ addressSearch, setAddressSearch ] = useState('');
-  // localStorage.setItem('InputAddress', addressSearch);
-  
-    const dispatch=useDispatch();
-    // const [loader,setLoader]=useState(false)
+  const [addressSearch, setAddressSearch] = useState('');
+  const dispatch = useDispatch();
+  const handlerChange = (e) => {
+    setAddressSearch(e.target.value)
+  }
 
-  // console.log("addressSearch",addressSearch)
-     const handlerChange=(e)=>{
-      setAddressSearch(e.target.value)
-     }
-
-    //  const InputSubmit=(e)=>{
-    //    e.preventDefault();
-    //   //  setLoader(true);
-    //   //  console.log("click");
-     
-    //  }
-    // useEffect(() => {
-    //   const getalldata=()=>{
-    //     axios.get(`http://192.168.18.65:8080/v1.0/dogeson/info/contract/${addressSearch}`).then((response)=>{
-    //       console.log("get api",response)
-    //     })
-    // }
-
-    //    getalldata();
-    // },[addressSearch]);
-    
   return (
-    <> 
-    {/* {loader?<BoxesLoader
-    
-        boxColor="#8b2a9b"
-        shadowColor="#aa8929"
-        style={{ marginBottom: "20px" }}
-        desktopSize="30px"
-        mobileSize="15px"
-      />:""} */}
- 
-      
+    <>
       <ContractPanelWrapper>
-      <ContractCard>
-        <CopyHelper toCopy={value ? value.contractAddress : addressSearch}>
-          &nbsp;
-        </CopyHelper>
-        <input placeholder='' value={addressSearch} onChange={handlerChange}  />
-        <Button size='sm' onClick={()=>dispatch(typeInput({input :addressSearch }))}>Submit</Button>
-      </ContractCard>
-      <SocialIconsWrapper>
-        <TwitterIcon />
-        <SocialIcon2 />
-        <TelegramIcon />
-      </SocialIconsWrapper>
-    </ContractPanelWrapper>
-
-  
-    
+        <ContractCard>
+          <CopyHelper toCopy={value ? value.contractAddress : addressSearch}>
+            &nbsp;
+          </CopyHelper>
+          <input placeholder='' value={addressSearch} onChange={handlerChange} />
+          <Button size='sm' onClick={() => dispatch(typeInput({ input: addressSearch }))}>Submit</Button>
+        </ContractCard>
+        <SocialIconsWrapper>
+          <TwitterIcon />
+          <SocialIcon2 />
+          <TelegramIcon />
+        </SocialIconsWrapper>
+      </ContractPanelWrapper>
     </>
 
   )

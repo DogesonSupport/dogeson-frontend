@@ -9,7 +9,6 @@ const configurationData = {
         name: 'Bitfinex',
         desc: 'Bitfinex',
     }
-        // ...
     ],
 };
 async function getAllSymbols() {
@@ -39,6 +38,7 @@ async function getAllSymbols() {
 }
 export default {
     onReady: (callback:any) => {
+         // eslint-disable-next-line no-console
         console.log('[onReady]: Method call');
         setTimeout(() => callback(configurationData));
     },
@@ -48,6 +48,7 @@ export default {
         symbolType:any,
         onResultReadyCallback:any,
     ) => {
+         // eslint-disable-next-line no-console
         console.log('[searchSymbols]: Method call');
         const symbols = await getAllSymbols();
         const newSymbols = symbols.filter(symbol => {
@@ -64,6 +65,7 @@ export default {
         onSymbolResolvedCallback:any,
         onResolveErrorCallback:any,
     ) => {
+         // eslint-disable-next-line no-console
         console.log('[resolveSymbol]: Method call', symbolName);
         // const symbols = await getAllSymbols();
         // const symbolItem = symbols.find(({full_name,

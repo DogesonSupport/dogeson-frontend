@@ -66,7 +66,7 @@ import { HotTokenType, TokenDetailProps, HistoricalDataProps } from './component
 import LiquidityWidget from '../Pool/LiquidityWidget'
 import {TVChartContainer} from './TVChartContainer'
 // eslint-disable-next-line import/extensions
-import datafeed from "./components/main.js";
+// import datafeed from "./components/main.js";
 
 
 
@@ -896,22 +896,12 @@ const Swap = () => {
             <CoinStatsBoard
              
             />
-{/* 
-           <div id="tv_chart_container">
-             {datafeed}
-              </div> 
-        */}
             <TVChartContainer/>
-            {/* <TradingViewWidget
-              symbol={currentToken?.symbol}
-              theme={Themes.DARK}
-              locale="en"
-              autosize
-            /> */}
+           
           </FullHeightColumn>
         </div>
         <div>
-            {/* tokenInfo={currentToken} */}
+           
           <TokenInfo  />
         
         </div>
