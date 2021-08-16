@@ -1,8 +1,10 @@
 import React,{useState,useEffect } from 'react'
 import styled from 'styled-components'
 import { Flex, Text } from '@pancakeswap-libs/uikit'
+// eslint-disable-next-line import/no-unresolved
 import { ReactComponent as MoreIcon2 } from 'assets/svg/icon/MoreIcon2.svg' 
 import axios from 'axios';
+import Web3 from 'web3';
 import { useSelector } from 'react-redux';
 import {  AppState } from '../../../state'
 // eslint-disable-next-line import/no-cycle
@@ -55,6 +57,9 @@ export default function TokenInfo() {
   //  const input= localStorage.getItem('InputAddress');
   //   console.log("inputaddress1",input);
     const input = useSelector<AppState, AppState['inputReducer']>((state) => state.inputReducer.input)
+    const result = Web3.utils.isAddress(input)
+    // eslint-disable-next-line no-console
+    console.log("result===============================>",result)  // => true
 
     // console.log("input in chart",input);
 
@@ -68,16 +73,20 @@ export default function TokenInfo() {
 
   const getTableData =   () => {
     try{
-      axios.post("https://api.sphynxswap.finance/tokenStats",{address:input})
-        .then((response) => {
-            setalldata(response.data)
-        });
+      if(result){
+        axios.post("https://api.sphynxswap.finance/tokenStats",{address:input})
+          .then((response) => {
+              setalldata(response.data)
+          });
+      }
 
     }
     catch(err){
        // eslint-disable-next-line no-console
       // console.log(err);
-      alert("Invalid Address")
+      // alert("Invalid Address")
+      console.log("errr",err.message);
+      
       
     }
     

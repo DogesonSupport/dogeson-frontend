@@ -9,6 +9,7 @@ import {
     ResolutionString,
 } from '../../../charting_library';
 import axios from 'axios';
+import Web3 from 'web3';
 import { BoxesLoader } from "react-awesome-loaders";
 import { makeApiRequest, generateSymbol, makeApiRequest1 } from './helpers';
 import { useSelector } from 'react-redux';
@@ -60,6 +61,9 @@ function getLanguageFromURL(): LanguageCode | null {
 export const TVChartContainer: React.FC<Partial<ChartContainerProps>> = () => {
 
     const input = useSelector<AppState, AppState['inputReducer']>((state) => state.inputReducer.input);
+    const result = Web3.utils.isAddress(input)
+    // eslint-disable-next-line no-console
+    console.log("result===============================>",result)  // => true
     const [loader, setLoader] = React.useState(false)
     
     console.log("input in tradingviewchart==========", input);
@@ -188,14 +192,18 @@ export const TVChartContainer: React.FC<Partial<ChartContainerProps>> = () => {
 
             try {
                 const data = await makeApiRequest1(input);
-                // setLoader(true);
-                if (!firstDataRequest) {
-                    // "noData" should be set if there is no data in the requested period.
-                    onHistoryCallback([], {
-                        noData: true,
-                    });
-                    return;
+                if(result){
+                      // setLoader(true);
+                    if (!firstDataRequest) {
+                        // "noData" should be set if there is no data in the requested period.
+                        onHistoryCallback([], {
+                            noData: true,
+                        });
+                        return;
+                    }
+
                 }
+              
 
                 console.log("responsedata", data);
 
@@ -240,7 +248,7 @@ export const TVChartContainer: React.FC<Partial<ChartContainerProps>> = () => {
             }
             catch (error) {
 
-                console.log('[getBars]: Get error', error);
+                console.log('[getBars]: Get error', error.message);
                 onErrorCallback(error);
             }
         },
@@ -275,7 +283,7 @@ export const TVChartContainer: React.FC<Partial<ChartContainerProps>> = () => {
             studies_overrides: ChartContainerProps.studiesOverrides,
         };
 
-        tvWidget = new widget(widgetOptions);
+        tvWidget = await new widget(widgetOptions);
         // this.tvWidget = widget
 
         //  tvWidget.onChartReady(() => {
@@ -317,7 +325,7 @@ export const TVChartContainer: React.FC<Partial<ChartContainerProps>> = () => {
 
     return (
         <>
-          {loader ?
+          {/* {loader ?
           <div style={{ position: 'absolute', left: 567, top: 150 }}>
             <BoxesLoader
 
@@ -330,7 +338,7 @@ export const TVChartContainer: React.FC<Partial<ChartContainerProps>> = () => {
           </div>
           : ""
 
-        }
+        } */}
         <div
             id={ChartContainerProps.containerId}
             className={'TVChartContainer'}

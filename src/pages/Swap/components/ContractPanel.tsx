@@ -1,11 +1,16 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Text, Button } from '@pancakeswap-libs/uikit'
+// eslint-disable-next-line import/no-unresolved
 import { ReactComponent as TwitterIcon } from 'assets/svg/icon/TwitterIcon.svg'
 // eslint-disable-next-line import/no-cycle
+// eslint-disable-next-line import/no-unresolved
 import { ReactComponent as SocialIcon2 } from 'assets/svg/icon/SocialIcon2.svg'
+// eslint-disable-next-line import/no-unresolved
 import { ReactComponent as TelegramIcon } from 'assets/svg/icon/TelegramIcon.svg'
+// eslint-disable-next-line import/no-unresolved
 import CopyHelper from 'components/AccountDetails/Copy'
+import Web3 from 'web3';
 import { useDispatch } from 'react-redux'
 import { typeInput } from '../../../state/input/actions'
 
@@ -71,10 +76,24 @@ const SocialIconsWrapper = styled.div`
 export default function ContractPanel({ value }: ContractPanelProps) {
 
   const [addressSearch, setAddressSearch] = useState('');
+  const [show,setShow]=useState(true)
+
+  // eslint-disable-next-line no-console
+  // console.log("result===============================>",result)  // => true
   const dispatch = useDispatch();
-  const handlerChange = (e) => {
-    setAddressSearch(e.target.value)
-  }
+  const handlerChange = (e:any) => {
+      const result = Web3.utils.isAddress(e.target.value)
+      if(result){
+        setAddressSearch(e.target.value)
+        setShow(false);
+      }
+      else{
+        setAddressSearch(e.target.value)
+        setShow(true);
+      }
+  }  
+
+
 
   return (
     <>
@@ -84,7 +103,7 @@ export default function ContractPanel({ value }: ContractPanelProps) {
             &nbsp;
           </CopyHelper>
           <input placeholder='' value={addressSearch} onChange={handlerChange} />
-          <Button size='sm' onClick={() => dispatch(typeInput({ input: addressSearch }))}>Submit</Button>
+          <Button size='sm' onClick={() => dispatch(typeInput({ input: addressSearch }))} disabled={show} >Submit</Button>
         </ContractCard>
         <SocialIconsWrapper>
           <TwitterIcon />

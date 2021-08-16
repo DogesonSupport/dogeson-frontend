@@ -1,9 +1,10 @@
-import React, {useEffect,useState, useContext } from 'react'
+import React, {useEffect,useState } from 'react'
 import {utils} from "ethers";
-import styled, { ThemeContext } from 'styled-components'
+import styled from 'styled-components'
 import { Text, Flex } from '@pancakeswap-libs/uikit'
-
+import { Redirect } from 'react-router';
 import axios from 'axios';
+import Web3 from 'web3';
 import { useSelector } from 'react-redux';
 import Column from '../../../components/Column'
 import {  AppState } from '../../../state'
@@ -77,6 +78,9 @@ export default function CoinStatsBoard() {
   // const theme = useContext(ThemeContext)
 
   const input = useSelector<AppState, AppState['inputReducer']>((state) => state.inputReducer.input);
+   const result = Web3.utils.isAddress(input)
+    // eslint-disable-next-line no-console
+    console.log("result===============================>",result)  // => true
   // console.log("input in marketcap==========",input);
   const [alldata, setalldata] = useState({
     address : '',
@@ -101,16 +105,20 @@ export default function CoinStatsBoard() {
  
   const getTableData =   () => {
     try{
+      if(result){
       axios.post("https://api.sphynxswap.finance/chartStats",{address:input})
       .then((response) => {
           setalldata(response.data)
           setLinkIcon(`https://r.poocoin.app/smartchain/assets/${input ? utils.getAddress(input) : '0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82'}/logo.png`);
       });
-
+    }
     }
     catch(err){
       // eslint-disable-next-line no-console
-      console.log(err)
+      console.log("eroor===========>",err.message);
+      alert("Invalid Address");
+			// <Redirect to="/swap" />
+
       
     }
    }  
@@ -131,7 +139,7 @@ useEffect(() => {
             </IconWrapper>
         <div>
           <Text>Coin</Text>
-          <Text>{input}</Text>
+          <Text>{result?input:''}</Text>
         </div>
         </Flex>
       </Column>

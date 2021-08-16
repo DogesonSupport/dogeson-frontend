@@ -2,7 +2,10 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { Flex } from '@pancakeswap-libs/uikit'
 import axios from 'axios';
+import Web3 from 'web3';
 import { useSelector } from 'react-redux';
+// import { RedirectToSwap } from '../redirects'; 
+import { Redirect } from 'react-router';
 // import { BoxesLoader } from "react-awesome-loaders";
 import { AppState } from '../../../state'
 
@@ -61,6 +64,9 @@ const TransactionCard = () => {
 	// const [data, setData] =useState ([]);
 	// const iinput= localStorage.getItem('InputAddress');
 	const input = useSelector<AppState, AppState['inputReducer']>((state) => state.inputReducer.input)
+	const result = Web3.utils.isAddress(input)
+    // eslint-disable-next-line no-console
+    console.log("result===============================>",result)  // => true
 
 
     //   const some=!input?'0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82':input;
@@ -120,7 +126,7 @@ const TransactionCard = () => {
 
 	const fetchData = async () => {
 		try {
-			if (input) {
+			if (result) {
 				// setLoader(true);
 				const queryResult = await axios.post('https://graphql.bitquery.io/', { query: Get_data });
 				if (queryResult.data.data)
@@ -131,8 +137,9 @@ const TransactionCard = () => {
 		}
 		catch (err) {
 			// eslint-disable-next-line no-console
-			// console.log(err);
-			alert("Invalid Address")
+			console.log("err",err.message);
+			// alert("Invalid Address");
+			// <Redirect to="/swap" />
 
 		}
 	}

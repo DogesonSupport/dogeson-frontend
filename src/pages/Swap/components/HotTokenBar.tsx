@@ -1,9 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Flex, Link } from '@pancakeswap-libs/uikit'
+import {  Link } from '@pancakeswap-libs/uikit'
 import Marquee from "react-fast-marquee";
+// eslint-disable-next-line import/no-unresolved
 import { ReactComponent as HelpIcon } from 'assets/svg/icon/HelpIcon.svg'
+// eslint-disable-next-line import/no-unresolved
 import { ReactComponent as DownRedArrowIcon} from 'assets/svg/icon/DownRedArrowIcon.svg'
+// eslint-disable-next-line import/no-unresolved
 import { ReactComponent as UpGreenArrowIcon} from 'assets/svg/icon/UpGreenArrowIcon.svg'
 import { HotTokenType } from './types'
 
