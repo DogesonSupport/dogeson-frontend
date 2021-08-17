@@ -83,7 +83,7 @@ const ArrowContainer = styled.div`
   margin: 0;
   cursor: pointer;
   &:hover {
-    opacity: 0.8;
+    transform: scale(1.2);
   }
   & svg {
     width: 14px;

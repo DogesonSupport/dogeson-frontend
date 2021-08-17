@@ -69,6 +69,15 @@ const ContractCard = styled(Text)`
     margin: 0;
   }
 `
+const MenuWrapper = styled.div`
+  & button {
+    background: transparent !important;
+    outline: none;
+    box-shadow: none !important;
+    padding: 0 12px;
+    border: none;
+  }
+`
 const SocialIconsWrapper = styled.div`
   display: flex;
   justify-content: center;
@@ -172,29 +181,29 @@ export default function ContractPanel({ value }: ContractPanelProps) {
             &nbsp;
           </CopyHelper>
           <input placeholder='' value={addressSearch}  onKeyPress={handleKeyPress} onChange={handlerChange} />
-          <div>
-      <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-      <ArrowDropDownIcon/>
-      </Button>
-        {showDrop ? <Menu
-        id="simple-menu"
-        anchorEl={anchorEl}
-        keepMounted
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-      >{data.length > 0 ?
-       <span>
-         {data?.map((item:any )=>{
-          //  {console.log('d==>', item)}
-          return <MenuItem onClick={()=> dispatch(typeInput({ input: item.address })) && setAnchorEl(null)}>{item.name}<br/>{item.symbol}<br/>{item.address}</MenuItem>
-         })}
-         
-       </span> : 
-        <MenuItem >no record</MenuItem>}
-      </Menu>:""}
-    </div>
+          <MenuWrapper>
+            <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+              <ArrowDropDownIcon/>
+            </Button>
+              {showDrop ? <Menu
+              id="simple-menu"
+              anchorEl={anchorEl}
+              keepMounted
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+            >{data.length > 0 ?
+            <span>
+              {data?.map((item:any )=>{
+                //  {console.log('d==>', item)}
+                return <MenuItem onClick={()=> dispatch(typeInput({ input: item.address })) && setAnchorEl(null)}>{item.name}<br/>{item.symbol}<br/>{item.address}</MenuItem>
+              })}
+              
+            </span> : 
+              <MenuItem >no record</MenuItem>}
+            </Menu>:""}
+          </MenuWrapper>
+          <Button size='sm' onClick={submitFuntioncall} disabled={show} >Submit</Button>
         </ContractCard>
-        <Button size='sm' onClick={submitFuntioncall} disabled={show} >Submit</Button>
         <SocialIconsWrapper>
           <TwitterIcon />
           <SocialIcon2 />
