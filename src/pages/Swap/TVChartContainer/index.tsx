@@ -63,10 +63,10 @@ export const TVChartContainer: React.FC<Partial<ChartContainerProps>> = () => {
     const input = useSelector<AppState, AppState['inputReducer']>((state) => state.inputReducer.input);
     const result = Web3.utils.isAddress(input)
     // eslint-disable-next-line no-console
-    console.log("result===============================>",result)  // => true
+    // console.log("result===============================>",result)  // => true
     const [loader, setLoader] = React.useState(false)
     
-    console.log("input in tradingviewchart==========", input);
+    // console.log("input in tradingviewchart==========", input);
 
     const [tokendetails, setTokenDetails] = React.useState({
         name: 'PancakeSwap Token',
@@ -125,7 +125,7 @@ export const TVChartContainer: React.FC<Partial<ChartContainerProps>> = () => {
             symbolType: any,
             onResultReadyCallback: any,
         ) => {
-            console.log('[searchSymbols]: Method call');
+            // console.log('[searchSymbols]: Method call');
             const symbols = await getAllSymbols();
             const newSymbols = symbols.filter(symbol => {
                 const isExchangeValid = exchange === '' || symbol.exchange === exchange;
@@ -205,7 +205,7 @@ export const TVChartContainer: React.FC<Partial<ChartContainerProps>> = () => {
                 }
               
 
-                console.log("responsedata", data);
+                // console.log("responsedata", data);
 
                 let bars: any = [];
                 // if(data.data.data){
@@ -230,7 +230,7 @@ export const TVChartContainer: React.FC<Partial<ChartContainerProps>> = () => {
                     return {}
                 })
                 //   }
-                console.log("here===========", bars)
+                // console.log("here===========", bars)
                 // eslint-disable-next-line no-console
 
                 // if (firstDataRequest) {

@@ -140,21 +140,21 @@ export default function ContractPanel({ value }: ContractPanelProps) {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  
+  const submitFuntioncall=()=>{
+    dispatch(typeInput({ input: addressSearch }))
+  }
   const handleKeyPress = (event) => {
     if(event.key === 'Enter'){
       submitFuntioncall();
     }
   }
 
-  const submitFuntioncall=()=>{
-    dispatch(typeInput({ input: addressSearch }))
-  }
+  
 
   useEffect(() => {
     const listener = event => {
       if (event.code === "Enter" || event.code === "NumpadEnter") {
-        console.log("Enter key was pressed. Run your function.");
+        // console.log("Enter key was pressed. Run your function.");
         // callMyFunction();
       }
     };
