@@ -104,6 +104,7 @@ export default function CoinStatsBoard() {
     const liquidityV2BNBdecimal=parseFloat(alldata.liquidityV2BNB).toFixed(3);
  
   const getTableData =   () => {
+    
     try{
       if(result){
       axios.post("https://api.sphynxswap.finance/chartStats",{address:input})
