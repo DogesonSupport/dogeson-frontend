@@ -667,9 +667,9 @@ const Swap = () => {
       <HotTokenBar
         tokens={hotTokens}
       />
-      <SwapRightBanner>
+      {/* <SwapRightBanner>
         <img src={SwapBanner} alt='Swap Banner' />
-      </SwapRightBanner>
+      </SwapRightBanner> */}
       <Cards>
         <div>
           <div style={{ height: 48, marginBottom: 20 }}>
