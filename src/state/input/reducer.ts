@@ -4,10 +4,12 @@ import { resetMintState, typeInput } from './actions'
 
 interface InputState {
     input: string
+
   }
   
   const initialState : InputState = {
-    input: '0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82'
+    input: '0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82',
+
   };
 
 

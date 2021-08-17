@@ -68,7 +68,7 @@ const TransactionCard = () => {
 	const input = useSelector<AppState, AppState['inputReducer']>((state) => state.inputReducer.input)
 	const result = Web3.utils.isAddress(input)
     // eslint-disable-next-line no-console
-    console.log("result===============================>",result)  // => true
+    // console.log("result===============================>",result)  // => true
 
 
     //   const some=!input?'0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82':input;

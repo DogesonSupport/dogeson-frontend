@@ -86,7 +86,7 @@ export default function CoinStatsBoard() {
   const input = useSelector<AppState, AppState['inputReducer']>((state) => state.inputReducer.input);
    const result = Web3.utils.isAddress(input)
     // eslint-disable-next-line no-console
-    console.log("result===============================>",result)  // => true
+    // console.log("result===============================>",result)  // => true
   // console.log("input in marketcap==========",input);
   const [alldata, setalldata] = useState({
     address : '',
@@ -112,6 +112,7 @@ export default function CoinStatsBoard() {
     const liquidityV2BNBdecimal=parseFloat(alldata.liquidityV2BNB).toFixed(3);
  
   const getTableData =   () => {
+    
     try{
       if(result){
         axios.post("https://api.sphynxswap.finance/tokenStats",{address:input})

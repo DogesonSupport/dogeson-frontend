@@ -59,7 +59,7 @@ export default function TokenInfo() {
     const input = useSelector<AppState, AppState['inputReducer']>((state) => state.inputReducer.input)
     const result = Web3.utils.isAddress(input)
     // eslint-disable-next-line no-console
-    console.log("result===============================>",result)  // => true
+    // console.log("result===============================>",result)  // => true
 
     // console.log("input in chart",input);
 
