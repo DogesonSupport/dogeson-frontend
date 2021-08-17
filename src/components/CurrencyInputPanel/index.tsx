@@ -45,7 +45,7 @@ const CurrencySelect = styled.button<{ selected: boolean }>`
 
   :focus,
   :hover {
-    background-color: ${({ theme }) => darken(0.05, theme.colors.input)};
+    opacity: 0.6;
   }
 
   & > span {
@@ -79,6 +79,10 @@ const MaxButtonWrapper = styled.div`
     background-color: #8B2A9B;
     color: white;
     margin-left: 4px;
+    &:hover {
+      background-color: #8B2A9B !important;
+      opacity: 0.6;
+    }
   }
 `
 
