@@ -225,9 +225,9 @@ const BottomCard = styled.div`
   border-radius: 8px;
   overflow: hidden;
   position: relative;
-  margin-bottom: -60px !important;
   ${({ theme }) => theme.mediaQueries.md} {
     width: 320px !important;
+    margin-bottom: -60px !important;
   }
   & div {
     position: absolute;
@@ -667,9 +667,9 @@ const Swap = () => {
       <HotTokenBar
         tokens={hotTokens}
       />
-      <SwapRightBanner>
+      {/* <SwapRightBanner>
         <img src={SwapBanner} alt='Swap Banner' />
-      </SwapRightBanner>
+      </SwapRightBanner> */}
       <Cards>
         <div>
           <div style={{ height: 48, marginBottom: 20 }}>
