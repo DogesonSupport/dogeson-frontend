@@ -14,8 +14,10 @@ const TableWrapper = styled.div`
 	background: rgba(0, 0, 0, 0.4);
 	border-radius: 8px;
 	height: 100%;
+	overflow-x: auto;
 	& table {
 		background: transparent;
+		min-width: 500px;
 		width: 100%;
 		& tr {
 			background: transparent;
