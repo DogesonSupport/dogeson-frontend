@@ -41,7 +41,6 @@ const StyledWrapper = styled.div`
   padding: 8px 16px 0;
   display: flex;
   flex-direction: column;
-  min-width: 500px;
 
   & > div {
     margin: 0 12px 8px 0;
@@ -79,6 +78,7 @@ const StyledWrapper = styled.div`
     align-items: center;
     justify-content: space-between;
     margin: 0;
+    min-width: 500px;
   }
 `
 
