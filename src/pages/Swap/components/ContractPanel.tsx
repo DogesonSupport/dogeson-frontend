@@ -199,7 +199,7 @@ export default function ContractPanel({ value }: ContractPanelProps) {
               })}
               
             </span> : 
-              <MenuItem >no record</MenuItem>}
+              <span style={{ padding: '0 16px' }}>no record</span>}
             </Menu>:""}
           </MenuWrapper>
           <Button size='sm' onClick={submitFuntioncall} disabled={show} >Submit</Button>

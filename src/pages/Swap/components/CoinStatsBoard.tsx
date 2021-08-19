@@ -32,16 +32,19 @@ const Container = styled.div`
   background-color: rgba(0, 0, 0, 0.4);
   border-radius: 12px 12px 0px 0px;
   overflow-x: auto;
+  ::-webkit-scrollbar {
+    height: 10px;
+  }
 `
 
 const StyledWrapper = styled.div`
   padding: 8px 16px 0;
   display: flex;
   flex-direction: column;
-  min-width: 760px;
+  min-width: 500px;
 
   & > div {
-    margin: 0 0 12px;
+    margin: 0 12px 8px 0;
     & > div, & > div > div > div {
       &:first-child {
         color: white;
@@ -57,18 +60,17 @@ const StyledWrapper = styled.div`
         line-height: 16px;
       }
     }
+    & .success {
+      color: #00AC1C;
+    }
+    & .error {
+      color: #EA3943;
+    }
     & h2 {
       font-size: 14px;
       line-height: 16px;
       font-weight: bold;
-      &.success {
-        color: #00AC1C;
-      }
-      &.error {
-        color: #EA3943;
-      }
-    }
-  
+    } 
   }
 
 
@@ -152,16 +154,16 @@ useEffect(() => {
                 <img src={linkIcon} alt="Coin icon" />
               </IconWrapper>
           {tokenData &&
-            <div>
+            <Flex flexDirection='column' justifyContent='center'>
               <Text>{tokenData.symbol}</Text>
               <Text>{tokenData.marketCap.substring(tokenData.marketCap.indexOf('$'))}</Text>
-            </div>
+            </Flex>
           }
           </Flex>
         </Column>
         <Column>
           <Text>Price</Text>
-          <Text>$ {Number(alldata.price).toLocaleString()}</Text>
+          <Text>${Number(alldata.price).toLocaleString()}</Text>
         </Column>
         <Column>
           <Text>24h Change</Text>
@@ -170,12 +172,11 @@ useEffect(() => {
         </Column>
         <Column>
           <Text>24h Volume</Text>
-          <Text>$ {Number(volumedecimal).toLocaleString()}</Text>
+          <Text>${Number(volumedecimal).toLocaleString()}</Text>
         </Column>
-        <Column >
+        <Column style={{ flex: 1 }}>
           <Text>Liquidity</Text>
-          <Text style={{color:'white', fontSize: 14, lineHeight: '16px'}}> $ {Number(liquidityV2decimal).toLocaleString()}</Text>
-          <Text><h2 className='success'>BNB {Number(liquidityV2BNBdecimal).toLocaleString()}</h2></Text>
+          <Text>{Number(liquidityV2BNBdecimal).toLocaleString()} BNB<span className='success'> (${Number(liquidityV2decimal).toLocaleString()})</span></Text>
         </Column>
       </StyledWrapper>
     </Container>
