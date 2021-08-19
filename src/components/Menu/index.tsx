@@ -196,13 +196,11 @@ const Menu: React.FC = props => {
 
   const [getallToken,setAllTokens]=useState([]);
 
-  // console.log("getallToken",getallToken)
   
   // const getAccount= new web3.eth.Iban('account');
   // const getBalance= async()=>{
     
   // const balance = await  web3.eth.getBalance('account'); 
-  // console.log("balance",balance);
   //     setWalletBalance(balance);
   // }
   
@@ -246,7 +244,6 @@ const Menu: React.FC = props => {
 
 //     const chartData =[]
 //     result.forEach(e =>{
-//        // console.log('result',e.timeInterval.minute);
 //        chartData.push({
 //            open : parseFloat(e.open_price),
 //            high : parseFloat(e.maximum_price),
@@ -256,7 +253,6 @@ const Menu: React.FC = props => {
 //            // time : "2021-04-12"
 //        })
 //    })
-//    console.log('before::::' , chartData)
  
 // };
 
@@ -268,15 +264,13 @@ const Menu: React.FC = props => {
   },[account])
 
   // const [alldata, setalldata] = useState([]);
-  // console.log("alladta",alldata)
   // const getTableData = () => {
   //   axios.get("http://ec2-34-220-133-56.us-west-2.compute.amazonaws.com:1337/approvals")
   //       .then((response) => {
-  //           console.log("response", response.data.approvals);
   //           setalldata(response.data.approvals)
 
   //       })
-  //       .catch((error) => { console.log("Error", error); })
+  //       .catch((error) => {  })
 
   //      }  
   

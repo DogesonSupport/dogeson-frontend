@@ -63,10 +63,8 @@ export const TVChartContainer: React.FC<Partial<ChartContainerProps>> = () => {
     const input = useSelector<AppState, AppState['inputReducer']>((state) => state.inputReducer.input);
     const result = Web3.utils.isAddress(input)
     // eslint-disable-next-line no-console
-    // console.log("result===============================>",result)  // => true
     const [loader, setLoader] = React.useState(false)
     
-    // console.log("input in tradingviewchart==========", input);
 
     const [tokendetails, setTokenDetails] = React.useState({
         name: 'PancakeSwap Token',
@@ -205,12 +203,10 @@ export const TVChartContainer: React.FC<Partial<ChartContainerProps>> = () => {
                 }
               
 
-                // console.log("responsedata", data);
 
                 let bars: any = [];
                 // if(data.data.data){
                 data.map((bar: any, i: any) => {
-                    // console.log("time from api",bar.time);
 
                     const obj = {
                         time: new Date(bar.time).toString(),
@@ -225,12 +221,10 @@ export const TVChartContainer: React.FC<Partial<ChartContainerProps>> = () => {
                         obj.isLastBar = true
                         obj.isBarClosed = false
                     }
-                    // console.log("here==",obj)
                     bars = [...bars, obj];
                     return {}
                 })
                 //   }
-                // console.log("here===========", bars)
                 // eslint-disable-next-line no-console
 
                 // if (firstDataRequest) {
@@ -240,7 +234,6 @@ export const TVChartContainer: React.FC<Partial<ChartContainerProps>> = () => {
                 });
                 // setLoader(false);
                 // }
-                // console.log(`[getBars]: returned ${bars.length} bar(s)`);
                 onHistoryCallback(bars, {
                     noData: false,
                 });

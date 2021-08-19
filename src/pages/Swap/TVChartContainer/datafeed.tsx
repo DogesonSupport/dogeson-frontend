@@ -168,12 +168,10 @@ export default {
                         obj.isLastBar = true
                         obj.isBarClosed = false
                     }
-                    // console.log("here==",obj)
                     bars = [...bars, obj];
                     return {}
                 })
             //   }\
-                  console.log("here===========",bars)
                  // eslint-disable-next-line no-console
                 
             // if (firstDataRequest) {
@@ -181,12 +179,10 @@ export default {
                     ...bars[bars.length - 1],
                 });
             // }
-            // console.log(`[getBars]: returned ${bars.length} bar(s)`);
             onHistoryCallback(bars, {
                 noData: false,
             });
         } catch (error) {
-            // console.log('[getBars]: Get error', error);
             onErrorCallback(error);
         }
     },
@@ -197,7 +193,6 @@ export default {
     //     subscribeUID,
     //     onResetCacheNeededCallback,
     // ) => {
-    //     console.log('[subscribeBars]: Method call with subscribeUID:', subscribeUID);
     //     subscribeOnStream(
     //      symbolInfo,
     //      resolution,
@@ -208,7 +203,6 @@ export default {
     //     );
     // },
     // unsubscribeBars: (subscriberUID) => {
-    //     console.log('[unsubscribeBars]: Method call with subscriberUID:', subscriberUID);
     //     unsubscribeFromStream(subscriberUID);
     // },
 };
