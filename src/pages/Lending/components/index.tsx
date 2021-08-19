@@ -205,17 +205,15 @@ const Landing = () => {
 
   // const[address,setaddress]=useState('');
   // function handleChange(value){
-  //     console.log("console parent::::" , address)
   //     setaddress(value);
   //   }
 
 
   // const getapi=()=>{
   //   axios.get('http://192.168.18.65:8080/v1.0/dogeson/historical?dexId=0x3b9dd0ac3fa49988a177b7c020f680295fb21996&span=month').then((response)=>{
-  //     console.log("getapi",response);
       
   //   })
-  //   .catch((error) => { console.log("Error", error); })
+  //   .catch((error) => { })
   // }
 
   // useEffect(()=>{

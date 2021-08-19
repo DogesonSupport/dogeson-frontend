@@ -1,12 +1,16 @@
-import React,{useState,useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { Flex, Text } from '@pancakeswap-libs/uikit'
+
 // eslint-disable-next-line import/no-unresolved
-import { ReactComponent as MoreIcon2 } from 'assets/svg/icon/MoreIcon2.svg' 
+import { ReactComponent as MoreIcon2 } from 'assets/svg/icon/MoreIcon2.svg'
 import axios from 'axios';
 import Web3 from 'web3';
-import { useSelector } from 'react-redux';
-import {  AppState } from '../../../state'
+import { useSelector, useDispatch } from 'react-redux';
+
+import { AppState, AppDispatch } from '../../../state'
+import { selectCurrency, Field } from '../../../state/swap/actions';
+
 // eslint-disable-next-line import/no-cycle
 
 const TextWrapper = styled.div`
@@ -53,60 +57,64 @@ const TokenInfoContainer = styled.div`
 `
 // {tokenInfo}: {tokenInfo?: TokenDetailProps | null}
 export default function TokenInfo() {
-  
-  //  const input= localStorage.getItem('InputAddress');
-  //   console.log("inputaddress1",input);
-    const input = useSelector<AppState, AppState['inputReducer']>((state) => state.inputReducer.input)
-    const result = Web3.utils.isAddress(input)
-    // eslint-disable-next-line no-console
-    // console.log("result===============================>",result)  // => true
 
-    // console.log("input in chart",input);
+  //  const input= localStorage.getItem('InputAddress');
+  const input = useSelector<AppState, AppState['inputReducer']>((state) => state.inputReducer.input)
+  const result = Web3.utils.isAddress(input)
+  // eslint-disable-next-line no-console
+
+  const dispatch = useDispatch<AppDispatch>()
 
   const [alldata, setalldata] = useState({
-    holders : '',
-    txs : '',
-    marketCap : '',
-    symbol : '',
-    totalSupply : ''
+    holders: '',
+    txs: '',
+    marketCap: '',
+    symbol: '',
+    totalSupply: ''
   });
 
-  const getTableData =   () => {
-    try{
-      if(result){
-        axios.post("https://api.sphynxswap.finance/tokenStats",{address:input})
+  const getTableData = () => {
+    try {
+
+      if (result) {
+        axios.post("https://api.sphynxswap.finance/tokenStats", { address: input })
           .then((response) => {
-              setalldata(response.data)
+            setalldata(response.data)
+              dispatch(
+              selectCurrency({
+                field : Field.INPUT,
+                currencyId : input
+              })
+            )
           });
       }
 
     }
-    catch(err){
-       // eslint-disable-next-line no-console
+    catch (err) {
+      // eslint-disable-next-line no-console
       // console.log(err);
       // alert("Invalid Address")
-      console.log("errr",err.message);
-      
-      
+
+
     }
-    
-       }  
-     
 
-useEffect(() => {
+  }
 
-  getTableData();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-},[input])
-  
+
+  useEffect(() => {
+
+    getTableData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [input])
+
   return (
     <TokenInfoContainer>
-    <Flex alignItems="center" justifyContent='space-between'>
+      <Flex alignItems="center" justifyContent='space-between'>
         <Flex alignItems='center'>
-         
-              <IconWrapper size={32}>
-                <Text>{alldata.symbol}</Text> 
-              </IconWrapper>
+
+          <IconWrapper size={32}>
+            <Text>{alldata.symbol}</Text>
+          </IconWrapper>
         </Flex>
         <Flex style={{ width: 40 }}>
           <MoreIcon2 />
@@ -115,13 +123,13 @@ useEffect(() => {
       <Flex flexDirection="column">
         <TextWrapper>
           <Text>Total Supply</Text>
-          <Text>{ alldata.totalSupply}</Text>
+          <Text>{alldata.totalSupply}</Text>
         </TextWrapper>
         <TextWrapper>
           <Text>Market Cap:<span style={{ fontSize: '70%' }}>(includes locked, excludes burned)</span></Text>
           <Text>{alldata.marketCap}</Text>
         </TextWrapper>
-          <TextWrapper>
+        <TextWrapper>
           <Text>Transactions</Text>
           <Text>{alldata.txs}</Text>
         </TextWrapper>
