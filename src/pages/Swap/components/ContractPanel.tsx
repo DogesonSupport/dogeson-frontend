@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/control-has-associated-label */
 import React, { useState,useEffect } from 'react'
 import styled from 'styled-components'
 import { Text, Button } from '@pancakeswap-libs/uikit'
@@ -205,9 +206,9 @@ export default function ContractPanel({ value }: ContractPanelProps) {
           <Button size='sm' onClick={submitFuntioncall} disabled={show} >Submit</Button>
         </ContractCard>
         <SocialIconsWrapper>
-          <TwitterIcon />
-          <SocialIcon2 />
-          <TelegramIcon />
+         <a href="https://mobile.twitter.com/sphynxswap" target="blank"><TwitterIcon /></a> 
+         <a href="sphynxtoken.co" target="blank"><SocialIcon2 /></a>  
+         <a href="https://t.me/sphynxswap" target="blank"><TelegramIcon /></a> 
         </SocialIconsWrapper>
       </ContractPanelWrapper>
     </>

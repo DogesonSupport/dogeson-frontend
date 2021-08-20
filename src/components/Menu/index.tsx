@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/control-has-associated-label */
 import React, { ReactElement, useContext, useState, useMemo, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
@@ -184,9 +185,9 @@ const IllustrationWrapper = styled.div`
 
 const Menu: React.FC = props => {
   const { account, activate, deactivate } = useWeb3React()
-  const { selectedLanguage, setSelectedLanguage } = useContext(LanguageContext)
-  const { isDark, toggleTheme } = useTheme()
-  const cakePriceUsd = useGetPriceData()
+  // const { selectedLanguage, setSelectedLanguage } = useContext(LanguageContext)
+  // const { isDark, toggleTheme } = useTheme()
+  // const cakePriceUsd = useGetPriceData()
   const { menuToggled, toggleMenu } = useMenuToggle();
   const [ showAllToken, setShowAllToken ] = useState(true);
 
@@ -244,21 +245,7 @@ const Menu: React.FC = props => {
     }
     }
 
-//     const chartData =[]
-//     result.forEach(e =>{
-//        // console.log('result',e.timeInterval.minute);
-//        chartData.push({
-//            open : parseFloat(e.open_price),
-//            high : parseFloat(e.maximum_price),
-//            low : parseFloat(e.minimum_price),
-//            close: parseFloat(e.close_price),
-//            // time : e.timeInterval.minute
-//            // time : "2021-04-12"
-//        })
-//    })
-//    console.log('before::::' , chartData)
- 
-// };
+
 
   useEffect(()=>{
     fetchData()
@@ -267,19 +254,7 @@ const Menu: React.FC = props => {
 // eslint-disable-next-line react-hooks/exhaustive-deps
   },[account])
 
-  // const [alldata, setalldata] = useState([]);
-  // console.log("alladta",alldata)
-  // const getTableData = () => {
-  //   axios.get("http://ec2-34-220-133-56.us-west-2.compute.amazonaws.com:1337/approvals")
-  //       .then((response) => {
-  //           console.log("response", response.data.approvals);
-  //           setalldata(response.data.approvals)
 
-  //       })
-  //       .catch((error) => { console.log("Error", error); })
-
-  //      }  
-  
        
        const token_data = getallToken.map((elem : any) => {
         const {currency,value } = elem;
@@ -355,43 +330,14 @@ const Menu: React.FC = props => {
   //       price1: '0.10088233231',
   //       price2: '0.10001'
   //     },
-  //     {
-  //       name: 'NEWWORLD',
-  //       rate: '1.10881',
-  //       price1: '0.10088233231',
-  //       price2: '0.10001'
-  //     },
-  //     {
-  //       name: 'GLend',
-  //       rate: '1.10881',
-  //       price1: '0.10088233231',
-  //       price2: '0.10001'
-  //     },
-  //     {
-  //       name: 'DOOOG',
-  //       rate: '1.10881',
-  //       price1: '0.10088233231',
-  //       price2: '0.10001'
-  //     },
-  //     {
-  //       name: 'FUDOFF',
-  //       rate: '1.10881',
-  //       price1: '0.10088233231',
-  //       price2: '0.10001'
-  //     },
-  //     {
-  //       name: 'NEWWORLD',
-  //       rate: '1.10881',
-  //       price1: '0.10088233231',
-  //       price2: '0.10001'
-  //     }
+  //    
   //   ];
   //   return showAllToken ? tokenData : tokenData.slice(0, 4)
   // }, [showAllToken])
 
   return (
     <MenuWrapper toggled={menuToggled}>
-      <Link  to="/swap"><img src={MainLogo} alt='Main Logo' /></Link>
+      <a  href="sphynxtoken.co"><img src={MainLogo} alt='Main Logo' /></a>
       <MenuIconWrapper>
         {!menuToggled && <span>Main Menu</span>
         }
@@ -444,14 +390,17 @@ const Menu: React.FC = props => {
                 }
               </MenuItem>
           )})
-        }
+        } 
         <SocialWrapper>
           <p><b>Socials</b></p>
           <SocialIconsWrapper toggled={menuToggled}>
             <div>
-              <TwitterIcon />
+              {/* <TwitterIcon />
               <SocialIcon2 />
-              <TelegramIcon />
+              <TelegramIcon /> */}
+         <a href="https://mobile.twitter.com/sphynxswap" target="blank"><TwitterIcon /></a> 
+         <a href="sphynxtoken.co" target="blank"><SocialIcon2 /></a>  
+         <a href="https://t.me/sphynxswap" target="blank"><TelegramIcon /></a> 
             </div>
           </SocialIconsWrapper>
         </SocialWrapper>
