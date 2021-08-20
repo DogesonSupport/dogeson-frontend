@@ -99,11 +99,9 @@ export default function ContractPanel({ value }: ContractPanelProps) {
   const [showDrop,setShowDrop]=useState(false);
 
   // eslint-disable-next-line no-console
-  // console.log("result===============================>",result)  // => true
   const [data,setdata]=useState([])
   const dispatch = useDispatch();
   const handlerChange = (e: any) => {
-    // console.log("e.target.value",e.target.value);
   
       try{
        
@@ -121,7 +119,6 @@ export default function ContractPanel({ value }: ContractPanelProps) {
          // eslint-disable-next-line no-console
         // console.log(err);
         // alert("Invalid Address")
-        console.log("errr",err.message);
         
         
       }
@@ -195,12 +192,11 @@ export default function ContractPanel({ value }: ContractPanelProps) {
             >{data.length > 0 ?
             <span>
               {data?.map((item:any )=>{
-                //  {console.log('d==>', item)}
                 return <MenuItem onClick={()=> dispatch(typeInput({ input: item.address })) && setAnchorEl(null)}>{item.name}<br/>{item.symbol}<br/>{item.address}</MenuItem>
               })}
               
             </span> : 
-              <MenuItem >no record</MenuItem>}
+              <span style={{ padding: '0 16px' }}>no record</span>}
             </Menu>:""}
           </MenuWrapper>
           <Button size='sm' onClick={submitFuntioncall} disabled={show} >Submit</Button>

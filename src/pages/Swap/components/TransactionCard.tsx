@@ -14,10 +14,11 @@ const TableWrapper = styled.div`
 	background: rgba(0, 0, 0, 0.4);
 	border-radius: 8px;
 	height: 100%;
-	overflow-x: auto;
+	max-height: 500px;
+	overflow: auto;
 	& table {
 		background: transparent;
-		min-width: 500px;
+		min-width: 420px;
 		width: 100%;
 		& tr {
 			background: transparent;
@@ -68,11 +69,9 @@ const TransactionCard = () => {
 	const input = useSelector<AppState, AppState['inputReducer']>((state) => state.inputReducer.input)
 	const result = Web3.utils.isAddress(input)
     // eslint-disable-next-line no-console
-    // console.log("result===============================>",result)  // => true
 
 
     //   const some=!input?'0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82':input;
-	// console.log("inputin table",input)
 
 
 // baseCurrency: {is: "${input}"}
@@ -131,6 +130,7 @@ const TransactionCard = () => {
 			if (result) {
 				// setLoader(true);
 				const queryResult = await axios.post('https://graphql.bitquery.io/', { query: Get_data });
+				console.log('bbb', queryResult.data.data)
 				if (queryResult.data.data)
 					setTableData(queryResult.data.data.ethereum.dexTrades)
 				// setLoader(false);
@@ -139,7 +139,6 @@ const TransactionCard = () => {
 		}
 		catch (err) {
 			// eslint-disable-next-line no-console
-			console.log("err",err.message);
 			// alert("Invalid Address");
 			// <Redirect to="/swap" />
 
@@ -164,20 +163,15 @@ const TransactionCard = () => {
 		      // eslint-disable-next-line no-console
 		//   console.log("onlytime",onlytime)
 		return (
-
 			<tr>
 				<td>
 					<a href={link} target="blank"><Flex alignItems='center'><h2 className={val.baseCurrency.symbol === val.buyCurrency.symbol ? 'success' : 'error'}>{today.toLocaleTimeString()}</h2></Flex></a>
 				</td>
-				<td><a href={link} target="blank"><h2 className={val.baseCurrency.symbol === val.buyCurrency.symbol ? 'success' : 'error'}> {val.baseAmount}</h2></a></td>
-				<td><a href={link} target="blank"><h2 className={val.baseCurrency.symbol === val.buyCurrency.symbol ? 'success' : 'error'}>{val.quotePrice * 335}</h2></a></td>
-				<td><a href={link} target="blank"><h2 className={val.baseCurrency.symbol === val.buyCurrency.symbol ? 'success' : 'error'}>${val.quoteAmount * 335}</h2></a></td>
+				<td><a href={link} target="blank"><h2 className={val.baseCurrency.symbol === val.buyCurrency.symbol ? 'success' : 'error'}> {Number(val.baseAmount).toLocaleString()}</h2></a></td>
+				<td><a href={link} target="blank"><h2 className={val.baseCurrency.symbol === val.buyCurrency.symbol ? 'success' : 'error'}>{(val.quotePrice * 335).toLocaleString()}</h2></a></td>
+				<td><a href={link} target="blank"><h2 className={val.baseCurrency.symbol === val.buyCurrency.symbol ? 'success' : 'error'}>${(val.quoteAmount * 335).toLocaleString()}</h2></a></td>
 				<td><a href={link} target="blank"><h2 className={val.baseCurrency.symbol === val.buyCurrency.symbol ? 'success' : 'error'}>{val.exchange.fullName}</h2></a></td>
-
 			</tr>
-
-
-
 		)
 
 	})
@@ -203,7 +197,6 @@ const TransactionCard = () => {
 						{table_data}
 					</tbody>
 				</table>
-
 			</TableWrapper>
 			{/* {loader ?
 				<div style={{ display: 'flex', justifyContent: 'center' }}>

@@ -197,13 +197,11 @@ const Menu: React.FC = props => {
 
   const [getallToken,setAllTokens]=useState([]);
 
-  // console.log("getallToken",getallToken)
   
   // const getAccount= new web3.eth.Iban('account');
   // const getBalance= async()=>{
     
   // const balance = await  web3.eth.getBalance('account'); 
-  // console.log("balance",balance);
   //     setWalletBalance(balance);
   // }
   
@@ -245,7 +243,23 @@ const Menu: React.FC = props => {
     }
     }
 
+<<<<<<< HEAD
 
+=======
+//     const chartData =[]
+//     result.forEach(e =>{
+//        chartData.push({
+//            open : parseFloat(e.open_price),
+//            high : parseFloat(e.maximum_price),
+//            low : parseFloat(e.minimum_price),
+//            close: parseFloat(e.close_price),
+//            // time : e.timeInterval.minute
+//            // time : "2021-04-12"
+//        })
+//    })
+ 
+// };
+>>>>>>> fe96955fbfec1a565d401affc18122cf32dbeeb7
 
   useEffect(()=>{
     fetchData()
@@ -254,6 +268,17 @@ const Menu: React.FC = props => {
 // eslint-disable-next-line react-hooks/exhaustive-deps
   },[account])
 
+<<<<<<< HEAD
+=======
+  // const [alldata, setalldata] = useState([]);
+  // const getTableData = () => {
+  //   axios.get("http://ec2-34-220-133-56.us-west-2.compute.amazonaws.com:1337/approvals")
+  //       .then((response) => {
+  //           setalldata(response.data.approvals)
+
+  //       })
+  //       .catch((error) => {  })
+>>>>>>> fe96955fbfec1a565d401affc18122cf32dbeeb7
 
        
        const token_data = getallToken.map((elem : any) => {

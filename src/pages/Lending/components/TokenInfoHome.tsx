@@ -56,7 +56,6 @@ const TokenInfoContainer = styled.div`
 export default function TokenInfoHome() {
   
   //  const input= localStorage.getItem('InputAddress');
-    // console.log("inputaddress1",input);
 
   // const [alldata, setalldata] = useState({
   //   holders : '',

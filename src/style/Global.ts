@@ -18,6 +18,12 @@ const GlobalStyle = createGlobalStyle`
       max-width: 100%;
     }
   }
+  #simple-menu {
+    .MuiMenu-paper {
+      background: #151515;
+      color: white;
+    }
+  }
 `
 
 export default GlobalStyle
