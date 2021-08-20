@@ -599,9 +599,9 @@ const Landing = () => {
         transactionType={syrupTransactionType}
         onConfirm={handleConfirmSyrupWarning}
       />
-      <HotTokenBar
+      {/* <HotTokenBar
         tokens={hotTokens}
-      />
+      /> */}
        <Slider  />
       <Cards>
         <LeftTopCard>

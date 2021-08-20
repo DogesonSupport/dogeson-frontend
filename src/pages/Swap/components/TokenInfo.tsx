@@ -73,11 +73,11 @@ export default function TokenInfo() {
     totalSupply: ''
   });
 
-  const getTableData = () => {
+  const getTableData =async  () => {
     try {
 
       if (result) {
-        axios.post("https://api.sphynxswap.finance/tokenStats", { address: input })
+        await axios.post("https://api.sphynxswap.finance/tokenStats", { address: input })
           .then((response) => {
             setalldata(response.data)
               dispatch(

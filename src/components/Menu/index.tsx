@@ -243,9 +243,6 @@ const Menu: React.FC = props => {
     }
     }
 
-<<<<<<< HEAD
-
-=======
 //     const chartData =[]
 //     result.forEach(e =>{
 //        chartData.push({
@@ -259,7 +256,6 @@ const Menu: React.FC = props => {
 //    })
  
 // };
->>>>>>> fe96955fbfec1a565d401affc18122cf32dbeeb7
 
   useEffect(()=>{
     fetchData()
@@ -268,8 +264,6 @@ const Menu: React.FC = props => {
 // eslint-disable-next-line react-hooks/exhaustive-deps
   },[account])
 
-<<<<<<< HEAD
-=======
   // const [alldata, setalldata] = useState([]);
   // const getTableData = () => {
   //   axios.get("http://ec2-34-220-133-56.us-west-2.compute.amazonaws.com:1337/approvals")
@@ -278,7 +272,6 @@ const Menu: React.FC = props => {
 
   //       })
   //       .catch((error) => {  })
->>>>>>> fe96955fbfec1a565d401affc18122cf32dbeeb7
 
        
        const token_data = getallToken.map((elem : any) => {
