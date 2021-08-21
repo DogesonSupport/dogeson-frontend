@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
-import React, { useState,useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { Text, Button } from '@pancakeswap-libs/uikit'
 // eslint-disable-next-line import/no-unresolved
@@ -11,10 +11,11 @@ import { ReactComponent as SocialIcon2 } from 'assets/svg/icon/SocialIcon2.svg'
 import { ReactComponent as TelegramIcon } from 'assets/svg/icon/TelegramIcon.svg'
 // eslint-disable-next-line import/no-unresolved
 import CopyHelper from 'components/AccountDetails/Copy'
+import Loader from 'components/myLoader/Loader'
 // eslint-disable-next-line import/no-unresolved
 import './dropdown.css'
 import axios from 'axios'
-import {Button as materialButton,Menu,MenuItem} from '@material-ui/core';
+import { Button as materialButton, Menu, MenuItem } from '@material-ui/core';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import Web3 from 'web3';
 import { useDispatch } from 'react-redux'
@@ -96,34 +97,34 @@ export default function ContractPanel({ value }: ContractPanelProps) {
   const [show, setShow] = useState(true)
   // const [showDrop, setshowDrop] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
-  const [showDrop,setShowDrop]=useState(false);
+  const [showDrop, setShowDrop] = useState(false);
 
   // eslint-disable-next-line no-console
-  const [data,setdata]=useState([])
+  const [data, setdata] = useState([])
   const dispatch = useDispatch();
   const handlerChange = (e: any) => {
-  
-      try{
-       
-          axios.get(`https://api.sphynxswap.finance/search/${e.target.value}`)
-            .then((response) => {
-                // setalldata(response.data)
-                // console.log("response",response.data);
-                setdata(response.data);
-                
-            })
-        }
-  
-      
-      catch(err){
-         // eslint-disable-next-line no-console
-        // console.log(err);
-        // alert("Invalid Address")
-        
-        
-      }
-     
-       
+
+    try {
+
+      axios.get(`https://api.sphynxswap.finance/search/${e.target.value}`)
+        .then((response) => {
+          // setalldata(response.data)
+          // console.log("response",response.data);
+          setdata(response.data);
+
+        })
+    }
+
+
+    catch (err) {
+      // eslint-disable-next-line no-console
+      // console.log(err);
+      // alert("Invalid Address")
+
+
+    }
+
+
     const result = Web3.utils.isAddress(e.target.value)
     if (result) {
       setAddressSearch(e.target.value)
@@ -137,9 +138,9 @@ export default function ContractPanel({ value }: ContractPanelProps) {
   // const DropDownShow = () => {
   //   setshowDrop(true)
   // }
-    
 
-  const handleClick = (event:any) => {
+
+  const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);
     setShowDrop(true);
   };
@@ -147,16 +148,16 @@ export default function ContractPanel({ value }: ContractPanelProps) {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const submitFuntioncall=()=>{
+  const submitFuntioncall = () => {
     dispatch(typeInput({ input: addressSearch }))
   }
   const handleKeyPress = (event) => {
-    if(event.key === 'Enter'){
+    if (event.key === 'Enter') {
       submitFuntioncall();
     }
   }
 
-  
+
 
   useEffect(() => {
     const listener = event => {
@@ -173,38 +174,39 @@ export default function ContractPanel({ value }: ContractPanelProps) {
 
   return (
     <>
+    
       <ContractPanelWrapper>
         <ContractCard>
           <CopyHelper toCopy={value ? value.contractAddress : addressSearch}>
             &nbsp;
           </CopyHelper>
-          <input placeholder='' value={addressSearch}  onKeyPress={handleKeyPress} onChange={handlerChange} />
+          <input placeholder='' value={addressSearch} onKeyPress={handleKeyPress} onChange={handlerChange} />
           <MenuWrapper>
             <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-              <ArrowDropDownIcon/>
+              <ArrowDropDownIcon />
             </Button>
-              {showDrop ? <Menu
+            {showDrop ? <Menu
               id="simple-menu"
               anchorEl={anchorEl}
               keepMounted
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >{data.length > 0 ?
-            <span>
-              {data?.map((item:any )=>{
-                return <MenuItem onClick={()=> dispatch(typeInput({ input: item.address })) && setAnchorEl(null)}>{item.name}<br/>{item.symbol}<br/>{item.address}</MenuItem>
-              })}
-              
-            </span> : 
+              <span>
+                {data?.map((item: any) => {
+                  return <MenuItem onClick={() => dispatch(typeInput({ input: item.address })) && setAnchorEl(null)}>{item.name}<br />{item.symbol}<br />{item.address}</MenuItem>
+                })}
+
+              </span> :
               <span style={{ padding: '0 16px' }}>no record</span>}
-            </Menu>:""}
+            </Menu> : ""}
           </MenuWrapper>
           <Button size='sm' onClick={submitFuntioncall} disabled={show} >Submit</Button>
         </ContractCard>
         <SocialIconsWrapper>
-         <a href="https://mobile.twitter.com/sphynxswap" target="blank"><TwitterIcon /></a> 
-         <a href="sphynxtoken.co" target="blank"><SocialIcon2 /></a>  
-         <a href="https://t.me/sphynxswap" target="blank"><TelegramIcon /></a> 
+          <a href="https://mobile.twitter.com/sphynxswap" target="blank"><TwitterIcon /></a>
+          <a href="sphynxtoken.co" target="blank"><SocialIcon2 /></a>
+          <a href="https://t.me/sphynxswap" target="blank"><TelegramIcon /></a>
         </SocialIconsWrapper>
       </ContractPanelWrapper>
     </>

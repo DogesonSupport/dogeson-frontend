@@ -9,7 +9,11 @@ import { ReactComponent as EmptyAvatar } from 'assets/svg/icon/EmptyAvatar.svg'
 import { ReactComponent as ChevronDown } from 'assets/svg/icon/ChevronDown.svg'
 import { useMenuToggle } from 'state/application/hooks'
 import PyramidImage from 'assets/images/pyramid.png'
-import Landing from './Lending/components'
+import Loader from 'components/myLoader/Loader'
+import { useSelector } from 'react-redux';
+
+import {  AppState } from '../state'
+// import Landing from './Lending/components'
 // import { Credentials, StringTranslations } from '@crowdin/crowdin-api-client'
 import Popups from '../components/Popups'
 import Web3ReactManager from '../components/Web3ReactManager'
@@ -184,6 +188,8 @@ export default function App() {
   const [translations, setTranslations] = useState<Array<any>>([])
   const { account, activate, deactivate } = useWeb3React();
   const { menuToggled, toggleMenu } = useMenuToggle();
+  const input = useSelector<AppState, AppState['inputReducer']>((state) => state.inputReducer.input);
+  const [showLoader,setShowLoader]=useState<any>(false);
   const { isXl } = useMatchBreakpoints();
   const history=useHistory();
   // history.push('/swap')
@@ -248,9 +254,19 @@ export default function App() {
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, [selectedLanguage])
 
+  React.useEffect(()=>{
+    setTimeout(() => {
+      setShowLoader(true)
+    }, 3000);
+    setShowLoader(false)
+  },[input])
+
   return (
+    
     <Suspense fallback={null}>
+  {!showLoader ?  <Loader/>:
       <HashRouter>
+     
         <AppWrapper>
           <LanguageContext.Provider
             value={{ selectedLanguage, setSelectedLanguage, translatedLanguage, setTranslatedLanguage }}
@@ -284,12 +300,15 @@ export default function App() {
                       <Button onClick={onPresentConnectModal }>Connect</Button>
                   }
                 </TopBar>
+              
                 <BannerWrapper>
                   <img src={PyramidImage} alt='Pyramid' />
                 </BannerWrapper>
+                {/* <Loader/> */}
                 <PageContent>
                   {/* <Web3ReactManager> */}
                     <Switch>
+                  
                       <Route exact strict path='/swap' component={Swap} />
                       <Route exact strict path='/swap/:outputCurrency' component={RedirectToSwap} />
                       <Route exact strict path='/send' component={RedirectPathToSwapOnly} />
@@ -309,9 +328,9 @@ export default function App() {
                     </Switch>
                   {/* </Web3ReactManager> */}
                   {/* <Web3ReactManager> */}
-                  <Switch>
+                  {/* <Switch>
                   <Route exact strict path='/landing' component={Landing} />
-                      </Switch>
+                      </Switch> */}
                   {/* </Web3ReactManager> */}
                   
                 </PageContent>
@@ -319,8 +338,12 @@ export default function App() {
               </BodyWrapper>
             </TranslationsContext.Provider>
           </LanguageContext.Provider>
+     
         </AppWrapper>
+
       </HashRouter>
+    }
     </Suspense>
+  
   )
 }

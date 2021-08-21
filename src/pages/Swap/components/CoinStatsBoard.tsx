@@ -3,6 +3,7 @@ import {utils} from "ethers";
 import styled from 'styled-components'
 import { Text, Flex } from '@pancakeswap-libs/uikit'
 import { Redirect } from 'react-router';
+import ReactLoading from 'react-loading';
 import axios from 'axios';
 import Web3 from 'web3';
 import { useSelector } from 'react-redux';
@@ -87,6 +88,7 @@ export default function CoinStatsBoard() {
 
   const input = useSelector<AppState, AppState['inputReducer']>((state) => state.inputReducer.input);
    const result = Web3.utils.isAddress(input)
+  //  const [showLoader,setShowLoader]=React.useState(true);
     // eslint-disable-next-line no-console
     // console.log("result===============================>",result)  // => true
   // console.log("input in marketcap==========",input);
@@ -105,10 +107,7 @@ export default function CoinStatsBoard() {
 
     // const pricedecimal=parseFloat(alldata.price).toFixed(5);
     const changedecimal:any=parseFloat(alldata.change).toFixed(3);
-    
-      
-    // const set=Math.sign(changedecimal);
-     
+    // const set=Math.sign(changedecimal);  
     const volumedecimal=parseFloat(alldata.volume).toFixed(3);
     const liquidityV2decimal=parseFloat(alldata.liquidityV2).toFixed(3);
     const liquidityV2BNBdecimal=parseFloat(alldata.liquidityV2BNB).toFixed(3);
@@ -116,10 +115,12 @@ export default function CoinStatsBoard() {
   const getTableData =   () => {
     
     try{
+    
       if(result){
+     
         axios.post("https://api.sphynxswap.finance/tokenStats",{address:input})
           .then((response) => {
-            console.log('ccc', response.data);
+          
             setTokenData(response.data)
           });
         axios.post("https://api.sphynxswap.finance/chartStats",{address:input})
@@ -127,11 +128,13 @@ export default function CoinStatsBoard() {
             setalldata(response.data)
             setLinkIcon(`https://r.poocoin.app/smartchain/assets/${input ? utils.getAddress(input) : '0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82'}/logo.png`);
           });
+        
       }
+    
     }
     catch(err){
       // eslint-disable-next-line no-console
-      console.log("eroor===========>",err.message);
+      // console.log("eroor===========>",err.message);
       alert("Invalid Address");
 			// <Redirect to="/swap" />
 
@@ -144,8 +147,14 @@ useEffect(() => {
 },[input])
 
   return (
+    <>
+
+   {/* <div style={{display: 'flex', justifyContent: 'center',alignItems: 'center'}}>
+    <ReactLoading type="spin" color="green" height='2%' width='2%'  />
+    </div> */}
     <Container>
       <StyledWrapper>
+        
         <Column>
           <Flex>
           {/* { */}
@@ -163,7 +172,8 @@ useEffect(() => {
         </Column>
         <Column>
           <Text>Price</Text>
-          <Text>${Number(alldata.price).toLocaleString()}</Text>
+          {/* ${Number(alldata.price).toLocaleString()} */}
+          <Text>${alldata.price}</Text>
         </Column>
         <Column>
           <Text>24h Change</Text>
@@ -176,9 +186,12 @@ useEffect(() => {
         </Column>
         <Column style={{ margin: '0 0 8px 0' }}>
           <Text>Liquidity</Text>
-          <Text>{Number(liquidityV2BNBdecimal).toLocaleString()} BNB<span className='success'> (${Number(liquidityV2decimal).toLocaleString()})</span></Text>
+          {/* <Text>{Number(liquidityV2BNBdecimal).toLocaleString()} BNB<span className='success'> (${Number(liquidityV2decimal).toLocaleString()})</span></Text> */}
+          <Text>{liquidityV2BNBdecimal} BNB<span className='success'> (${liquidityV2decimal})</span></Text>
         </Column>
       </StyledWrapper>
     </Container>
+    
+   </>
   )
 }

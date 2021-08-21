@@ -10,7 +10,7 @@ import {
 } from '../../../charting_library';
 import axios from 'axios';
 import Web3 from 'web3';
-import { BoxesLoader } from "react-awesome-loaders";
+// import ReactLoading from 'react-loading';
 import { makeApiRequest, generateSymbol, makeApiRequest1 } from './helpers';
 import { useSelector } from 'react-redux';
 import { AppDispatch, AppState } from '../../../state'
@@ -36,7 +36,7 @@ export interface ChartContainerProps {
 
 const ChartContainerProps = {
     symbol: 'AAPL',
-    interval: 'Minutes' as ResolutionString,
+    interval: 'D' as ResolutionString,
     containerId: 'tv_chart_container',
     datafeedUrl: 'https://demo_feed.tradingview.com',
     libraryPath: '/charting_library/',
@@ -63,7 +63,7 @@ export const TVChartContainer: React.FC<Partial<ChartContainerProps>> = () => {
     const input = useSelector<AppState, AppState['inputReducer']>((state) => state.inputReducer.input);
     const result = Web3.utils.isAddress(input)
     // eslint-disable-next-line no-console
-    const [loader, setLoader] = React.useState(false)
+    // const [showloader,setShowLoader]=React.useState(false);
     
 
     const [tokendetails, setTokenDetails] = React.useState({
@@ -76,7 +76,7 @@ export const TVChartContainer: React.FC<Partial<ChartContainerProps>> = () => {
     const lastBarsCache = new Map();
 
     const configurationData = {
-        supported_resolutions: ['15 Minutes','1H','1D','1W','1M'],
+        supported_resolutions: ['1H','1D','1W','1M'],
         exchanges: [{
             value: 'Bitfinex',
             name: 'Bitfinex',
@@ -250,7 +250,7 @@ export const TVChartContainer: React.FC<Partial<ChartContainerProps>> = () => {
     // const tvWidget = null;
     //   React.useEffect(()=>{
     const getWidget = async () => {
-
+        // setShowLoader(true)
         let tvWidget: IChartingLibraryWidget | null = null;
         const widgetOptions: ChartingLibraryWidgetOptions = {
             // symbol: this.props.symbol as string,
@@ -313,6 +313,7 @@ export const TVChartContainer: React.FC<Partial<ChartContainerProps>> = () => {
 
     React.useEffect(() => {
         getWidget();
+        // setShowLoader(false);
     }, [input])
 
 
@@ -332,10 +333,13 @@ export const TVChartContainer: React.FC<Partial<ChartContainerProps>> = () => {
           : ""
 
         } */}
+        {/* {!showloader? */}
+        {/* <ReactLoading type="bubbles" color="green" height='20%' width='20%' /> */}
         <div
             id={ChartContainerProps.containerId}
             className={'TVChartContainer'}
         />
+        
         </>
 
     )
