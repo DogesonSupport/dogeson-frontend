@@ -126,8 +126,8 @@ export default function TokenInfo() {
           <Text>{alldata.totalSupply}</Text>
         </TextWrapper>
         <TextWrapper>
-          <Text>Market Cap:<span style={{ fontSize: '70%' }}>(includes locked, excludes burned)</span></Text>
-          <Text>{alldata.marketCap}</Text>
+          <Text>Market Cap:</Text>
+          <Text>{alldata.marketCap.substring(alldata.marketCap.indexOf('$'))}</Text>
         </TextWrapper>
         <TextWrapper>
           <Text>Transactions</Text>
