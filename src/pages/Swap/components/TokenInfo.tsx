@@ -17,6 +17,9 @@ const TextWrapper = styled.div`
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   padding: 12px 20px;
   word-break: break-all;
+  & a {
+    color: white;
+  }
   & > div:first-child {
     color: white;
     font-size: 16px;
@@ -148,11 +151,11 @@ export default function TokenInfo() {
               &nbsp;
             </CopyHelper>
           </Text>
-          <Text>{input}</Text>
+          <Text><a href={`https://bscscan.com/token/${input}`} target='_blank' rel='noreferrer'>{input}</a></Text>
         </TextWrapper>
         <TextWrapper>
           <Text>Holders</Text>
-          <Text>{alldata.holders}</Text>
+          <Text><a href={`https://bscscan.com/token/${input}#balances`} target='_blank' rel='noreferrer'>{alldata.holders}</a></Text>
         </TextWrapper>
       </Flex>
     </TokenInfoContainer>

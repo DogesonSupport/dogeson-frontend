@@ -187,7 +187,7 @@ useEffect(() => {
         <Column style={{ margin: '0 0 8px 0' }}>
           <Text>Liquidity</Text>
           {/* <Text>{Number(liquidityV2BNBdecimal).toLocaleString()} BNB<span className='success'> (${Number(liquidityV2decimal).toLocaleString()})</span></Text> */}
-          <Text>{liquidityV2BNBdecimal} BNB<span className='success'> (${liquidityV2decimal})</span></Text>
+          <Text>{Number(liquidityV2BNBdecimal).toLocaleString()} BNB<span className='success'> (${Number(liquidityV2decimal).toLocaleString()})</span></Text>
         </Column>
       </StyledWrapper>
     </Container>
