@@ -156,7 +156,7 @@ const SocialWrapper = styled.div`
 
 const TokenListWrapper = styled.div`
   overflow-y: auto;
-  max-height: 300px;
+  max-height: 330px;
 `
 
 const SocialIconsWrapper = styled.div<{toggled: boolean}>`
@@ -384,10 +384,8 @@ const Menu: React.FC = props => {
          { 
          account?
          <div>
-
-         
           <TokenListWrapper>
-          {token_data}
+          {showAllToken ? token_data : token_data.slice(0, 3)}
         </TokenListWrapper>
          <ButtonWrapper style={{ margin: '10px 0' }} onClick={() => {setShowAllToken(!showAllToken)}}>
          <p><b>{ showAllToken ? 'Show Some Tokens' : 'Show All Tokens' }</b></p>
