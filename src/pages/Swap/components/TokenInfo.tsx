@@ -7,7 +7,7 @@ import { ReactComponent as MoreIcon2 } from 'assets/svg/icon/MoreIcon2.svg'
 import axios from 'axios';
 import Web3 from 'web3';
 import { useSelector, useDispatch } from 'react-redux';
-
+import CopyHelper from 'components/AccountDetails/Copy'
 import { AppState, AppDispatch } from '../../../state'
 import { selectCurrency, Field } from '../../../state/swap/actions';
 
@@ -28,6 +28,15 @@ const TextWrapper = styled.div`
     line-height: 16px;
     color: #ADB5BD;
     margin-top: 2px;
+  }
+  & .textWithCopy {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    & button {
+      padding: 0;
+      color: white;
+    }
   }
 `
 
@@ -111,9 +120,8 @@ export default function TokenInfo() {
     <TokenInfoContainer>
       <Flex alignItems="center" justifyContent='space-between'>
         <Flex alignItems='center'>
-
           <IconWrapper size={32}>
-            <Text>{alldata.symbol}</Text>
+            <Text color='white'>{alldata.symbol}</Text>
           </IconWrapper>
         </Flex>
         <Flex style={{ width: 40 }}>
@@ -134,7 +142,12 @@ export default function TokenInfo() {
           <Text>{alldata.txs}</Text>
         </TextWrapper>
         <TextWrapper>
-          <Text>Contract Address</Text>
+          <Text className='textWithCopy'>
+            Contract Address
+            <CopyHelper toCopy={input}>
+              &nbsp;
+            </CopyHelper>
+          </Text>
           <Text>{input}</Text>
         </TextWrapper>
         <TextWrapper>
