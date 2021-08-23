@@ -16,14 +16,15 @@ import { TranslateString } from '../../utils/translateTextHelpers'
 const InputRow = styled.div<{ selected: boolean }>`
   display: flex;
   flex-flow: row nowrap;
-  align-items: flex-start;
-  padding: 12px 16px;
+  align-items: center;
+  padding: 8px 6px;
 
   & input {
     text-align: right;
     color: white;
-    font-size: 24px;
-    font-weight: bold;
+    font-size: 22px;
+    letter-spacing: -0.04em;
+    font-weight: normal;
     &::placeholder {
       color: white;
     }
@@ -41,7 +42,8 @@ const CurrencySelect = styled.button<{ selected: boolean }>`
   cursor: pointer;
   user-select: none;
   border: none;
-  padding: 0 4px;
+  padding: 2px 4px;
+  margin-right: 4px;
 
   :focus,
   :hover {
@@ -50,9 +52,10 @@ const CurrencySelect = styled.button<{ selected: boolean }>`
 
   & > span {
     & > div {
-      font-size: 10px;
+      font-size: 12px;
+      letter-spacing: -0.02em;
       color: white;
-      font-weight: bold;
+      font-weight: 700;
     }
     & > svg > path {
       fill: white;
@@ -79,6 +82,8 @@ const MaxButtonWrapper = styled.div`
     background-color: #8B2A9B;
     color: white;
     margin-left: 4px;
+    padding: 8px 6px;
+    font-size: 14px;
     &:hover {
       background-color: #8B2A9B !important;
       opacity: 0.6;
@@ -183,9 +188,9 @@ export default function CurrencyInputPanel({
           >
             <Aligner>
               {pair ? (
-                <DoubleCurrencyLogo currency0={pair.token0} currency1={pair.token1} size={12} margin />
+                <DoubleCurrencyLogo currency0={pair.token0} currency1={pair.token1} size={14} margin />
               ) : currency ? (
-                <CurrencyLogo currency={currency} size="12px" style={{ marginRight: '8px' }} />
+                <CurrencyLogo currency={currency} size="14px" style={{ marginRight: '4px' }} />
               ) : null}
               {pair ? (
                 <Text>
