@@ -56,7 +56,8 @@ const ContractCard = styled(Text)`
 const MenuWrapper = styled.div`
   position: absolute;
   width: 100%;
-  background: white;
+  background: #131313;
+  color: #eee;
   margin-top: 12px;
   overflow-y: auto;
   max-height: 100vh;
