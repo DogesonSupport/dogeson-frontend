@@ -7,7 +7,7 @@ import { ReactComponent as MoreIcon2 } from 'assets/svg/icon/MoreIcon2.svg'
 import axios from 'axios';
 import Web3 from 'web3';
 import { useSelector, useDispatch } from 'react-redux';
-
+import CopyHelper from 'components/AccountDetails/Copy'
 import { AppState, AppDispatch } from '../../../state'
 import { selectCurrency, Field } from '../../../state/swap/actions';
 
@@ -17,6 +17,9 @@ const TextWrapper = styled.div`
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   padding: 12px 20px;
   word-break: break-all;
+  & a {
+    color: white;
+  }
   & > div:first-child {
     color: white;
     font-size: 16px;
@@ -28,6 +31,15 @@ const TextWrapper = styled.div`
     line-height: 16px;
     color: #ADB5BD;
     margin-top: 2px;
+  }
+  & .textWithCopy {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    & button {
+      padding: 0;
+      color: white;
+    }
   }
 `
 
@@ -111,9 +123,8 @@ export default function TokenInfo() {
     <TokenInfoContainer>
       <Flex alignItems="center" justifyContent='space-between'>
         <Flex alignItems='center'>
-
           <IconWrapper size={32}>
-            <Text>{alldata.symbol}</Text>
+            <Text color='white'>{alldata.symbol}</Text>
           </IconWrapper>
         </Flex>
         <Flex style={{ width: 40 }}>
@@ -126,20 +137,25 @@ export default function TokenInfo() {
           <Text>{alldata.totalSupply}</Text>
         </TextWrapper>
         <TextWrapper>
-          <Text>Market Cap:<span style={{ fontSize: '70%' }}>(includes locked, excludes burned)</span></Text>
-          <Text>{alldata.marketCap}</Text>
+          <Text>Market Cap:</Text>
+          <Text>{alldata.marketCap.substring(alldata.marketCap.indexOf('$'))}</Text>
         </TextWrapper>
         <TextWrapper>
           <Text>Transactions</Text>
           <Text>{alldata.txs}</Text>
         </TextWrapper>
         <TextWrapper>
-          <Text>Contract Address</Text>
-          <Text>{input}</Text>
+          <Text className='textWithCopy'>
+            Contract Address
+            <CopyHelper toCopy={input}>
+              &nbsp;
+            </CopyHelper>
+          </Text>
+          <Text><a href={`https://bscscan.com/token/${input}`} target='_blank' rel='noreferrer'>{input}</a></Text>
         </TextWrapper>
         <TextWrapper>
           <Text>Holders</Text>
-          <Text>{alldata.holders}</Text>
+          <Text><a href={`https://bscscan.com/token/${input}#balances`} target='_blank' rel='noreferrer'>{alldata.holders}</a></Text>
         </TextWrapper>
       </Flex>
     </TokenInfoContainer>
