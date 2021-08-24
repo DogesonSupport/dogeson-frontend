@@ -91,7 +91,6 @@ export default function CoinStatsBoard() {
   //  const [showLoader,setShowLoader]=React.useState(true);
     // eslint-disable-next-line no-console
     // console.log("result===============================>",result)  // => true
-  // console.log("input in marketcap==========",input);
   const [alldata, setalldata] = useState({
     address : '',
     price : '',
@@ -165,7 +164,7 @@ useEffect(() => {
           {tokenData &&
             <Flex flexDirection='column' justifyContent='center'>
               <Text>{tokenData.symbol}</Text>
-              <Text>{tokenData.marketCap.substring(tokenData.marketCap.indexOf('$'))}</Text>
+              <Text>{tokenData.marketCap}</Text>
             </Flex>
           }
           </Flex>
