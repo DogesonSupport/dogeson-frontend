@@ -150,10 +150,10 @@ const TransactionCard = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps 
 	}, [input])
 
-   const table_data = tableData.map((val: any) => {
+	const table_data = tableData.map((val: any) => {
 		const link = `https://bscscan.com/tx/${val.transaction.hash}`;
-		  const today:Date = new Date(val.block.timestamp.time);
-		  today.setHours(today.getHours() + 5);
+		const today:Date = new Date(val.block.timestamp.time);
+		today.setHours(today.getHours() + 5);
 		//   const  time=new Date(val.block.timestamp.time)
 		//   console.log(time)
 		//   const  addhour=today.getHours()+5;

@@ -32,7 +32,10 @@ export const SectionBreak = styled.div`
 export const BottomGrouping = styled.div`
   margin-top: 1rem;
   & button {
-    background: #8b2a9b;
+    background-color: #8b2a9b !important;
+    &:hover {
+      opacity: 0.6;
+    }
   }
 `
 
