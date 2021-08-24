@@ -168,7 +168,7 @@ const TransactionCard = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps 
 	}, [input])
 
-   const table_data = tableData.map((val: any) => {
+	const table_data = tableData.map((val: any) => {
 		const link = `https://bscscan.com/tx/${val.transaction.hash}`;
 		// eslint-disable-next-line no-console
 		
