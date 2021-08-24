@@ -138,7 +138,7 @@ export default function TokenInfo() {
         </TextWrapper>
         <TextWrapper>
           <Text>Market Cap:</Text>
-          <Text>{alldata.marketCap.substring(alldata.marketCap.indexOf('$'))}</Text>
+          <Text>{alldata.marketCap}</Text>
         </TextWrapper>
         <TextWrapper>
           <Text>Transactions</Text>
