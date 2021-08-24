@@ -3,11 +3,13 @@ import React from 'react'
 import styled from 'styled-components'
 // import {  Link } from '@pancakeswap-libs/uikit'
 import Marquee from "react-fast-marquee";
-import { useDispatch } from 'react-redux';
+import { useDispatch,useSelector } from 'react-redux';
 // import ReactLoading from 'react-loading';
 import axios from 'axios';
 // eslint-disable-next-line import/no-unresolved
+
 import { ReactComponent as HelpIcon } from 'assets/svg/icon/HelpIcon.svg'
+import { AppState } from '../../../state'
 import { typeInput } from '../../../state/input/actions'
 // eslint-disable-next-line import/no-unresolved
 // import { ReactComponent as DownRedArrowIcon} from 'assets/svg/icon/DownRedArrowIcon.svg'
@@ -91,12 +93,14 @@ export default function HotTokenBar() {
      }
    }])
   //  const [showLoader,setShowLoader]=React.useState(false);
-   
+  const input = useSelector<AppState, AppState['inputReducer']>((state) => state.inputReducer.input)
    const dispatch = useDispatch();
   const date:any = new Date();
-  date.setDate(date.getDate() - 13);
-  console.log("data in hotbar==================================",data)
+  date.setDate(date.getDate() - 2);
+  // console.log("date==================================",date)
   const d:any = new Date()
+  d.setDate(d.getDate() - 2);
+  // console.log("minutes============>>>>>:::::::::::::",d)
   const Get_data = `
   {
     ethereum(network: bsc) {
@@ -147,7 +151,7 @@ export default function HotTokenBar() {
    React.useEffect(()=>{
     fetchData()
    // eslint-disable-next-line react-hooks/exhaustive-deps
-   },[])
+   },[input])
 
   return (
 

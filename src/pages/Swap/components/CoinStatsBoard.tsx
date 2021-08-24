@@ -164,7 +164,7 @@ useEffect(() => {
           {tokenData &&
             <Flex flexDirection='column' justifyContent='center'>
               <Text>{tokenData.symbol}</Text>
-              <Text>{tokenData.marketCap.substring(tokenData.marketCap.indexOf('$'))}</Text>
+              {/* <Text>{tokenData.marketCap.substring(tokenData.marketCap.indexOf('$'))}</Text> */}
             </Flex>
           }
           </Flex>

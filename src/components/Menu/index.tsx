@@ -11,6 +11,9 @@ import useGetPriceData from 'hooks/useGetPriceData'
 import { injected, bsc, walletconnect } from 'connectors'
 import { useMenuToggle } from 'state/application/hooks'
 import MainLogo from 'assets/images/MainLogo.png'
+import { useDispatch } from 'react-redux'
+
+import CopyHelper from 'components/AccountDetails/Copy'
 import Illustration from 'assets/images/Illustration.svg'
 import { ReactComponent as MenuOpenIcon } from 'assets/svg/icon/MenuOpenIcon.svg'
 import { ReactComponent as WalletIcon } from 'assets/svg/icon/WalletIcon.svg'
@@ -19,6 +22,7 @@ import { ReactComponent as SocialIcon2 } from 'assets/svg/icon/SocialIcon2.svg'
 import { ReactComponent as TelegramIcon } from 'assets/svg/icon/TelegramIcon.svg'
 import Web3 from 'web3';
 import axios from 'axios'
+import { typeInput } from '../../state/input/actions'
 import links from './config'
 
 
@@ -192,10 +196,13 @@ const Menu: React.FC = props => {
   const [ showAllToken, setShowAllToken ] = useState(true);
 
   const [walletbalance,setWalletBalance]=useState(0);
+  const dispatch = useDispatch();
 
-
-
+  const [sum,setSum]=useState(0);
   const [getallToken,setAllTokens]=useState([]);
+    
+  console.log("sum",sum);
+  
 
   
   // const getAccount= new web3.eth.Iban('account');
@@ -209,14 +216,14 @@ const Menu: React.FC = props => {
   //   getBalance() 
   // }); 
 
-  const Balance= ()=>{
+  // const Balance= ()=>{
 
-    const testnet = 'https://bsc-dataseed1.defibit.io';
-    const web3 = new Web3(new Web3.providers.HttpProvider(testnet));
-    const balance= account && web3.eth.getBalance(account).then((res : any)=>{
-    setWalletBalance(res/1000000000000000000);
-     })
-  }
+  //   const testnet = 'https://bsc-dataseed1.defibit.io';
+  //   const web3 = new Web3(new Web3.providers.HttpProvider(testnet));
+  //   const balance= account && web3.eth.getBalance(account).then((res : any)=>{
+  //   setWalletBalance(res/1000000000000000000);
+  //    })
+  // }
   
   const Get_data = `
   {
@@ -233,15 +240,53 @@ const Menu: React.FC = props => {
       }
     }
   }`
+
+
+  // const [address,setAddress]=useState<any>([])
+  // console.log("addressssssss=>>>>>>>>:::::::::::::::::::::::",address)
   const fetchData = async () =>{
     if(account){
+      
+      
+      // const g= await axios.get('https://api.sphynxswap.finance/price/0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82');
+      // // eslint-disable-next-line no-console
+      // console.log("price============>",g);
+      
       const queryResult= await axios.post('https://graphql.bitquery.io/',{query: Get_data});
+      // const addres=setAddress(queryResult.data.data.ethereum.address[0].balances.currency.address)
+      // console.log("address============>",addres);
       if(queryResult.data.data){
-        setAllTokens(queryResult.data.data.ethereum.address[0].balances)
+      // queryResult.data.data.ethereum.address[0].balances.forEach(async (elem, index)=>{
 
+        // eslint-disable-next-line no-restricted-syntax
+        for(const elem of queryResult.data.data.ethereum.address[0].balances){
+
+          const price:any= await axios.get(`https://api.sphynxswap.finance/price/${elem.currency.address === '-' ? '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c' : elem.currency.address}`);
+          const dollerprice:any=price.data.price*elem.value;
+          elem.dollarPrice = dollerprice;
+          const allsum:any =+dollerprice;
+
+          // eslint-disable-next-line no-console
+          console.log("allsum:::::::::::::::::::::::::::::",allsum)
+          setSum(allsum)
+          
+        }
+        
+    // })
+
+        setAllTokens(queryResult.data.data.ethereum.address[0].balances)
+        
       }
+
+
     }
     }
+
+    // const getPrice=async ()=>{
+    //   const g= await axios.get('https://api.sphynxswap.finance/price/0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82');
+    //   // eslint-disable-next-line no-console
+    //   console.log("price============>",g);
+    // }
 
 //     const chartData =[]
 //     result.forEach(e =>{
@@ -259,34 +304,29 @@ const Menu: React.FC = props => {
 
   useEffect(()=>{
     fetchData()
-    Balance();
+    // Balance();
+
    
 // eslint-disable-next-line react-hooks/exhaustive-deps
   },[account])
 
-  // const [alldata, setalldata] = useState([]);
-  // const getTableData = () => {
-  //   axios.get("http://ec2-34-220-133-56.us-west-2.compute.amazonaws.com:1337/approvals")
-  //       .then((response) => {
-  //           setalldata(response.data.approvals)
 
-  //       })
-  //       .catch((error) => {  })
 
        
        const token_data = getallToken.map((elem : any) => {
-        const {currency,value } = elem;
-       const link = `https://bscscan.com/token/${currency.address}`
+        const {currency,value, dollarPrice } = elem;
+      //  const link = `https://bscscan.com/token/${currency.address}`
         
-
+        console.log('dollarPrice:::' , dollarPrice)
         return (
             <>
               <TokenItemWrapper toggled={menuToggled}>
                 <div>
-                  <a href={`${link}`} target="blank" >
+                  <Button onClick={() => { dispatch(typeInput({ input: currency.address })) }} >
                   <p><b>{currency.symbol}</b></p>
                   <p><b>{value}</b></p>
-                  </a>
+                  <p><b>{dollarPrice}</b></p>
+                  </Button>
                   
                 </div>
                 {/* {
@@ -307,51 +347,6 @@ const Menu: React.FC = props => {
     })
 
 
-
-
-
-
-
-  //      useEffect(() => {
-  //       getTableData();
-  //     }, [])
-    
-     
-    //   const table_data = alldata.map((elem, index) => {
-    //     const { id, txHash, approvedFrom, approvedTo, amount, createdAt } = elem;
-
-    //     return (
-    //         <>
-            
-
-    //         </>
-    //     )
-    // })
-
-  // const sTokens = useMemo(() => {
-  //   const tokenData = [
-  //     {
-  //       name: 'GLend',
-  //       rate: '1.10881',
-  //       price1: '0.10088233231',
-  //       price2: '0.10001'
-  //     },
-  //     {
-  //       name: 'DOOOG',
-  //       rate: '1.10881',
-  //       price1: '0.10088233231',
-  //       price2: '0.10001'
-  //     },
-  //     {
-  //       name: 'FUDOFF',
-  //       rate: '1.10881',
-  //       price1: '0.10088233231',
-  //       price2: '0.10001'
-  //     },
-  //    
-  //   ];
-  //   return showAllToken ? tokenData : tokenData.slice(0, 4)
-  // }, [showAllToken])
 
   return (
     <MenuWrapper toggled={menuToggled}>
@@ -376,7 +371,7 @@ const Menu: React.FC = props => {
             !menuToggled && <p>Wallet</p>
           }
         </div>
-        {!menuToggled && <p><b>{account?walletbalance.toLocaleString():''}</b></p>
+        {!menuToggled && <p><b>{account?sum:""}</b></p>
         }
       </WalletHeading>
       <MenuContentWrapper toggled={menuToggled}>

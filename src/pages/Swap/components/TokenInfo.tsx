@@ -136,10 +136,10 @@ export default function TokenInfo() {
           <Text>Total Supply</Text>
           <Text>{alldata.totalSupply}</Text>
         </TextWrapper>
-        <TextWrapper>
+        {/* <TextWrapper>
           <Text>Market Cap:</Text>
           <Text>{alldata.marketCap.substring(alldata.marketCap.indexOf('$'))}</Text>
-        </TextWrapper>
+        </TextWrapper> */}
         <TextWrapper>
           <Text>Transactions</Text>
           <Text>{alldata.txs}</Text>
