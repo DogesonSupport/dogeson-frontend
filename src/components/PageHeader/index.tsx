@@ -42,7 +42,14 @@ const StyledPageHeader = styled.div`
   & button {
     color: white;
     background: transparent !important;
-    padding: 0 8px;
+    padding: 4px 6px;
+    height: 36px;
+    outline: none;
+    border: none;
+    box-shadow: none !important;
+    &.button {
+      box-shadow: 0 0 0 2px #8b2a9b !important;
+    }
   }
 `
 
