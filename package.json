@@ -51,6 +51,7 @@
     "lightweight-charts": "^3.5.0",
     "lodash.flatmap": "^4.5.0",
     "moment": "^2.29.1",
+    "moment-timezone": "^0.5.33",
     "multicodec": "^2.0.0",
     "multihashes": "^3.0.1",
     "numeral": "^2.0.6",

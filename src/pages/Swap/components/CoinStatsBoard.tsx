@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, {useEffect,useState } from 'react'
 import {utils} from "ethers";
 import styled from 'styled-components'
@@ -88,10 +89,8 @@ export default function CoinStatsBoard() {
 
   const input = useSelector<AppState, AppState['inputReducer']>((state) => state.inputReducer.input);
    const result = Web3.utils.isAddress(input)
-  //  const [showLoader,setShowLoader]=React.useState(true);
-    // eslint-disable-next-line no-console
-    // console.log("result===============================>",result)  // => true
-  // console.log("input in marketcap==========",input);
+
+   
   const [alldata, setalldata] = useState({
     address : '',
     price : '',

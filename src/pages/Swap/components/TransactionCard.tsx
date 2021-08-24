@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { Flex } from '@pancakeswap-libs/uikit'
 import axios from 'axios';
 import Web3 from 'web3';
+import moment from 'moment-timezone'
 import { useSelector } from 'react-redux';
 // import { RedirectToSwap } from '../redirects'; 
 import { Redirect } from 'react-router';
@@ -152,8 +153,13 @@ const TransactionCard = () => {
 
    const table_data = tableData.map((val: any) => {
 		const link = `https://bscscan.com/tx/${val.transaction.hash}`;
-		  const today:Date = new Date(val.block.timestamp.time);
-		  today.setHours(today.getHours() + 5);
+		// eslint-disable-next-line no-console
+		
+		  const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+		  // eslint-disable-next-line no-console
+          const currentTime = moment().tz(timezone).format();
+		  // eslint-disable-next-line no-console
+		  const today:any = new Date(currentTime);
 		//   const  time=new Date(val.block.timestamp.time)
 		//   console.log(time)
 		//   const  addhour=today.getHours()+5;
