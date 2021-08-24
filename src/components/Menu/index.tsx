@@ -163,7 +163,7 @@ const TokenListWrapper = styled.div`
   max-height: 330px;
 `
 
-const SocialIconsWrapper = styled.div<{toggled: boolean}>`
+const SocialIconsWrapper = styled.div<{ toggled: boolean }>`
   display: flex;
   height: ${(props) => props.toggled ? 'auto' : '48px'};
   & div {
@@ -193,25 +193,24 @@ const Menu: React.FC = props => {
   // const { isDark, toggleTheme } = useTheme()
   // const cakePriceUsd = useGetPriceData()
   const { menuToggled, toggleMenu } = useMenuToggle();
-  const [ showAllToken, setShowAllToken ] = useState(true);
+  const [showAllToken, setShowAllToken] = useState(true);
 
-  const [walletbalance,setWalletBalance]=useState(0);
+  const [walletbalance, setWalletBalance] = useState(0);
   const dispatch = useDispatch();
 
-  const [sum,setSum]=useState(0);
-  const [getallToken,setAllTokens]=useState([]);
-    
-  console.log("sum",sum);
-  
+  const [sum, setSum] = useState(0);
+  const [getallToken, setAllTokens] = useState([]);
 
-  
+
+
+
   // const getAccount= new web3.eth.Iban('account');
   // const getBalance= async()=>{
-    
+
   // const balance = await  web3.eth.getBalance('account'); 
   //     setWalletBalance(balance);
   // }
-  
+
   // useEffect(()=>{
   //   getBalance() 
   // }); 
@@ -224,7 +223,7 @@ const Menu: React.FC = props => {
   //   setWalletBalance(res/1000000000000000000);
   //    })
   // }
-  
+
   const Get_data = `
   {
     ethereum(network: bsc) {
@@ -244,92 +243,91 @@ const Menu: React.FC = props => {
 
   // const [address,setAddress]=useState<any>([])
   // console.log("addressssssss=>>>>>>>>:::::::::::::::::::::::",address)
-  const fetchData = async () =>{
-    if(account){
-      
-      
+  const fetchData = async () => {
+    if (account) {
+
+
       // const g= await axios.get('https://api.sphynxswap.finance/price/0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82');
       // // eslint-disable-next-line no-console
       // console.log("price============>",g);
-      
-      const queryResult= await axios.post('https://graphql.bitquery.io/',{query: Get_data});
+
+      const queryResult = await axios.post('https://graphql.bitquery.io/', { query: Get_data });
       // const addres=setAddress(queryResult.data.data.ethereum.address[0].balances.currency.address)
       // console.log("address============>",addres);
-      if(queryResult.data.data){
-      // queryResult.data.data.ethereum.address[0].balances.forEach(async (elem, index)=>{
+      if (queryResult.data.data) {
+        // queryResult.data.data.ethereum.address[0].balances.forEach(async (elem, index)=>{
+        let allsum: any = 0;
 
         // eslint-disable-next-line no-restricted-syntax
-        for(const elem of queryResult.data.data.ethereum.address[0].balances){
+        for (const elem of queryResult.data.data.ethereum.address[0].balances) {
 
-          const price:any= await axios.get(`https://api.sphynxswap.finance/price/${elem.currency.address === '-' ? '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c' : elem.currency.address}`);
-          const dollerprice:any=price.data.price*elem.value;
+          const price: any = await axios.get(`https://api.sphynxswap.finance/price/${elem.currency.address === '-' ? '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c' : elem.currency.address}`);
+          const dollerprice: any = price.data.price * elem.value;
           elem.dollarPrice = dollerprice;
-          const allsum:any =+dollerprice;
+          allsum += dollerprice;
 
           // eslint-disable-next-line no-console
-          console.log("allsum:::::::::::::::::::::::::::::",allsum)
-          setSum(allsum)
           
         }
         
-    // })
-
-        setAllTokens(queryResult.data.data.ethereum.address[0].balances)
+        // })
         
+        setSum(allsum)
+        setAllTokens(queryResult.data.data.ethereum.address[0].balances)
+
       }
 
 
     }
-    }
+  }
 
-    // const getPrice=async ()=>{
-    //   const g= await axios.get('https://api.sphynxswap.finance/price/0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82');
-    //   // eslint-disable-next-line no-console
-    //   console.log("price============>",g);
-    // }
+  // const getPrice=async ()=>{
+  //   const g= await axios.get('https://api.sphynxswap.finance/price/0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82');
+  //   // eslint-disable-next-line no-console
+  //   console.log("price============>",g);
+  // }
 
-//     const chartData =[]
-//     result.forEach(e =>{
-//        chartData.push({
-//            open : parseFloat(e.open_price),
-//            high : parseFloat(e.maximum_price),
-//            low : parseFloat(e.minimum_price),
-//            close: parseFloat(e.close_price),
-//            // time : e.timeInterval.minute
-//            // time : "2021-04-12"
-//        })
-//    })
- 
-// };
+  //     const chartData =[]
+  //     result.forEach(e =>{
+  //        chartData.push({
+  //            open : parseFloat(e.open_price),
+  //            high : parseFloat(e.maximum_price),
+  //            low : parseFloat(e.minimum_price),
+  //            close: parseFloat(e.close_price),
+  //            // time : e.timeInterval.minute
+  //            // time : "2021-04-12"
+  //        })
+  //    })
 
-  useEffect(()=>{
+  // };
+
+  useEffect(() => {
     fetchData()
     // Balance();
 
-   
-// eslint-disable-next-line react-hooks/exhaustive-deps
-  },[account])
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [account])
 
 
 
-       
-       const token_data = getallToken.map((elem : any) => {
-        const {currency,value, dollarPrice } = elem;
-      //  const link = `https://bscscan.com/token/${currency.address}`
-        
-        console.log('dollarPrice:::' , dollarPrice)
-        return (
-            <>
-              <TokenItemWrapper toggled={menuToggled}>
-                <div>
-                  <Button onClick={() => { dispatch(typeInput({ input: currency.address })) }} >
-                  <p><b>{currency.symbol}</b></p>
-                  <p><b>{value}</b></p>
-                  <p><b>{dollarPrice}</b></p>
-                  </Button>
-                  
-                </div>
-                {/* {
+
+  const token_data = getallToken.map((elem: any) => {
+    const { currency, value, dollarPrice } = elem;
+    //  const link = `https://bscscan.com/token/${currency.address}`
+
+    return (
+      <>
+        <TokenItemWrapper toggled={menuToggled}>
+          <div>
+            <Button onClick={() => { dispatch(typeInput({ input: currency.address })) }} >
+              <p><b>{currency.symbol}</b></p>
+              <p><b>{value}</b></p>
+              <p><b>${dollarPrice}</b></p>
+            </Button>
+
+          </div>
+          {/* {
                   !menuToggled &&
                   <div>
                     <p><b>{currency.symbol }</b></p>
@@ -337,30 +335,30 @@ const Menu: React.FC = props => {
                   </div>
 
                 } */}
-               
-              </TokenItemWrapper>
-               
 
-            </>
-            
-        )
-    })
+        </TokenItemWrapper>
+
+
+      </>
+
+    )
+  })
 
 
 
   return (
     <MenuWrapper toggled={menuToggled}>
-      <a  href="sphynxtoken.co"><img src={MainLogo} alt='Main Logo' /></a>
+      <a href="sphynxtoken.co"><img src={MainLogo} alt='Main Logo' /></a>
       <MenuIconWrapper>
         {!menuToggled && <span>Main Menu</span>
         }
         <Button onClick={() => { toggleMenu(!menuToggled) }}>
-          { menuToggled ?
+          {menuToggled ?
             <svg viewBox='0 0 24 24' width='24px'>
               <path d="M4 18H20C20.55 18 21 17.55 21 17C21 16.45 20.55 16 20 16H4C3.45 16 3 16.45 3 17C3 17.55 3.45 18 4 18ZM4 13H20C20.55 13 21 12.55 21 12C21 11.45 20.55 11 20 11H4C3.45 11 3 11.45 3 12C3 12.55 3.45 13 4 13ZM3 7C3 7.55 3.45 8 4 8H20C20.55 8 21 7.55 21 7C21 6.45 20.55 6 20 6H4C3.45 6 3 6.45 3 7Z" />
             </svg>
             :
-            <MenuOpenIcon />         
+            <MenuOpenIcon />
           }
         </Button>
       </MenuIconWrapper>
@@ -371,25 +369,25 @@ const Menu: React.FC = props => {
             !menuToggled && <p>Wallet</p>
           }
         </div>
-        {!menuToggled && <p><b>{account?sum:""}</b></p>
+        {!menuToggled && <p><b>{account ? sum : ""}</b></p>
         }
       </WalletHeading>
       <MenuContentWrapper toggled={menuToggled}>
-       
-         { 
-         account?
-         <div>
-          <TokenListWrapper>
-          {showAllToken ? token_data : token_data.slice(0, 3)}
-        </TokenListWrapper>
-         <ButtonWrapper style={{ margin: '10px 0' }} onClick={() => {setShowAllToken(!showAllToken)}}>
-         <p><b>{ showAllToken ? 'Show Some Tokens' : 'Show All Tokens' }</b></p>
-       </ButtonWrapper>
-       </div>
-        :""
 
-         }
-                 
+        {
+          account ?
+            <div>
+              <TokenListWrapper>
+                {showAllToken ? token_data : token_data.slice(0, 3)}
+              </TokenListWrapper>
+              <ButtonWrapper style={{ margin: '10px 0' }} onClick={() => { setShowAllToken(!showAllToken) }}>
+                <p><b>{showAllToken ? 'Show Some Tokens' : 'Show All Tokens'}</b></p>
+              </ButtonWrapper>
+            </div>
+            : ""
+
+        }
+
         {
           links.map((link) => {
             const Icon = link.icon
@@ -397,11 +395,12 @@ const Menu: React.FC = props => {
               <MenuItem href={link.href}>
                 <Icon />
                 {
-                  !menuToggled && <p><b>{ link.label }</b></p>
+                  !menuToggled && <p><b>{link.label}</b></p>
                 }
               </MenuItem>
-          )})
-        } 
+            )
+          })
+        }
         <SocialWrapper>
           <p><b>Socials</b></p>
           <SocialIconsWrapper toggled={menuToggled}>
@@ -409,16 +408,16 @@ const Menu: React.FC = props => {
               {/* <TwitterIcon />
               <SocialIcon2 />
               <TelegramIcon /> */}
-         <a href="https://mobile.twitter.com/sphynxswap" target="blank"><TwitterIcon /></a> 
-         <a href="sphynxtoken.co" target="blank"><SocialIcon2 /></a>  
-         <a href="https://t.me/sphynxswap" target="blank"><TelegramIcon /></a> 
+              <a href="https://mobile.twitter.com/sphynxswap" target="blank"><TwitterIcon /></a>
+              <a href="sphynxtoken.co" target="blank"><SocialIcon2 /></a>
+              <a href="https://t.me/sphynxswap" target="blank"><TelegramIcon /></a>
             </div>
           </SocialIconsWrapper>
         </SocialWrapper>
-        {!menuToggled && 
+        {!menuToggled &&
           <IllustrationWrapper>
             <img src={Illustration} alt='Illustration' />
-          </IllustrationWrapper>      
+          </IllustrationWrapper>
         }
       </MenuContentWrapper>
       {/* <UikitMenu

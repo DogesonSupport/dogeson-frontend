@@ -94,7 +94,7 @@ export default function TokenInfo() {
             setalldata(response.data)
               dispatch(
               selectCurrency({
-                field : Field.INPUT,
+                field : Field.OUTPUT,
                 currencyId : input
               })
             )
