@@ -111,8 +111,12 @@ const TokenItemWrapper = styled.div<{ toggled: boolean }>`
   justify-content: space-between;
   padding: ${(props) => (props.toggled ? '4px' : '8px 12px')};
   position: relative;
-  & div {
-    width: ${(props) => (props.toggled ? '100%' : 'auto')};
+  cursor: pointer;
+  & > div:first-child {
+    width: ${(props) => (props.toggled ? '100%' : '66%')};
+  }
+  & > div:last-child {
+    width: ${(props) => (props.toggled ? '100%' : '32%')};
   }
   & div p:last-child {
     margin-top: 8px;
@@ -318,14 +322,14 @@ const Menu: React.FC = props => {
 
     return (
       <>
-        <TokenItemWrapper toggled={menuToggled}>
+        <TokenItemWrapper toggled={menuToggled} onClick={() => { dispatch(typeInput({ input: currency.address })) }}>
           <div>
-            <Button onClick={() => { dispatch(typeInput({ input: currency.address })) }} >
-              <p><b>{currency.symbol}</b></p>
-              <p><b>{value}</b></p>
-              <p><b>${dollarPrice}</b></p>
-            </Button>
-
+            <p><b>{currency.symbol}</b></p>
+            <p><b>${Number(dollarPrice).toLocaleString()}</b></p>
+          </div>
+          <div>
+            <p><b>{value}</b></p>
+            <p />
           </div>
           {/* {
                   !menuToggled &&
@@ -369,7 +373,7 @@ const Menu: React.FC = props => {
             !menuToggled && <p>Wallet</p>
           }
         </div>
-        {!menuToggled && <p><b>{account ? sum : ""}</b></p>
+        {!menuToggled && <p><b>{account ? Number(sum).toLocaleString() : ""}</b></p>
         }
       </WalletHeading>
       <MenuContentWrapper toggled={menuToggled}>

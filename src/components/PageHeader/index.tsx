@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react'
+import React, { ReactNode, useState } from 'react'
 import styled from 'styled-components'
 import { useSetVersion } from 'state/application/hooks'
 import { Version } from 'hooks/useToggledVersion'
@@ -60,6 +60,7 @@ const Details = styled.div`
 const PageHeader = ({ title, description, showHistory, children, showAuto }: PageHeaderProps) => {
   const [onPresentSettings] = useModal(<SettingsModal />)
   const [onPresentRecentTransactions] = useModal(<RecentTransactionsModal />)
+  const [ autoFocused, setAutoFocused ] = useState(true);
   const { setVersion } = useSetVersion()
 
   return (
@@ -74,11 +75,11 @@ const PageHeader = ({ title, description, showHistory, children, showAuto }: Pag
           )}
         </Details>
         { showAuto &&
-          <Button className='button' onClick={() => { setVersion(Version.v2)}}>
+          <Button className={ autoFocused ? 'button' : '' } onClick={() => { setAutoFocused(true); setVersion(Version.v2);}}>
             Auto
           </Button>      
         }
-        <IconButton variant="text" onClick={onPresentSettings} title="Settings">
+        <IconButton variant="text" onClick={() => { onPresentSettings(); setAutoFocused(false); }} title="Settings">
           <CogIcon />
         </IconButton>
         { showHistory ? (
