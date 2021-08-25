@@ -1,5 +1,9 @@
 .TVChartContainer {
-	/* height: calc(100vh - 80px); */
-	/* height: 400px; */
-	height: 400px;
+  /* height: calc(100vh - 80px); */
+  /* height: 400px; */
+  height: 400px;
+}
+
+#advanced-chart-widget-container {
+  height: 400px !important;
 }
