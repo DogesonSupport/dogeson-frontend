@@ -10,7 +10,7 @@ import useTheme from 'hooks/useTheme'
 import useGetPriceData from 'hooks/useGetPriceData'
 import { injected, bsc, walletconnect } from 'connectors'
 import { useMenuToggle } from 'state/application/hooks'
-import MainLogo from 'assets/images/MainLogo.png'
+import MainLogo from 'assets/svg/logo_new.svg'
 import { useDispatch } from 'react-redux'
 
 import CopyHelper from 'components/AccountDetails/Copy'
