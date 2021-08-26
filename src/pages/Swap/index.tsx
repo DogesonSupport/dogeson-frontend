@@ -22,7 +22,7 @@ import ProgressSteps from 'components/ProgressSteps'
 import { Redirect } from 'react-router-dom'
 import moment from 'moment';
 import axios from 'axios';
-
+import { Rnd } from 'react-rnd';
 import { BETTER_TRADE_LINK_THRESHOLD, INITIAL_ALLOWED_SLIPPAGE } from 'constants/index'
 import { isTradeBetter } from 'data/V1'
 import { useActiveWeb3React } from 'hooks'
@@ -264,6 +264,14 @@ const BottomCard = styled.div`
     outline: none;
     box-shadow: none;
     border: none;
+  }
+`
+
+const ChartContainer = styled.div<{height: string}> `
+  position: relative;
+  height: ${(props) => props.height};
+  .react-draggable {
+    transform: translate(0, 0) !important;
   }
 `
 
@@ -532,6 +540,8 @@ const Swap = () => {
   const [hotTokens, setHotTokens] = useState<HotTokenType[] | null>(null)
   const [timeNow, setTimeNow] = useState(Date.now())
   const countDownDeadline = new Date(Date.UTC(2021, 6, 1, 0, 0, 0, 0)).getTime();
+
+  const [ chartHeight, setChartHeight ] = useState('400px');
 
   useEffect(() => {
     let timeout;
@@ -895,8 +905,16 @@ const Swap = () => {
             <CoinStatsBoard
              
             />
-            <TVChartContainer/>
-           
+            <ChartContainer height={chartHeight}>
+              <Rnd
+                size={{ width: '100%', height: chartHeight }}
+                onResizeStop={(e, direction, ref, delta, position) => {
+                  setChartHeight(ref.style.height)
+                }}
+              >
+                <TVChartContainer/>
+              </Rnd>
+            </ChartContainer>
           </FullHeightColumn>
         </div>
         <div>
