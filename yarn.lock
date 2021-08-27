@@ -15131,6 +15131,11 @@ react-transition-group@^4.4.0, react-transition-group@^4.4.1:
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
 
+react-ts-tradingview-widgets@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/react-ts-tradingview-widgets/-/react-ts-tradingview-widgets-1.0.3.tgz#a73ec108383d8daba25d0d069dd8522b144feae0"
+  integrity sha512-2KuFkhQL3Q0htIHpXOT7DS562D1sl9Czilk6qYQGrogjlLzhENfZ0JtncbJisuJsaayXSiUt9QfS/4+gc94J3g==
+
 react-virtualized-auto-sizer@^1.0.2:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/react-virtualized-auto-sizer/-/react-virtualized-auto-sizer-1.0.6.tgz#66c5b1c9278064c5ef1699ed40a29c11518f97ca"

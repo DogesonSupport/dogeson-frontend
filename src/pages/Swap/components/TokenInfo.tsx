@@ -4,12 +4,12 @@ import { Flex, Text } from '@pancakeswap-libs/uikit'
 
 // eslint-disable-next-line import/no-unresolved
 import { ReactComponent as MoreIcon2 } from 'assets/svg/icon/MoreIcon2.svg'
-import axios from 'axios';
-import Web3 from 'web3';
-import { useSelector, useDispatch } from 'react-redux';
+import axios from 'axios'
+import Web3 from 'web3'
+import { useSelector, useDispatch } from 'react-redux'
 import CopyHelper from 'components/AccountDetails/Copy'
 import { AppState, AppDispatch } from '../../../state'
-import { selectCurrency, Field } from '../../../state/swap/actions';
+import { selectCurrency, Field } from '../../../state/swap/actions'
 
 // eslint-disable-next-line import/no-cycle
 
@@ -29,7 +29,7 @@ const TextWrapper = styled.div`
   & > div:last-child {
     font-size: 14px;
     line-height: 16px;
-    color: #ADB5BD;
+    color: #adb5bd;
     margin-top: 2px;
   }
   & .textWithCopy {
@@ -69,7 +69,6 @@ const TokenInfoContainer = styled.div`
 `
 // {tokenInfo}: {tokenInfo?: TokenDetailProps | null}
 export default function TokenInfo() {
-
   //  const input= localStorage.getItem('InputAddress');
   const input = useSelector<AppState, AppState['inputReducer']>((state) => state.inputReducer.input)
   const result = Web3.utils.isAddress(input)
@@ -82,49 +81,40 @@ export default function TokenInfo() {
     txs: '',
     marketCap: '',
     symbol: '',
-    totalSupply: ''
-  });
+    totalSupply: '',
+  })
 
-  const getTableData =async  () => {
+  const getTableData = async () => {
     try {
-
       if (result) {
-        await axios.post("https://api.sphynxswap.finance/tokenStats", { address: input })
-          .then((response) => {
-            setalldata(response.data)
-              dispatch(
-              selectCurrency({
-                field : Field.OUTPUT,
-                currencyId : input
-              })
-            )
-          });
+        await axios.post('https://api.sphynxswap.finance/tokenStats', { address: input }).then((response) => {
+          setalldata(response.data)
+          dispatch(
+            selectCurrency({
+              field: Field.OUTPUT,
+              currencyId: input,
+            })
+          )
+        })
       }
-
-    }
-    catch (err) {
+    } catch (err) {
       // eslint-disable-next-line no-console
       // console.log(err);
       // alert("Invalid Address")
-
-
     }
-
   }
 
-
   useEffect(() => {
-
-    getTableData();
+    getTableData()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [input])
 
   return (
     <TokenInfoContainer>
-      <Flex alignItems="center" justifyContent='space-between'>
-        <Flex alignItems='center'>
+      <Flex alignItems="center" justifyContent="space-between">
+        <Flex alignItems="center">
           <IconWrapper size={32}>
-            <Text color='white'>{alldata.symbol}</Text>
+            <Text color="white">{alldata.symbol}</Text>
           </IconWrapper>
         </Flex>
         <Flex style={{ width: 40 }}>
@@ -145,17 +135,23 @@ export default function TokenInfo() {
           <Text>{alldata.txs}</Text>
         </TextWrapper>
         <TextWrapper>
-          <Text className='textWithCopy'>
+          <Text className="textWithCopy">
             Contract Address
-            <CopyHelper toCopy={input}>
-              &nbsp;
-            </CopyHelper>
+            <CopyHelper toCopy={input}>&nbsp;</CopyHelper>
           </Text>
-          <Text><a href={`https://bscscan.com/token/${input}`} target='_blank' rel='noreferrer'>{input}</a></Text>
+          <Text>
+            <a href={`https://bscscan.com/token/${input}`} target="_blank" rel="noreferrer">
+              {input}
+            </a>
+          </Text>
         </TextWrapper>
         <TextWrapper>
           <Text>Holders</Text>
-          <Text><a href={`https://bscscan.com/token/${input}#balances`} target='_blank' rel='noreferrer'>{Number(alldata.holders).toLocaleString()}</a></Text>
+          <Text>
+            <a href={`https://bscscan.com/token/${input}#balances`} target="_blank" rel="noreferrer">
+              {Number(alldata.holders).toLocaleString()}
+            </a>
+          </Text>
         </TextWrapper>
       </Flex>
     </TokenInfoContainer>
