@@ -14,8 +14,7 @@ import Web3 from 'web3'
 import { makeApiRequest, generateSymbol, makeApiRequest1 } from './helpers'
 import { useSelector } from 'react-redux'
 import { AppDispatch, AppState } from '../../../state'
-import { AdvancedRealTimeChart } from 'react-ts-tradingview-widgets'
-
+import TradingViewWidget, { Themes } from 'react-tradingview-widget'
 // eslint-disable-next-line import/extensions
 
 export interface ChartContainerProps {
@@ -63,7 +62,7 @@ export const TVChartContainer: React.FC<Partial<ChartContainerProps>> = () => {
 
   const [tokendetails, setTokenDetails] = React.useState({
     name: 'PancakeSwap Token',
-    pair: 'Cake/BNB',
+    pair: 's',
     sybmol: 'CAKE',
     version: 'Pancake v2',
   })
@@ -289,10 +288,10 @@ export const TVChartContainer: React.FC<Partial<ChartContainerProps>> = () => {
   //     }
   //   },[tvWidget])
 
-  React.useEffect(() => {
-    getWidget()
-    // setShowLoader(false);
-  }, [input])
+  // React.useEffect(() => {
+  //   getWidget()
+  //   // setShowLoader(false);
+  // }, [input])
 
   return (
     <>
@@ -312,13 +311,9 @@ export const TVChartContainer: React.FC<Partial<ChartContainerProps>> = () => {
         } */}
       {/* {!showloader? */}
       {/* <ReactLoading type="bubbles" color="green" height='20%' width='20%' /> */}
-      <div id={ChartContainerProps.containerId} className={'TVChartContainer'}></div>
-      <AdvancedRealTimeChart
-        symbol={tokendetails.pair}
-        theme="dark"
-        locale={getLanguageFromURL() || 'en'}
-        autosize={ChartContainerProps.autosize}
-      />
+      <div id={ChartContainerProps.containerId} className={'TVChartContainer'}>
+        <TradingViewWidget symbol="Cake/BNB" theme={Themes.DARK} locale={getLanguageFromURL() || 'en'} width="100%" />
+      </div>
     </>
   )
 }
