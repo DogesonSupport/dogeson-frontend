@@ -91,7 +91,7 @@ export default function TokenInfo() {
           setalldata(response.data)
           dispatch(
             selectCurrency({
-              field: Field.INPUT,
+              field: Field.OUTPUT,
               currencyId: input,
             })
           )
@@ -124,11 +124,11 @@ export default function TokenInfo() {
       <Flex flexDirection="column">
         <TextWrapper>
           <Text>Total Supply</Text>
-          <Text>{alldata.totalSupply}</Text>
+          <Text>{Number(alldata.totalSupply).toLocaleString()}</Text>
         </TextWrapper>
         <TextWrapper>
           <Text>Market Cap:</Text>
-          {/* <Text>{alldata.marketCap.substring(alldata.marketCap.indexOf('$'))}</Text> */}
+          <Text>{Number(alldata.marketCap).toLocaleString()}</Text>
         </TextWrapper>
         <TextWrapper>
           <Text>Transactions</Text>
@@ -149,7 +149,7 @@ export default function TokenInfo() {
           <Text>Holders</Text>
           <Text>
             <a href={`https://bscscan.com/token/${input}#balances`} target="_blank" rel="noreferrer">
-              {alldata.holders}
+              {Number(alldata.holders).toLocaleString()}
             </a>
           </Text>
         </TextWrapper>

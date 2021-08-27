@@ -42,7 +42,6 @@ const StyledWrapper = styled.div`
   padding: 8px 16px 0;
   display: flex;
   flex-direction: column;
-
   & > div {
     margin: 0 12px 8px 0;
     & > div,
@@ -73,7 +72,6 @@ const StyledWrapper = styled.div`
       font-weight: bold;
     }
   }
-
   ${({ theme }) => theme.mediaQueries.md} {
     flex-direction: row;
     align-items: center;
@@ -88,10 +86,7 @@ export default function CoinStatsBoard() {
 
   const input = useSelector<AppState, AppState['inputReducer']>((state) => state.inputReducer.input)
   const result = Web3.utils.isAddress(input)
-  //  const [showLoader,setShowLoader]=React.useState(true);
-  // eslint-disable-next-line no-console
-  // console.log("result===============================>",result)  // => true
-  // console.log("input in marketcap==========",input);
+
   const [alldata, setalldata] = useState({
     address: '',
     price: '',
@@ -158,7 +153,7 @@ export default function CoinStatsBoard() {
               {tokenData && (
                 <Flex flexDirection="column" justifyContent="center">
                   <Text>{tokenData.symbol}</Text>
-                  {/* <Text>{tokenData.marketCap.substring(tokenData.marketCap.indexOf('$'))}</Text> */}
+                  <Text>{tokenData.marketCap}</Text>
                 </Flex>
               )}
             </Flex>

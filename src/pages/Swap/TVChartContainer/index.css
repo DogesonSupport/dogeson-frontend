@@ -1,13 +1,5 @@
 .TVChartContainer {
   /* height: calc(100vh - 80px); */
   /* height: 400px; */
-  height: 400px;
-}
-
-#advanced-chart-widget-container {
-  height: 400px !important;
-}
-
-#tradingview_6a21c-wrapper {
-  height: 400px !important;
+  height: 100%;
 }

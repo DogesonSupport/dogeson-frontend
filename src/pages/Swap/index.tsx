@@ -22,7 +22,7 @@ import ProgressSteps from 'components/ProgressSteps'
 import { Redirect } from 'react-router-dom'
 import moment from 'moment';
 import axios from 'axios';
-
+import { Rnd } from 'react-rnd';
 import { BETTER_TRADE_LINK_THRESHOLD, INITIAL_ALLOWED_SLIPPAGE } from 'constants/index'
 import { isTradeBetter } from 'data/V1'
 import { useActiveWeb3React } from 'hooks'
@@ -46,8 +46,8 @@ import { ReactComponent as HelpIcon } from 'assets/svg/icon/HelpIcon.svg'
 import { ReactComponent as HelpIcon1 } from 'assets/svg/icon/HelpIcon1.svg'
 import BinanceLogo from 'assets/images/binance-logo.png'
 import SwapBanner from 'assets/images/DogeBanner1.png'
-import FarmBanner from 'assets/images/SphynxFarmbanner.jpg'
-import StakingBanner from 'assets/images/SphynxStakebanner.jpg'
+import FarmBanner from 'assets/images/farmbanner.png'
+import StakingBanner from 'assets/images/stakebanner.png'
 
 import { getHotTokens, getTokenInfo } from 'utils/request'
 import ConnectWalletButton from 'components/ConnectWalletButton'
@@ -223,8 +223,8 @@ const BottomCard = styled.div`
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center center;
-  background-color: rgba(0, 0, 0, 0.4);
-  height: 480px;
+  background-color: #000;
+  height: 420px;
   filter: drop-shadow(0 2px 12px rgba(37, 51, 66, 0.15));
   border-radius: 8px;
   overflow: hidden;
@@ -264,6 +264,14 @@ const BottomCard = styled.div`
     outline: none;
     box-shadow: none;
     border: none;
+  }
+`
+
+const ChartContainer = styled.div<{height: string}> `
+  position: relative;
+  height: ${(props) => props.height};
+  .react-draggable {
+    transform: translate(0, 0) !important;
   }
 `
 
@@ -532,6 +540,8 @@ const Swap = () => {
   const [hotTokens, setHotTokens] = useState<HotTokenType[] | null>(null)
   const [timeNow, setTimeNow] = useState(Date.now())
   const countDownDeadline = new Date(Date.UTC(2021, 6, 1, 0, 0, 0, 0)).getTime();
+
+  const [ chartHeight, setChartHeight ] = useState('400px');
 
   useEffect(() => {
     let timeout;
@@ -895,8 +905,16 @@ const Swap = () => {
             <CoinStatsBoard
              
             />
-            <TVChartContainer/>
-           
+            <ChartContainer height={chartHeight}>
+              <Rnd
+                size={{ width: '100%', height: chartHeight }}
+                onResizeStop={(e, direction, ref, delta, position) => {
+                  setChartHeight(ref.style.height)
+                }}
+              >
+                <TVChartContainer/>
+              </Rnd>
+            </ChartContainer>
           </FullHeightColumn>
         </div>
         <div>

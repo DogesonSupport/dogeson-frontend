@@ -3,11 +3,13 @@ import styled from 'styled-components'
 import { Flex } from '@pancakeswap-libs/uikit'
 import axios from 'axios';
 import Web3 from 'web3';
+import moment from 'moment-timezone'
 import { useSelector } from 'react-redux';
 // import { RedirectToSwap } from '../redirects'; 
 import { Redirect } from 'react-router';
 // import { BoxesLoader } from "react-awesome-loaders";
 import { AppState } from '../../../state'
+
 
 
 const TableWrapper = styled.div`
@@ -70,7 +72,12 @@ const TransactionCard = () => {
 	const result = Web3.utils.isAddress(input)
     // eslint-disable-next-line no-console
 
+   const [bnb,setBnb]=useState(0);
+   const [tokenprice,setTokenPrice]=useState(0);
+   
 
+//    console.log("bnbPrice",bnb)
+//    console.log("tokenPrice",tokenprice)
     //   const some=!input?'0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82':input;
 
 
@@ -82,7 +89,7 @@ const TransactionCard = () => {
 				options: {desc: ["block.height", "tradeIndex"],limit:100 offset: 0}
 				date: {since: "2021-08-05", till: null}
 				baseCurrency: {is: "${input}"}
-				
+				quoteCurrency:{is : "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c"}
 			  ) {
 				block {
 				  timestamp {
@@ -119,6 +126,12 @@ const TransactionCard = () => {
 				  address
 				  name
 				}
+				sellCurrency {
+					symbol
+					address
+					name
+				  }
+				price
 				quotePrice
 			  }
 			}
@@ -130,8 +143,13 @@ const TransactionCard = () => {
 			if (result) {
 				// setLoader(true);
 				const queryResult = await axios.post('https://graphql.bitquery.io/', { query: Get_data });
-				console.log('bbb', queryResult.data.data)
+				// console.log('bbb', queryResult.data.data)
+				const bnbprice:any= await axios.get(`https://api.sphynxswap.finance/price/${input}`);
+				const Tprice:any= await axios.get(`https://api.sphynxswap.finance/price/0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c`);
+				setBnb(Tprice.data.price);
+			    setTokenPrice(bnbprice.data.price)
 				if (queryResult.data.data)
+
 					setTableData(queryResult.data.data.ethereum.dexTrades)
 				// setLoader(false);
 			}
@@ -152,8 +170,13 @@ const TransactionCard = () => {
 
 	const table_data = tableData.map((val: any) => {
 		const link = `https://bscscan.com/tx/${val.transaction.hash}`;
-		const today:Date = new Date(val.block.timestamp.time);
-		today.setHours(today.getHours() + 5);
+		// eslint-disable-next-line no-console
+		
+		  const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+		  // eslint-disable-next-line no-console
+          const currentTime = moment().tz(timezone).format();
+		  // eslint-disable-next-line no-console
+		  const today:any = new Date(currentTime);
 		//   const  time=new Date(val.block.timestamp.time)
 		//   console.log(time)
 		//   const  addhour=today.getHours()+5;
@@ -168,8 +191,8 @@ const TransactionCard = () => {
 					<a href={link} target="blank"><Flex alignItems='center'><h2 className={val.baseCurrency.symbol === val.buyCurrency.symbol ? 'success' : 'error'}>{today.toLocaleTimeString()}</h2></Flex></a>
 				</td>
 				<td><a href={link} target="blank"><h2 className={val.baseCurrency.symbol === val.buyCurrency.symbol ? 'success' : 'error'}> {Number(val.baseAmount).toLocaleString()}</h2></a></td>
-				<td><a href={link} target="blank"><h2 className={val.baseCurrency.symbol === val.buyCurrency.symbol ? 'success' : 'error'}>{(val.quotePrice * 335).toLocaleString()}</h2></a></td>
-				<td><a href={link} target="blank"><h2 className={val.baseCurrency.symbol === val.buyCurrency.symbol ? 'success' : 'error'}>${(val.quoteAmount * 335).toLocaleString()}</h2></a></td>
+				<td><a href={link} target="blank"><h2 className={val.baseCurrency.symbol === val.buyCurrency.symbol ? 'success' : 'error'}>{(val.quotePrice*bnb)}</h2></a></td> 
+				<td><a href={link} target="blank"><h2 className={val.baseCurrency.symbol === val.buyCurrency.symbol ? 'success' : 'error'}>${(val.baseAmount*tokenprice)}</h2></a></td>
 				<td><a href={link} target="blank"><h2 className={val.baseCurrency.symbol === val.buyCurrency.symbol ? 'success' : 'error'}>{val.exchange.fullName}</h2></a></td>
 			</tr>
 		)
